@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
+import { getPrioridad } from "@/lib/utils/prioridad";
 import { Users, Calendar, FileText, AlertCircle } from "lucide-react";
 import Link from "next/link";
 
@@ -26,10 +27,10 @@ type Paciente = {
   proceso_paciente: ProcesoPaciente[];
 };
 
-function esAltaPrioridad(perfil: PerfilVulnerabilidad): boolean {
-  if (!perfil) return false;
-  return !!(perfil.jefa_hogar || perfil.viene_provincia || perfil.tiene_discapacidad || perfil.habla_quechua);
-}
+const PRIORIDAD_BADGE = {
+  ALTA:  { variant: "danger"  as const, label: "Alta prioridad" },
+  MEDIA: { variant: "warning" as const, label: "Media prioridad" },
+} as const;
 
 function etapaActual(procesos: ProcesoPaciente[]): string | null {
   const enCurso = procesos.find((p) => p.estado === "en_curso");
@@ -134,7 +135,8 @@ export default async function AdminDashboardPage() {
                 <tbody className="divide-y divide-border">
                   {lista.map((p) => {
                     const etapa = etapaActual(p.proceso_paciente);
-                    const altaPrioridad = esAltaPrioridad(p.perfil_vulnerabilidad);
+                    const prioridad = getPrioridad(p.perfil_vulnerabilidad);
+                    const badgePrioridad = prioridad !== "BAJA" ? PRIORIDAD_BADGE[prioridad] : null;
                     return (
                       <tr key={p.id} className="hover:bg-gray-50">
                         <td className="py-3 font-medium text-foreground">{p.nombre}</td>
@@ -147,8 +149,8 @@ export default async function AdminDashboardPage() {
                           )}
                         </td>
                         <td className="py-3">
-                          {altaPrioridad && (
-                            <Badge variant="danger">Alta prioridad</Badge>
+                          {badgePrioridad && (
+                            <Badge variant={badgePrioridad.variant}>{badgePrioridad.label}</Badge>
                           )}
                         </td>
                         <td className="py-3 text-right">

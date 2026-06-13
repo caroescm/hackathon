@@ -3,6 +3,7 @@ import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import RevisarDocumento from "@/components/admin/RevisarDocumento";
+import { getPrioridad } from "@/lib/utils/prioridad";
 import { ArrowLeft, Check, Clock, Circle } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -123,6 +124,12 @@ export default async function PacienteExpedientePage({ params }: { params: { id:
     (f) => p.perfil_vulnerabilidad?.[f.key] === true
   );
 
+  const prioridad = getPrioridad(p.perfil_vulnerabilidad);
+  const PRIORIDAD_BADGE = {
+    ALTA:  { variant: "danger"  as const, label: "Alta prioridad" },
+    MEDIA: { variant: "warning" as const, label: "Media prioridad" },
+  };
+
   return (
     <>
       <TopBar title="Expediente del Paciente" subtitle={p.nombre} />
@@ -164,10 +171,17 @@ export default async function PacienteExpedientePage({ params }: { params: { id:
           {flagsActivos.length === 0 ? (
             <p className="text-sm text-muted">Sin factores de vulnerabilidad registrados.</p>
           ) : (
-            <div className="flex flex-wrap gap-2">
-              {flagsActivos.map((f) => (
-                <Badge key={f.key} variant="danger">{f.label}</Badge>
-              ))}
+            <div className="space-y-3">
+              {prioridad !== "BAJA" && (
+                <Badge variant={PRIORIDAD_BADGE[prioridad].variant}>
+                  {PRIORIDAD_BADGE[prioridad].label}
+                </Badge>
+              )}
+              <div className="flex flex-wrap gap-2">
+                {flagsActivos.map((f) => (
+                  <Badge key={f.key} variant="default">{f.label}</Badge>
+                ))}
+              </div>
             </div>
           )}
         </Card>
