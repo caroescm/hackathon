@@ -1,27 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #f9fafb;
+  --foreground: #111928;
+  --primary: #1a56db;
+  --primary-dark: #1e429f;
+  --sidebar-bg: #ffffff;
+  --border-color: #e5e7eb;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-dark transition-colors duration-200;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-primary border border-primary px-4 py-2 rounded-lg font-medium hover:bg-primary-light transition-colors duration-200;
+  }
+
+  .card {
+    @apply bg-white rounded-lg border border-border shadow-sm p-6;
+  }
+
+  .input-field {
+    @apply w-full border border-border rounded-lg px-3 py-2 text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted hover:bg-primary-light hover:text-primary transition-colors duration-150;
+  }
+
+  .sidebar-link-active {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium bg-primary-light text-primary;
   }
 }
