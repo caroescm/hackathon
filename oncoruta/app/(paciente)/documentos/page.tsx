@@ -1,26 +1,49 @@
+import { createClient } from "@/lib/supabase/server";
 import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
-import { FileText, Download, Upload } from "lucide-react";
+import { FileText, Upload } from "lucide-react";
 
-const documentos = [
-  { nombre: "Informe de Biopsia", tipo: "Diagnóstico", fecha: "12 Mar 2024", size: "1.2 MB" },
-  { nombre: "Resultado de Mamografía", tipo: "Imagen", fecha: "10 Mar 2024", size: "3.5 MB" },
-  { nombre: "Protocolo de Quimioterapia", tipo: "Tratamiento", fecha: "05 May 2024", size: "450 KB" },
-  { nombre: "Análisis de Sangre - Mayo", tipo: "Laboratorio", fecha: "28 May 2024", size: "210 KB" },
-  { nombre: "Consentimiento Informado Cirugía", tipo: "Administrativo", fecha: "02 Abr 2024", size: "380 KB" },
-];
-
-const tipoVariant: Record<string, "info" | "success" | "warning" | "default"> = {
-  "Diagnóstico": "danger" as any,
-  "Imagen": "info",
-  "Tratamiento": "warning",
-  "Laboratorio": "success",
-  "Administrativo": "default",
+type Documento = {
+  id: string;
+  nombre: string;
+  estado: string;
+  created_at: string;
+  pasos: { nombre: string } | null;
 };
 
-export default function DocumentosPage() {
+const estadoVariant: Record<string, "info" | "warning" | "success" | "danger" | "default"> = {
+  enviado:     "info",
+  en_revision: "warning",
+  aprobado:    "success",
+  rechazado:   "danger",
+};
+
+function formatFecha(fechaISO: string) {
+  try {
+    return new Date(fechaISO).toLocaleDateString("es-PE", {
+      day: "numeric", month: "short", year: "numeric",
+    });
+  } catch {
+    return fechaISO;
+  }
+}
+
+export default async function DocumentosPage() {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const { data } = user
+    ? await supabase
+        .from("documentos")
+        .select("id, nombre, estado, created_at, pasos(nombre)")
+        .eq("paciente_id", user.id)
+        .order("created_at", { ascending: false })
+    : { data: null };
+
+  const documentos = (data as Documento[] | null) ?? [];
+
   return (
     <>
       <TopBar title="Mis Documentos" subtitle="Historial médico y resultados" />
@@ -32,31 +55,38 @@ export default function DocumentosPage() {
           </Button>
         </div>
 
-        <Card title="Documentos" description={`${documentos.length} archivos en tu expediente`}>
-          <div className="space-y-2">
-            {documentos.map((doc, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-gray-50 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-primary-light rounded-lg flex items-center justify-center flex-shrink-0">
-                    <FileText size={16} className="text-primary" />
+        <Card
+          title="Documentos"
+          description={documentos.length > 0 ? `${documentos.length} archivo${documentos.length !== 1 ? "s" : ""} en tu expediente` : undefined}
+        >
+          {documentos.length === 0 ? (
+            <p className="text-sm text-muted text-center py-4">Aún no has subido documentos.</p>
+          ) : (
+            <div className="space-y-2">
+              {documentos.map((doc) => (
+                <div
+                  key={doc.id}
+                  className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-gray-50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 bg-primary-light rounded-lg flex items-center justify-center flex-shrink-0">
+                      <FileText size={16} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{doc.nombre}</p>
+                      <p className="text-xs text-muted">
+                        {formatFecha(doc.created_at)}
+                        {doc.pasos?.nombre ? ` · ${doc.pasos.nombre}` : ""}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{doc.nombre}</p>
-                    <p className="text-xs text-muted">{doc.fecha} · {doc.size}</p>
-                  </div>
+                  <Badge variant={estadoVariant[doc.estado] ?? "default"}>
+                    {doc.estado === "en_revision" ? "En revisión" : doc.estado.charAt(0).toUpperCase() + doc.estado.slice(1)}
+                  </Badge>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Badge variant={tipoVariant[doc.tipo] ?? "default"}>{doc.tipo}</Badge>
-                  <button className="p-1.5 rounded-lg text-muted hover:text-primary hover:bg-primary-light transition-colors">
-                    <Download size={16} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </Card>
       </div>
     </>

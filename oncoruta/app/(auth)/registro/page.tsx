@@ -157,7 +157,7 @@ export default function RegistroPage() {
     }
 
     // 3. Insertar perfil de vulnerabilidad
-    await supabase.from("perfil_vulnerabilidad").insert({
+    const { error: vulnError } = await supabase.from("perfil_vulnerabilidad").insert({
       paciente_id: user.id,
       jefa_hogar: vulnerabilidad.jefaHogar,
       de_provincia: vulnerabilidad.vieneProvincia,
@@ -165,8 +165,14 @@ export default function RegistroPage() {
       habla_quechua: vulnerabilidad.hablaQuechua,
     });
 
+    if (vulnError) {
+      setErrors({ general: `Error al guardar perfil de vulnerabilidad: ${vulnError.message}` });
+      setLoading(false);
+      return;
+    }
+
     // 4. Crear los 5 registros del proceso de tratamiento
-    await supabase.from("proceso_paciente").insert(
+    const { error: procesoError } = await supabase.from("proceso_paciente").insert(
       ETAPAS_PROCESO.map((e) => ({
         paciente_id: user.id,
         etapa: e.etapa,
@@ -174,6 +180,12 @@ export default function RegistroPage() {
         orden: e.orden,
       }))
     );
+
+    if (procesoError) {
+      setErrors({ general: `Error al crear proceso de tratamiento: ${procesoError.message}` });
+      setLoading(false);
+      return;
+    }
 
     router.push("/dashboard");
   }

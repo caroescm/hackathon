@@ -57,23 +57,18 @@ export default async function DashboardPage() {
       .select("id, orden")
       .order("orden", { ascending: true });
 
-    if (pasosError) {
-      console.error("[dashboard] Error al leer tabla pasos:", pasosError.message);
-    } else if (pasos && pasos.length > 0) {
+    if (!pasosError && pasos && pasos.length > 0) {
       const { error: insertError } = await supabase
         .from("proceso_paciente")
         .insert(
           pasos.map((paso, i) => ({
-            paciente_id: userId,   // = auth.uid() del usuario autenticado
+            paciente_id: userId,
             paso_id: paso.id,
             estado: i === 0 ? "en_curso" : "pendiente",
           }))
         );
 
-      if (insertError) {
-        console.error("[dashboard] Error al crear proceso:", insertError.message);
-      } else {
-        // Solo re-queryear si el insert fue exitoso
+      if (!insertError) {
         proceso = await getProceso(supabase, userId);
       }
     }

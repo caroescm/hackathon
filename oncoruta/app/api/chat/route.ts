@@ -30,7 +30,11 @@ export async function POST(req: NextRequest) {
   const service = createServiceClient();
   const hoy = new Date().toISOString().split("T")[0];
 
-  const [{ data: proceso }, { data: citas }, { data: documentos }] = await Promise.all([
+  const [
+    { data: proceso, error: procesoError },
+    { data: citas, error: citasError },
+    { data: documentos, error: documentosError },
+  ] = await Promise.all([
     service
       .from("proceso_paciente")
       .select("estado, pasos(nombre)")
@@ -52,7 +56,11 @@ export async function POST(req: NextRequest) {
       .eq("estado", "enviado"),
   ]);
 
-  const pasoActual = (proceso as Array<{ estado: string; pasos: { nombre: string } | null }> | null)?.[0];
+  if (procesoError || citasError || documentosError) {
+    return NextResponse.json({ error: "Error al obtener información del paciente" }, { status: 500 });
+  }
+
+  const pasoActual = (proceso as unknown as Array<{ estado: string; pasos: { nombre: string } | null }> | null)?.[0];
   const paso_actual = pasoActual?.pasos?.nombre ?? "No hay paso activo";
   const estado_paso = pasoActual?.estado ?? "—";
 

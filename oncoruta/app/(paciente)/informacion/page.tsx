@@ -9,7 +9,7 @@ const CONTACTOS = [
   { label: "Psicología Oncológica", valor: "(01) 201-6000", ext: "2070" },
 ];
 
-const WHATSAPP_NUMERO = "51999999999"; // reemplazar con número real
+const WHATSAPP_NUMERO = process.env.NEXT_PUBLIC_WHATSAPP_NUMERO ?? "51999999999";
 
 export default function InformacionPage() {
   return (
