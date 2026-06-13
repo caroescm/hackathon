@@ -72,8 +72,8 @@ export default function Sidebar({ role = "paciente", userName }: SidebarProps) {
             <Heart size={16} className="text-white" />
           </div>
           <div>
-            <span className="text-sm font-bold text-primary">OncoRuta</span>
-            <p className="text-xs text-muted -mt-0.5">Portal de Apoyo</p>
+            <span className="text-sm font-bold text-primary">Portal INEN</span>
+            <p className="text-xs text-muted -mt-0.5">Atención al Paciente</p>
           </div>
         </div>
       </div>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 70" width="140" height="70" font-family="Arial, sans-serif">
+  <!-- Blue accent bar -->
+  <rect x="0" y="0" width="5" height="70" fill="#1a56db" rx="2"/>
+  <!-- INEN letters -->
+  <text x="14" y="40" font-size="36" font-weight="900" fill="#1a56db" letter-spacing="2">INEN</text>
+  <!-- Subtitle line 1 -->
+  <text x="14" y="53" font-size="7.5" fill="#4B5563" letter-spacing="0.3">INSTITUTO NACIONAL DE</text>
+  <!-- Subtitle line 2 -->
+  <text x="14" y="63" font-size="7.5" fill="#4B5563" letter-spacing="0.3">ENFERMEDADES NEOPLÁSICAS</text>
+</svg>
