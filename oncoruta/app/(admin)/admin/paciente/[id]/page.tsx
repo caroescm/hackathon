@@ -3,8 +3,9 @@ import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import RevisarDocumento from "@/components/admin/RevisarDocumento";
+import AgregarNota from "@/components/admin/AgregarNota";
 import { getPrioridad } from "@/lib/utils/prioridad";
-import { ArrowLeft, Check, Clock, Circle } from "lucide-react";
+import { ArrowLeft, Check, Clock, Circle, LockKeyhole } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -46,6 +47,12 @@ type Cita = {
   hora: string | null;
   piso: string | null;
   estado: string;
+};
+
+type NotaInterna = {
+  id: string;
+  contenido: string;
+  created_at: string;
 };
 
 /* ─── helpers ────────────────────────────────────────── */
@@ -90,6 +97,7 @@ export default async function PacienteExpedientePage({ params }: { params: { id:
     { data: proceso },
     { data: documentos },
     { data: citas },
+    { data: notas },
   ] = await Promise.all([
     supabase
       .from("usuarios")
@@ -111,6 +119,11 @@ export default async function PacienteExpedientePage({ params }: { params: { id:
       .select("id, servicio, fecha, hora, piso, estado")
       .eq("paciente_id", params.id)
       .order("fecha", { ascending: true }),
+    supabase
+      .from("notas_internas")
+      .select("id, contenido, created_at")
+      .eq("paciente_id", params.id)
+      .order("created_at", { ascending: false }),
   ]);
 
   if (!paciente) notFound();
@@ -119,6 +132,7 @@ export default async function PacienteExpedientePage({ params }: { params: { id:
   const pasosProceso = (proceso as PasoProceso[] | null) ?? [];
   const listaDocumentos = (documentos as Documento[] | null) ?? [];
   const listaCitas = (citas as Cita[] | null) ?? [];
+  const listaNotas = (notas as NotaInterna[] | null) ?? [];
 
   const flagsActivos = FLAGS_VULNERABILIDAD.filter(
     (f) => p.perfil_vulnerabilidad?.[f.key] === true
@@ -280,6 +294,40 @@ export default async function PacienteExpedientePage({ params }: { params: { id:
               })}
             </div>
           )}
+        </Card>
+
+        {/* F. Notas internas */}
+        <Card>
+          <div className="space-y-4">
+            {/* Encabezado */}
+            <div className="flex items-center gap-2">
+              <LockKeyhole size={15} className="text-muted flex-shrink-0" />
+              <h3 className="text-sm font-semibold text-foreground">Notas internas</h3>
+              <span className="text-xs text-muted">(solo visible para el equipo)</span>
+            </div>
+
+            {/* Lista de notas */}
+            {listaNotas.length === 0 ? (
+              <p className="text-sm text-muted">No hay notas registradas para esta paciente.</p>
+            ) : (
+              <ul className="space-y-3">
+                {listaNotas.map((nota) => (
+                  <li key={nota.id} className="border border-border rounded-lg p-3">
+                    <p className="text-sm text-foreground whitespace-pre-wrap">{nota.contenido}</p>
+                    <p className="text-xs text-muted mt-1.5">
+                      {new Date(nota.created_at).toLocaleString("es-PE", {
+                        day: "numeric", month: "short", year: "numeric",
+                        hour: "2-digit", minute: "2-digit",
+                      })}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* Formulario */}
+            <AgregarNota pacienteId={params.id} />
+          </div>
         </Card>
       </div>
     </>

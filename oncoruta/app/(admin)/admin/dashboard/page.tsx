@@ -1,10 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
-import Badge from "@/components/ui/Badge";
-import { getPrioridad } from "@/lib/utils/prioridad";
+import TablaPacientes, { type PacienteRow } from "./TablaPacientes";
 import { Users, Calendar, FileText, AlertCircle } from "lucide-react";
-import Link from "next/link";
 
 type PerfilVulnerabilidad = {
   jefa_hogar: boolean | null;
@@ -18,7 +16,7 @@ type ProcesoPaciente = {
   pasos: { nombre: string; orden: number } | null;
 };
 
-type Paciente = {
+type PacienteRaw = {
   id: string;
   nombre: string;
   dni: string | null;
@@ -27,14 +25,15 @@ type Paciente = {
   proceso_paciente: ProcesoPaciente[];
 };
 
-const PRIORIDAD_BADGE = {
-  ALTA:  { variant: "danger"  as const, label: "Alta prioridad" },
-  MEDIA: { variant: "warning" as const, label: "Media prioridad" },
-} as const;
+function esInactivo(p: PacienteRaw): boolean {
+  const creado = new Date(p.created_at);
+  const diasDesdeRegistro = (Date.now() - creado.getTime()) / (1000 * 60 * 60 * 24);
+  if (diasDesdeRegistro <= 7) return false;
 
-function etapaActual(procesos: ProcesoPaciente[]): string | null {
-  const enCurso = procesos.find((p) => p.estado === "en_curso");
-  return enCurso?.pasos?.nombre ?? null;
+  const primerPaso = p.proceso_paciente.find(
+    (pp) => pp.pasos?.orden === 1 && pp.estado === "en_curso"
+  );
+  return !!primerPaso;
 }
 
 export default async function AdminDashboardPage() {
@@ -64,7 +63,18 @@ export default async function AdminDashboardPage() {
       .order("created_at", { ascending: false }),
   ]);
 
-  const lista = (pacientes as Paciente[] | null) ?? [];
+  const listaRaw = (pacientes as PacienteRaw[] | null) ?? [];
+
+  const lista: PacienteRow[] = listaRaw.map((p) => ({
+    id: p.id,
+    nombre: p.nombre,
+    dni: p.dni,
+    perfil_vulnerabilidad: p.perfil_vulnerabilidad,
+    proceso_paciente: p.proceso_paciente,
+    inactivo: esInactivo(p),
+  }));
+
+  const totalAlertas = lista.filter((p) => p.inactivo).length;
 
   const stats = [
     {
@@ -87,7 +97,7 @@ export default async function AdminDashboardPage() {
     },
     {
       label: "Alertas",
-      value: "—",
+      value: totalAlertas > 0 ? totalAlertas.toString() : "0",
       icon: <AlertCircle size={20} className="text-danger" />,
       color: "bg-red-50",
     },
@@ -114,59 +124,14 @@ export default async function AdminDashboardPage() {
           ))}
         </div>
 
-        {/* Tabla de pacientes */}
+        {/* Tabla con filtros */}
         <Card title="Pacientes" description="Lista de pacientes registrados">
           {lista.length === 0 ? (
             <p className="text-sm text-muted text-center py-4">
               No hay pacientes registrados aún.
             </p>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left py-2 text-xs font-medium text-muted uppercase tracking-wider">Paciente</th>
-                    <th className="text-left py-2 text-xs font-medium text-muted uppercase tracking-wider">DNI</th>
-                    <th className="text-left py-2 text-xs font-medium text-muted uppercase tracking-wider">Etapa actual</th>
-                    <th className="text-left py-2 text-xs font-medium text-muted uppercase tracking-wider">Prioridad</th>
-                    <th className="py-2" />
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border">
-                  {lista.map((p) => {
-                    const etapa = etapaActual(p.proceso_paciente);
-                    const prioridad = getPrioridad(p.perfil_vulnerabilidad);
-                    const badgePrioridad = prioridad !== "BAJA" ? PRIORIDAD_BADGE[prioridad] : null;
-                    return (
-                      <tr key={p.id} className="hover:bg-gray-50">
-                        <td className="py-3 font-medium text-foreground">{p.nombre}</td>
-                        <td className="py-3 text-muted font-mono text-xs">{p.dni ?? "—"}</td>
-                        <td className="py-3">
-                          {etapa ? (
-                            <Badge variant="info">{etapa}</Badge>
-                          ) : (
-                            <span className="text-xs text-muted">Sin etapa</span>
-                          )}
-                        </td>
-                        <td className="py-3">
-                          {badgePrioridad && (
-                            <Badge variant={badgePrioridad.variant}>{badgePrioridad.label}</Badge>
-                          )}
-                        </td>
-                        <td className="py-3 text-right">
-                          <Link
-                            href={`/admin/paciente/${p.id}`}
-                            className="text-primary text-xs font-medium hover:underline"
-                          >
-                            Ver expediente
-                          </Link>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+            <TablaPacientes pacientes={lista} />
           )}
         </Card>
       </div>
