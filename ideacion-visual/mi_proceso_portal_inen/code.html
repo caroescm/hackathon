@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#9acee1",
+                        "outline": "#70787c",
+                        "surface-dim": "#d8dadb",
+                        "tertiary-fixed": "#d9e6da",
+                        "secondary": "#006e1c",
+                        "on-secondary-fixed": "#002204",
+                        "inverse-on-surface": "#eff1f2",
+                        "surface-container-highest": "#e1e3e4",
+                        "tertiary-fixed-dim": "#bdcabe",
+                        "surface-container-low": "#f2f4f5",
+                        "surface-tint": "#306576",
+                        "on-secondary-container": "#00731e",
+                        "on-primary-fixed-variant": "#114d5d",
+                        "primary-container": "#0f4c5c",
+                        "surface-variant": "#e1e3e4",
+                        "inverse-primary": "#9acee1",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#2e3132",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#131e17",
+                        "tertiary": "#26322a",
+                        "on-surface-variant": "#40484b",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eceeef",
+                        "on-primary-fixed": "#001f28",
+                        "background": "#f8fafb",
+                        "primary": "#003441",
+                        "secondary-fixed": "#94f990",
+                        "on-background": "#191c1d",
+                        "secondary-fixed-dim": "#78dc77",
+                        "on-surface": "#191c1d",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f8fafb",
+                        "on-primary-container": "#87bbce",
+                        "tertiary-container": "#3c4840",
+                        "surface": "#f8fafb",
+                        "on-secondary-fixed-variant": "#005313",
+                        "outline-variant": "#c0c8cb",
+                        "on-tertiary-container": "#aab6ab",
+                        "secondary-container": "#91f78e",
+                        "on-tertiary-fixed-variant": "#3e4a41",
+                        "surface-container-high": "#e6e8e9",
+                        "primary-fixed": "#b6ebfe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "unit": "8px",
+                        "container-max": "1280px",
+                        "margin-desktop": "40px",
+                        "card-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafb; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-pulse {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .5; transform: scale(1.1); }
+        }
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #c0c8cb; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface shadow-sm">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-bold text-primary">Portal INEN</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">language</span>
+</button>
+<div class="flex items-center gap-3 pl-2">
+<img alt="Patient Profile Picture" class="w-10 h-10 rounded-full object-cover border-2 border-primary-fixed" data-alt="A professional medical headshot of a healthcare administrator in a bright, modern clinical office. The lighting is soft and empathetic, utilizing a clean high-key aesthetic consistent with a premium corporate healthcare environment. The background is slightly blurred showing a contemporary medical facility with soft teal and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0nnjBexm4p-RcJnddpP6qkei0PHl2xUuT1yeHjuZVHYt8FE8OKVWUoiKof6YZlnFMMVO2sLBfma4gikSbalPRJq-4HHWUzVWpK6h9Rf2bae12ARPou1f5an1tfWR5ePNFK-5cetc3EqveOYTV3d19lRzBuL63gVvQjU7nLXCYYaNH_FmQMjCaig0-_ow_o6InKNf1CMJ6i9HcCf7NZT_pVmaW2PLFmEvUbnGf2-eR8jABFZI2gz_GEd3NOCr93X2kugRlZ0oVaGZV"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full z-40 pt-20 pb-8 h-full w-64 hidden md:flex flex-col border-r border-outline-variant bg-surface-container-low">
+<div class="px-6 mb-8">
+<h2 class="font-headline-sm text-headline-sm text-primary">Paciente INEN</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">DNI: 00000000</p>
+</div>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Inicio</span>
+</a>
+<a class="flex items-center gap-4 bg-primary-container text-on-primary-container rounded-xl px-4 py-3 mx-2 translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+<span class="font-label-md text-label-md">Mi Proceso</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-md text-label-md">Citas</span>
+</a>
+</div>
+<div class="px-4 mb-4">
+<button class="w-full flex items-center justify-center gap-2 bg-secondary text-on-secondary py-3 rounded-xl font-label-md hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+                Contacto WhatsApp
+            </button>
+</div>
+<div class="pt-4 border-t border-outline-variant">
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Ajustes</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Cerrar Sesión</span>
+</a>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="md:ml-64 pt-24 pb-24 px-margin-mobile md:px-margin-desktop min-h-screen">
+<div class="max-w-[1280px] mx-auto">
+<header class="mb-10">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Mi Proceso Médico</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Sigue el estado de tu tratamiento y los próximos pasos necesarios para tu atención integral.</p>
+</header>
+<!-- Timeline Container -->
+<div class="relative">
+<!-- Vertical Line -->
+<div class="absolute left-[23px] top-4 bottom-4 w-[2px] bg-outline-variant md:left-[31px]"></div>
+<!-- Step 1: Completado -->
+<div class="relative flex gap-6 mb-12">
+<div class="relative z-10 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-secondary text-on-secondary shadow-sm">
+<span class="material-symbols-outlined text-[24px] md:text-[32px]">check_circle</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-card-padding rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-l-4 border-secondary">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
+<h3 class="font-headline-sm text-headline-sm text-primary">Evaluación Inicial</h3>
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-label-sm w-fit">Completado</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Revisión de historial médico y triaje general por el equipo de medicina interna.</p>
+<div class="flex items-center gap-2 text-label-sm text-outline">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                            Finalizado el 12 de Octubre
+                        </div>
+</div>
+</div>
+<!-- Step 2: Aprobado -->
+<div class="relative flex gap-6 mb-12">
+<div class="relative z-10 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-secondary text-on-secondary shadow-sm">
+<span class="material-symbols-outlined text-[24px] md:text-[32px]">verified</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-card-padding rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-l-4 border-secondary">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
+<h3 class="font-headline-sm text-headline-sm text-primary">Exámenes de Laboratorio</h3>
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-label-sm w-fit">Aprobado</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Análisis de sangre completos y marcadores específicos validados por el oncólogo.</p>
+<div class="flex items-center gap-2 text-label-sm text-outline">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                            Completado en 3 días
+                        </div>
+</div>
+</div>
+<!-- Step 3: En curso (ACTIVE) -->
+<div class="relative flex gap-6 mb-12">
+<div class="relative z-10 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-primary text-on-primary shadow-lg step-pulse">
+<span class="material-symbols-outlined text-[24px] md:text-[32px]">upload_file</span>
+</div>
+<div class="flex-1 bg-white p-card-padding rounded-xl shadow-[0_8px_24px_rgba(0,52,65,0.12)] border-2 border-primary">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
+<h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
+                                Documentación de Especialidad
+                                <span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">star</span>
+</h3>
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed text-label-sm font-label-sm w-fit">En curso</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Por favor, adjunte los resultados de la tomografía realizada en centros externos para continuar con el diagnóstico.</p>
+<div class="bg-surface-container-low p-4 rounded-lg mb-6 border border-dashed border-outline-variant flex flex-col items-center justify-center text-center cursor-pointer hover:bg-surface-container transition-colors group">
+<span class="material-symbols-outlined text-primary mb-2 text-[40px] group-hover:scale-110 transition-transform">cloud_upload</span>
+<p class="font-label-md text-label-md text-primary mb-1">Haz clic para subir archivos</p>
+<p class="text-label-sm text-on-surface-variant">Formatos aceptados: PDF, JPG, DICOM (Max 50MB)</p>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-2 text-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+                                Tiempo estimado: 24-48 horas
+                            </div>
+<button class="w-full md:w-auto px-8 py-3 bg-primary text-on-primary rounded-full font-label-md hover:shadow-lg active:scale-95 transition-all">
+                                Subir documento
+                            </button>
+</div>
+</div>
+</div>
+<!-- Step 4: Pendiente -->
+<div class="relative flex gap-6 mb-12 opacity-70">
+<div class="relative z-10 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-surface-container-highest text-outline shadow-sm">
+<span class="material-symbols-outlined text-[24px] md:text-[32px]">assignment</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-card-padding rounded-xl border border-outline-variant">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Junta Médica</h3>
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-label-sm font-label-sm w-fit">Pendiente</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Reunión de especialistas para definir el plan de tratamiento óptimo.</p>
+<div class="flex items-center gap-2 text-label-sm text-outline">
+<span class="material-symbols-outlined text-[18px]">event</span>
+                            Sujeto a paso anterior
+                        </div>
+</div>
+</div>
+<!-- Step 5: Pendiente -->
+<div class="relative flex gap-6 opacity-70">
+<div class="relative z-10 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-surface-container-highest text-outline shadow-sm">
+<span class="material-symbols-outlined text-[24px] md:text-[32px]">medical_services</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-card-padding rounded-xl border border-outline-variant">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Inicio de Tratamiento</h3>
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-label-sm font-label-sm w-fit">Pendiente</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Programación de primera sesión y entrega de kit de cuidados.</p>
+<div class="flex items-center gap-2 text-label-sm text-outline">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                            Fecha estimada: Noviembre 2024
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface md:hidden shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Inicio</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-2xl px-3 py-1 scale-95 duration-100">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+<span class="font-label-sm text-label-sm-mobile">Proceso</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm-mobile">Documentos</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-sm text-label-sm-mobile">Citas</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for upload zone
+        const uploadZone = document.querySelector('.bg-surface-container-low.border-dashed');
+        if(uploadZone) {
+            uploadZone.addEventListener('click', () => {
+                alert('Abriendo selector de archivos...');
+            });
+            
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('bg-primary-fixed');
+            });
+            
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('bg-primary-fixed');
+            });
+        }
+    </script>
+</body></html>

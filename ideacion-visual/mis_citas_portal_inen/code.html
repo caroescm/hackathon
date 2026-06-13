@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#0f4c5c",
+                    "on-tertiary-fixed-variant": "#3e4a41",
+                    "surface": "#f8fafb",
+                    "surface-container-high": "#e6e8e9",
+                    "primary-fixed": "#b6ebfe",
+                    "primary": "#003441",
+                    "surface-bright": "#f8fafb",
+                    "secondary-container": "#91f78e",
+                    "primary-fixed-dim": "#9acee1",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#94f990",
+                    "on-tertiary-fixed": "#131e17",
+                    "on-background": "#191c1d",
+                    "surface-dim": "#d8dadb",
+                    "outline-variant": "#c0c8cb",
+                    "on-secondary-container": "#00731e",
+                    "on-primary-fixed-variant": "#114d5d",
+                    "background": "#f8fafb",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#eff1f2",
+                    "inverse-primary": "#9acee1",
+                    "on-primary-container": "#87bbce",
+                    "on-secondary-fixed-variant": "#005313",
+                    "on-secondary-fixed": "#002204",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#e1e3e4",
+                    "secondary": "#006e1c",
+                    "on-tertiary-container": "#aab6ab",
+                    "surface-container-low": "#f2f4f5",
+                    "on-surface-variant": "#40484b",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#306576",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#3c4840",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-surface": "#191c1d",
+                    "secondary-fixed-dim": "#78dc77",
+                    "outline": "#70787c",
+                    "tertiary": "#26322a",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed": "#001f28",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-highest": "#e1e3e4",
+                    "surface-container": "#eceeef",
+                    "tertiary-fixed": "#d9e6da",
+                    "tertiary-fixed-dim": "#bdcabe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "margin-desktop": "40px",
+                    "card-padding": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            background-color: #f8fafb;
+            font-family: 'Inter', sans-serif;
+            color: #191c1d;
+        }
+        .card-shadow {
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+        }
+        .vulnerability-border {
+            border-left: 4px solid #6750A4;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">Portal INEN</span>
+</div>
+<div class="hidden md:flex gap-8 items-center h-full">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low transition-colors px-4 py-2 rounded-lg" href="#">Inicio</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low transition-colors px-4 py-2 rounded-lg" href="#">Mi Proceso</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low transition-colors px-4 py-2 rounded-lg" href="#">Documentos</a>
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim border-b-2 border-primary px-4 py-2" href="#">Citas</a>
+</div>
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-variant rounded-full">language</button>
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-variant rounded-full">account_circle</button>
+</div>
+</nav>
+<!-- Side Navigation (Desktop Only) -->
+<aside class="fixed left-0 top-0 h-full z-40 pt-20 pb-8 h-full w-64 hidden md:flex flex-col border-r border-outline-variant bg-surface-container-low dark:bg-inverse-surface">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-bold">Paciente INEN</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">DNI: 00000000</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Inicio</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-md text-label-md">Mi Proceso</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-4 bg-primary-container text-on-primary-container rounded-xl px-4 py-3 mx-2 translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">event</span>
+<span class="font-label-md text-label-md">Citas</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full bg-secondary-container text-on-secondary-container py-3 rounded-xl font-label-md flex items-center justify-center gap-2 hover:brightness-95 transition-all">
+<span class="material-symbols-outlined">chat</span>
+                Contacto WhatsApp
+            </button>
+<div class="mt-4 pt-4 border-t border-outline-variant">
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-2 hover:bg-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm">Ajustes</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-2 hover:bg-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-sm">Cerrar Sesión</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-24 pb-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<header class="mb-8">
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Gestión de Citas</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Revisa tus próximas visitas y el historial de atención en el instituto.</p>
+</header>
+<!-- Bento Grid Layout for Appointments -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Featured 'Next Appointment' Card -->
+<section class="lg:col-span-8 flex flex-col gap-gutter">
+<div class="bg-surface-container-lowest rounded-xl p-card-padding card-shadow border border-outline-variant relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-secondary-container text-on-secondary-container text-label-sm font-label-md px-3 py-1 rounded-full uppercase tracking-wider">Próxima Cita</span>
+</div>
+<div class="flex flex-col md:flex-row gap-8">
+<div class="flex-shrink-0 flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl w-32 h-32 md:w-40 md:h-40">
+<span class="font-headline-sm text-headline-sm">OCT</span>
+<span class="text-[48px] font-bold leading-none">25</span>
+<span class="font-label-md text-label-md">Lunes</span>
+</div>
+<div class="flex-1 space-y-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Oncología Médica</h2>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">schedule</span>
+                                    08:30 AM
+                                </p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-surface-container rounded-lg p-4">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Ubicación</p>
+<p class="font-body-md text-body-md font-semibold text-on-surface">2do Piso - Consultorio 204</p>
+</div>
+<div class="bg-surface-container rounded-lg p-4">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Especialista</p>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Dr. Ricardo Salinas</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant">
+<h3 class="font-label-md text-label-md text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined">info</span>
+                            Qué llevar
+                        </h3>
+<div class="flex flex-wrap gap-3">
+<div class="flex items-center gap-2 bg-surface-container-high text-on-surface-variant px-4 py-2 rounded-lg font-label-md">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                DNI original
+                            </div>
+<div class="flex items-center gap-2 bg-surface-container-high text-on-surface-variant px-4 py-2 rounded-lg font-label-md">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                Resultados de laboratorio
+                            </div>
+<div class="flex items-center gap-2 bg-surface-container-high text-on-surface-variant px-4 py-2 rounded-lg font-label-md">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                Orden de interconsulta
+                            </div>
+</div>
+</div>
+</div>
+<!-- Action Panel -->
+<div class="bg-surface-container-low rounded-xl p-card-padding border border-dashed border-outline-variant flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="max-w-md">
+<h4 class="font-label-md text-label-md text-on-surface font-bold">Continuidad del Tratamiento</h4>
+<p class="text-label-sm text-on-surface-variant mt-1">Podrás agendar tu siguiente cita una vez que el médico apruebe el informe de la consulta actual en el sistema.</p>
+</div>
+<div class="flex flex-col items-center gap-2">
+<button class="bg-outline-variant text-surface cursor-not-allowed px-8 py-4 rounded-xl font-label-md flex items-center gap-2 opacity-70" disabled="">
+<span class="material-symbols-outlined">add_circle</span>
+                            Agendar siguiente cita
+                        </button>
+<span class="text-[11px] font-medium text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                            Paso previo requiere aprobación
+                        </span>
+</div>
+</div>
+</section>
+<!-- Sidebar Info / Vulnerability Indicator -->
+<aside class="lg:col-span-4 space-y-gutter">
+<div class="bg-surface-container-lowest rounded-xl p-card-padding card-shadow vulnerability-border">
+<div class="flex items-center gap-3 mb-3 text-primary">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">stars</span>
+<h4 class="font-label-md text-label-md font-bold">Atención Preferencial</h4>
+</div>
+<p class="text-label-sm text-on-surface-variant">El paciente cuenta con seguro integral activo. Priorizar tiempos de espera en ventanilla de farmacia y laboratorio.</p>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-card-padding card-shadow border border-outline-variant overflow-hidden">
+<h4 class="font-label-md text-label-md text-primary mb-4">Ubicación del Instituto</h4>
+<div class="w-full h-48 rounded-lg bg-surface-container flex items-center justify-center overflow-hidden mb-4 relative">
+<img class="w-full h-full object-cover grayscale opacity-50" data-alt="A detailed, high-contrast overhead map view of a modern medical facility campus in a professional light mode aesthetic. The map features clean architectural lines, minimalist labeling, and a sophisticated color palette of deep teals and soft grays, mirroring a corporate healthcare environment with clinical precision and accessibility." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7Cu6bJKrI3iCPHttlu5RJjrnl3pMGzBR-amv1bGt1XMeHZwsymH2JifIu5Us73BzZEaen9ULdX18hmfe6n2zmXC6vh_8Xr9o1-3kh9-EuzCCTPCUnenfU2ayYWL-jATh4OOnkzDdwC3g9hzFQng_Y3jdTfkexQ0ItAEHngDVJ9JoRdFpuL8rlrfd8N0Fje8-2DxDshyrPEoNZh_7oUcw1ZxHymmFOA7B4f1rUrHYbME2h7WiXxCh1uatwnbebGhS__sRXNn_T4zox"/>
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center pointer-events-none">
+<span class="material-symbols-outlined text-primary text-4xl">location_on</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Av. Angamos Este 2520, Surquillo. Lima - Perú.</p>
+</div>
+</aside>
+<!-- Appointment History -->
+<section class="lg:col-span-12 mt-4">
+<div class="bg-surface-container-lowest rounded-xl card-shadow border border-outline-variant overflow-hidden">
+<div class="px-card-padding py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="font-headline-sm text-headline-sm text-primary">Historial de Citas</h3>
+<button class="text-primary font-label-md flex items-center gap-1 hover:underline">
+                            Ver reporte anual
+                            <span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest">
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant border-b border-outline-variant">Fecha</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant border-b border-outline-variant">Especialidad</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant border-b border-outline-variant">Médico</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant border-b border-outline-variant">Estado</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant border-b border-outline-variant">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5 font-body-md text-body-md">12 Set 2023</td>
+<td class="px-6 py-5 font-body-md text-body-md">Oncología Médica</td>
+<td class="px-6 py-5 font-body-md text-body-md">Dr. Ricardo Salinas</td>
+<td class="px-6 py-5">
+<span class="bg-secondary-container text-on-secondary-container text-[11px] font-bold px-2 py-1 rounded-md">COMPLETADA</span>
+</td>
+<td class="px-6 py-5">
+<button class="text-primary material-symbols-outlined">description</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5 font-body-md text-body-md">05 Ago 2023</td>
+<td class="px-6 py-5 font-body-md text-body-md">Radioterapia</td>
+<td class="px-6 py-5 font-body-md text-body-md">Dra. Elena Ramos</td>
+<td class="px-6 py-5">
+<span class="bg-secondary-container text-on-secondary-container text-[11px] font-bold px-2 py-1 rounded-md">COMPLETADA</span>
+</td>
+<td class="px-6 py-5">
+<button class="text-primary material-symbols-outlined">description</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5 font-body-md text-body-md">20 Jul 2023</td>
+<td class="px-6 py-5 font-body-md text-body-md">Análisis Clínicos</td>
+<td class="px-6 py-5 font-body-md text-body-md">Lab. Central</td>
+<td class="px-6 py-5">
+<span class="bg-secondary-container text-on-secondary-container text-[11px] font-bold px-2 py-1 rounded-md">COMPLETADA</span>
+</td>
+<td class="px-6 py-5">
+<button class="text-primary material-symbols-outlined">description</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface dark:bg-inverse-surface shadow-lg md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-sm text-label-sm-mobile">Proceso</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm-mobile">Documentos</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-2xl px-3 py-1 scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">event</span>
+<span class="font-label-sm text-label-sm-mobile">Citas</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for table rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                // Potential interaction: Expand row or navigate to details
+                console.log('Row clicked');
+            });
+        });
+    </script>
+</body></html>

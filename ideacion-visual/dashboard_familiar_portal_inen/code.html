@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portal INEN - Dashboard de Familiar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .step-pulse {
+            box-shadow: 0 0 0 0 rgba(15, 76, 92, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(15, 76, 92, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(15, 76, 92, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(15, 76, 92, 0); }
+        }
+        .tonal-layer {
+            background: linear-gradient(180deg, rgba(248, 250, 251, 0) 0%, rgba(236, 238, 239, 0.5) 100%);
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#d8dadb",
+                    "surface-container-low": "#f2f4f5",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#0f4c5c",
+                    "error-container": "#ffdad6",
+                    "tertiary": "#26322a",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#bdcabe",
+                    "on-tertiary-container": "#aab6ab",
+                    "on-primary-container": "#87bbce",
+                    "secondary-fixed": "#94f990",
+                    "on-surface": "#191c1d",
+                    "on-primary": "#ffffff",
+                    "outline": "#70787c",
+                    "surface-container": "#eceeef",
+                    "on-secondary-fixed-variant": "#005313",
+                    "on-secondary-container": "#00731e",
+                    "surface-variant": "#e1e3e4",
+                    "secondary-container": "#91f78e",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#114d5d",
+                    "inverse-on-surface": "#eff1f2",
+                    "on-primary-fixed": "#001f28",
+                    "on-background": "#191c1d",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#006e1c",
+                    "primary": "#003441",
+                    "surface-tint": "#306576",
+                    "surface-container-high": "#e6e8e9",
+                    "surface-container-highest": "#e1e3e4",
+                    "surface": "#f8fafb",
+                    "surface-bright": "#f8fafb",
+                    "outline-variant": "#c0c8cb",
+                    "on-surface-variant": "#40484b",
+                    "tertiary-fixed": "#d9e6da",
+                    "on-tertiary-fixed": "#131e17",
+                    "primary-fixed-dim": "#9acee1",
+                    "on-secondary-fixed": "#002204",
+                    "tertiary-container": "#3c4840",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#9acee1",
+                    "background": "#f8fafb",
+                    "secondary-fixed-dim": "#78dc77",
+                    "on-tertiary-fixed-variant": "#3e4a41",
+                    "primary-fixed": "#b6ebfe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "card-padding": "24px",
+                    "unit": "8px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "margin-desktop": "40px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">Portal INEN</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="hidden md:block font-label-md text-label-md text-on-surface-variant">Dashboard de Familiar</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="language">language</span>
+<span class="material-symbols-outlined text-primary" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full z-40 pt-20 pb-8 h-full w-64 hidden md:flex flex-col border-r border-outline-variant bg-surface-container-low dark:bg-inverse-surface">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">FJ</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Familiar Responsable</p>
+<p class="text-[12px] text-on-surface-variant">ID: 458293</p>
+</div>
+</div>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center gap-4 bg-primary-container dark:bg-primary-container text-on-primary-container dark:text-on-primary-fixed-variant rounded-xl px-4 py-3 mx-2 translate-x-1 duration-150">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Inicio</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 mx-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-label-md text-label-md">Mi Proceso</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 mx-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-md text-label-md">Documentos</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 mx-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+<span class="font-label-md text-label-md">Citas</span>
+</div>
+</div>
+<div class="mt-auto border-t border-outline-variant pt-4">
+<div class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Ajustes</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Cerrar Sesión</span>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-20 pb-24 md:pb-8 md:pl-64 min-h-screen">
+<div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-8">
+<!-- Header Section -->
+<div class="mb-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Dashboard de Familiar</h1>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+<p class="font-body-md text-body-md">Paciente vinculada: <span class="font-bold text-on-surface">María García</span></p>
+</div>
+</div>
+<div class="bg-surface-container-low px-4 py-2 rounded-lg border border-outline-variant">
+<p class="text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant">Estado General</p>
+<p class="text-primary font-bold">En tratamiento activo</p>
+</div>
+</div>
+</div>
+<!-- Progress Bento Grid Area -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-gutter">
+<!-- Large Progress Card -->
+<div class="md:col-span-12 bg-surface-container-lowest p-card-padding rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-l-4 border-primary">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary mb-1">Estado del Tratamiento</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">María se encuentra actualmente en la fase de Tratamiento Especializado.</p>
+</div>
+<div class="text-right">
+<p class="font-headline-md text-primary">Paso 3 de 5</p>
+<p class="text-label-sm text-on-surface-variant">Progreso del Ciclo</p>
+</div>
+</div>
+<!-- Progress Bar Component -->
+<div class="relative pt-8 pb-12">
+<div class="absolute top-[50px] left-0 w-full h-1 bg-surface-container-high rounded-full"></div>
+<div class="absolute top-[50px] left-0 w-[60%] h-1 bg-primary rounded-full"></div>
+<div class="relative flex justify-between">
+<!-- Step 1: Complete -->
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center z-10">
+<span class="material-symbols-outlined" data-icon="check">check</span>
+</div>
+<p class="mt-2 font-label-md text-label-md text-secondary">Evaluación</p>
+</div>
+<!-- Step 2: Complete -->
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center z-10">
+<span class="material-symbols-outlined" data-icon="check">check</span>
+</div>
+<p class="mt-2 font-label-md text-label-md text-secondary">Diagnóstico</p>
+</div>
+<!-- Step 3: Active -->
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center z-10 step-pulse">
+<span class="font-bold">3</span>
+</div>
+<p class="mt-2 font-label-md text-label-md text-primary font-bold">Tratamiento</p>
+</div>
+<!-- Step 4: Future -->
+<div class="flex flex-col items-center opacity-40">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center z-10">
+<span class="font-bold">4</span>
+</div>
+<p class="mt-2 font-label-md text-label-md text-on-surface-variant">Seguimiento</p>
+</div>
+<!-- Step 5: Future -->
+<div class="flex flex-col items-center opacity-40">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center z-10">
+<span class="font-bold">5</span>
+</div>
+<p class="mt-2 font-label-md text-label-md text-on-surface-variant">Alta</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Citas Próximas Card -->
+<div class="md:col-span-7 bg-surface-container-lowest p-card-padding rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary-container rounded-lg">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="event_upcoming">event_upcoming</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Citas Próximas</h2>
+</div>
+<span class="text-label-sm text-on-surface-variant">Sólo lectura</span>
+</div>
+<div class="space-y-4">
+<!-- Appointment Item -->
+<div class="flex items-center gap-4 p-4 rounded-xl border border-outline-variant hover:bg-surface-container-low transition-colors">
+<div class="flex-shrink-0 w-16 h-16 bg-surface-container rounded-lg flex flex-col items-center justify-center text-primary">
+<span class="text-label-sm font-bold uppercase">Oct</span>
+<span class="text-headline-sm font-bold">24</span>
+</div>
+<div class="flex-grow">
+<p class="font-label-md text-label-md text-on-surface">Quimioterapia Ambulatoria</p>
+<p class="text-label-sm text-on-surface-variant">08:30 AM • Torre B, Piso 3</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-bold uppercase">Confirmada</span>
+</div>
+</div>
+<!-- Appointment Item -->
+<div class="flex items-center gap-4 p-4 rounded-xl border border-outline-variant hover:bg-surface-container-low transition-colors">
+<div class="flex-shrink-0 w-16 h-16 bg-surface-container rounded-lg flex flex-col items-center justify-center text-primary">
+<span class="text-label-sm font-bold uppercase">Oct</span>
+<span class="text-headline-sm font-bold">28</span>
+</div>
+<div class="flex-grow">
+<p class="font-label-md text-label-md text-on-surface">Consulta Oncología Médica</p>
+<p class="text-label-sm text-on-surface-variant">10:15 AM • Consultorio 402</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-bold uppercase">Confirmada</span>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl border border-dashed border-outline text-center">
+<p class="text-label-sm text-on-surface-variant">Para cambios en las citas, por favor contacte a recepción.</p>
+</div>
+</div>
+</div>
+<!-- Estado de Documentos Card -->
+<div class="md:col-span-5 bg-surface-container-lowest p-card-padding rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-secondary-container rounded-lg">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="description">description</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Estado de Documentos</h2>
+</div>
+</div>
+<div class="space-y-6">
+<!-- Doc Group -->
+<div>
+<p class="text-label-sm font-bold text-on-surface-variant uppercase mb-3">Recientes</p>
+<div class="space-y-3">
+<div class="flex items-center justify-between py-2 border-b border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="lab_research">lab_research</span>
+<span class="font-label-md text-label-md">Analítica de Sangre</span>
+</div>
+<span class="text-secondary font-bold text-[12px]">Validado</span>
+</div>
+<div class="flex items-center justify-between py-2 border-b border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="radiology">radiology</span>
+<span class="font-label-md text-label-md">Informe TAC Torácico</span>
+</div>
+<span class="text-secondary font-bold text-[12px]">Validado</span>
+</div>
+</div>
+</div>
+<!-- Vulnerability / Special Care Indicator -->
+<div class="bg-tertiary-fixed p-4 rounded-xl border-l-4 border-tertiary">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-tertiary" data-icon="verified_user">verified_user</span>
+<div>
+<p class="font-label-md text-label-md text-on-tertiary-fixed">Seguro Oncológico</p>
+<p class="text-label-sm text-on-tertiary-fixed-variant">Cobertura activa y validada hasta el 31/12/2024.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Info Area -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface-container-high p-6 rounded-xl flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="support_agent">support_agent</span>
+<div>
+<p class="font-label-md text-label-md">Asistencia INEN</p>
+<p class="text-label-sm text-on-surface-variant">9:00 AM - 6:00 PM</p>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+<div>
+<p class="font-label-md text-label-md">Av. Angamos Este 2520</p>
+<p class="text-label-sm text-on-surface-variant">Surquillo, Lima</p>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="call">call</span>
+<div>
+<p class="font-label-md text-label-md">(01) 209-6000</p>
+<p class="text-label-sm text-on-surface-variant">Llamada de emergencia</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface dark:bg-inverse-surface shadow-lg md:hidden">
+<div class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-2xl px-3 py-1 scale-95 duration-100">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm-mobile">Inicio</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-label-sm text-label-sm-mobile">Proceso</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm-mobile">Documentos</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+<span class="font-label-sm text-label-sm-mobile">Citas</span>
+</div>
+</nav>
+<script>
+        // Micro-interaction for side nav active state (visual only for dashboard)
+        document.querySelectorAll('nav div[data-icon]').forEach(item => {
+            item.addEventListener('click', () => {
+                // Since it's read only dashboard, we just show a subtle feedback
+                item.style.transform = "scale(0.98)";
+                setTimeout(() => item.style.transform = "scale(1)", 100);
+            });
+        });
+    </script>
+</body></html>

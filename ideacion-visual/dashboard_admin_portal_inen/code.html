@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portal INEN - Panel de Asistente Social</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 224, 224, 0.5);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadb",
+                        "surface-container-low": "#f2f4f5",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#0f4c5c",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#26322a",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#bdcabe",
+                        "on-tertiary-container": "#aab6ab",
+                        "on-primary-container": "#87bbce",
+                        "secondary-fixed": "#94f990",
+                        "on-surface": "#191c1d",
+                        "on-primary": "#ffffff",
+                        "outline": "#70787c",
+                        "surface-container": "#eceeef",
+                        "on-secondary-fixed-variant": "#005313",
+                        "on-secondary-container": "#00731e",
+                        "surface-variant": "#e1e3e4",
+                        "secondary-container": "#91f78e",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#114d5d",
+                        "inverse-on-surface": "#eff1f2",
+                        "on-primary-fixed": "#001f28",
+                        "on-background": "#191c1d",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#006e1c",
+                        "primary": "#003441",
+                        "surface-tint": "#306576",
+                        "surface-container-high": "#e6e8e9",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface": "#f8fafb",
+                        "surface-bright": "#f8fafb",
+                        "outline-variant": "#c0c8cb",
+                        "on-surface-variant": "#40484b",
+                        "tertiary-fixed": "#d9e6da",
+                        "on-tertiary-fixed": "#131e17",
+                        "primary-fixed-dim": "#9acee1",
+                        "on-secondary-fixed": "#002204",
+                        "tertiary-container": "#3c4840",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#9acee1",
+                        "background": "#f8fafb",
+                        "secondary-fixed-dim": "#78dc77",
+                        "on-tertiary-fixed-variant": "#3e4a41",
+                        "primary-fixed": "#b6ebfe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "12px",
+                        "2xl": "16px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "card-padding": "24px",
+                        "unit": "8px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface shadow-sm">
+<div class="flex items-center gap-4">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">Portal INEN</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8">
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary py-1" href="#">Inicio</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-1" href="#">Pacientes</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-1" href="#">Reportes</a>
+</div>
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">language</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">account_circle</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full z-40 pt-20 pb-8 h-full w-64 hidden md:flex flex-col border-r border-outline-variant bg-surface-container-low">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Asistente Social</p>
+<p class="text-[11px] text-on-surface-variant">ID: AS-2024-089</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-4 bg-primary-container text-on-primary-container rounded-xl px-4 py-3 mx-2 transition-all translate-x-1" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Inicio</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high px-4 py-3 mx-2 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-md text-label-md">Mi Proceso</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high px-4 py-3 mx-2 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high px-4 py-3 mx-2 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-md text-label-md">Citas</span>
+</a>
+</nav>
+<div class="mt-auto px-4">
+<a class="flex items-center justify-center gap-2 bg-secondary text-on-secondary px-4 py-3 rounded-xl mb-6 hover:opacity-90 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+<span class="font-label-md text-label-md">Contacto WhatsApp</span>
+</a>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high px-4 py-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Ajustes</span>
+</a>
+<a class="flex items-center gap-4 text-error hover:bg-error-container px-4 py-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Cerrar Sesión</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:ml-64 pt-24 px-margin-mobile md:px-margin-desktop pb-24 md:pb-8">
+<div class="max-w-container-max mx-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-1">Panel de Control</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Seguimiento de pacientes y gestión de procesos sociales.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 bg-surface border border-outline-variant px-4 py-2 rounded-xl text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                        Exportar Reporte
+                    </button>
+<button class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-xl font-label-md text-label-md shadow-sm hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+                        Nuevo Paciente
+                    </button>
+</div>
+</div>
+<!-- Stats Summary Cards (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-l-4 border-primary">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary-fixed text-on-primary-fixed rounded-xl">
+<span class="material-symbols-outlined">group</span>
+</div>
+<span class="text-secondary font-label-sm text-label-sm bg-secondary-container px-2 py-1 rounded-full">+4%</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-1">Total Pacientes</h3>
+<p class="font-headline-lg text-headline-lg text-primary">1,284</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-l-4 border-on-secondary-container">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-secondary-container text-on-secondary-container rounded-xl">
+<span class="material-symbols-outlined">pending_actions</span>
+</div>
+<span class="text-error font-label-sm text-label-sm bg-error-container px-2 py-1 rounded-full">-2</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-1">Documentos Pendientes</h3>
+<p class="font-headline-lg text-headline-lg text-on-secondary-container">42</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-l-4 border-error">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-error-container text-on-error-container rounded-xl">
+<span class="material-symbols-outlined">person_off</span>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm bg-surface-container px-2 py-1 rounded-full">Sin cambios</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-1">Pacientes Inactivos</h3>
+<p class="font-headline-lg text-headline-lg text-error">18</p>
+</div>
+</div>
+<!-- Filters Section -->
+<div class="bg-surface p-card-padding rounded-2xl border border-outline-variant mb-6 flex flex-wrap items-center gap-4">
+<div class="flex flex-col gap-1 flex-1 min-w-[200px]">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Estado del Paciente</label>
+<select class="form-select w-full bg-surface-container-low border-none rounded-xl font-body-md text-body-md focus:ring-2 focus:ring-primary h-12">
+<option>Todos los estados</option>
+<option>Activo en proceso</option>
+<option>En espera de documentos</option>
+<option>Finalizado</option>
+</select>
+</div>
+<div class="flex flex-col gap-1 flex-1 min-w-[200px]">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Nivel de Prioridad</label>
+<select class="form-select w-full bg-surface-container-low border-none rounded-xl font-body-md text-body-md focus:ring-2 focus:ring-primary h-12">
+<option>Cualquier prioridad</option>
+<option>Alta (Roja)</option>
+<option>Media (Amarilla)</option>
+<option>Baja (Verde)</option>
+</select>
+</div>
+<div class="flex flex-col gap-1 flex-1 min-w-[200px]">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Días de Inactividad</label>
+<select class="form-select w-full bg-surface-container-low border-none rounded-xl font-body-md text-body-md focus:ring-2 focus:ring-primary h-12">
+<option>Cualquier periodo</option>
+<option>Más de 3 días</option>
+<option>Más de 7 días</option>
+<option>Más de 15 días</option>
+</select>
+</div>
+<div class="flex items-end h-full self-end">
+<button class="h-12 w-12 bg-primary-container text-on-primary-container rounded-xl flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all shadow-sm">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Patient Table -->
+<div class="bg-surface-container-lowest rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] overflow-hidden border border-outline-variant">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Nombre del Paciente</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Paso Actual</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Días sin avanzar</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Prioridad</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary font-bold">RM</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Ricardo Mendoza Soto</p>
+<p class="text-[12px] text-on-surface-variant">DNI: 45678912</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">description</span>
+<span class="font-body-md text-body-md text-on-surface">Evaluación Socioeconómica</span>
+</div>
+</td>
+<td class="px-6 py-5 font-body-md text-body-md text-error font-semibold">12 días</td>
+<td class="px-6 py-5">
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-tight flex items-center gap-1 w-fit">
+<span class="w-1.5 h-1.5 bg-on-error-container rounded-full"></span>
+                                        Alta
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container rounded-lg text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary font-bold">EC</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Elena Castañeda Ruiz</p>
+<p class="text-[12px] text-on-surface-variant">DNI: 09871234</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<span class="font-body-md text-body-md text-on-surface">Validación SIS</span>
+</div>
+</td>
+<td class="px-6 py-5 font-body-md text-body-md text-on-surface">3 días</td>
+<td class="px-6 py-5">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-tight flex items-center gap-1 w-fit">
+<span class="w-1.5 h-1.5 bg-on-secondary-container rounded-full"></span>
+                                        Baja
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container rounded-lg text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary font-bold">JP</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Jorge Palacios Vega</p>
+<p class="text-[12px] text-on-surface-variant">DNI: 72345678</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">local_hospital</span>
+<span class="font-body-md text-body-md text-on-surface">Asignación de Cama</span>
+</div>
+</td>
+<td class="px-6 py-5 font-body-md text-body-md text-on-secondary-container font-medium">5 días</td>
+<td class="px-6 py-5">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed-variant px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-tight flex items-center gap-1 w-fit">
+<span class="w-1.5 h-1.5 bg-on-tertiary-fixed-variant rounded-full"></span>
+                                        Media
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container rounded-lg text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary font-bold">MV</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Maria Villalobos</p>
+<p class="text-[12px] text-on-surface-variant">DNI: 11223344</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">upload_file</span>
+<span class="font-body-md text-body-md text-on-surface">Carga Documental</span>
+</div>
+</td>
+<td class="px-6 py-5 font-body-md text-body-md text-error font-semibold">15 días</td>
+<td class="px-6 py-5">
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-tight flex items-center gap-1 w-fit">
+<span class="w-1.5 h-1.5 bg-on-error-container rounded-full"></span>
+                                        Alta
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container rounded-lg text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-outline-variant flex items-center justify-between">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Mostrando 1-4 de 1,284 pacientes</p>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-primary text-on-primary font-label-md text-label-md">1</button>
+<button class="w-10 h-10 rounded-lg hover:bg-surface-container font-label-md text-label-md transition-colors">2</button>
+<button class="w-10 h-10 rounded-lg hover:bg-surface-container font-label-md text-label-md transition-colors">3</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Secondary Content Section -->
+<div class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Recent Activity Card -->
+<div class="bg-surface-container-low p-card-padding rounded-2xl border border-outline-variant">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-sm text-headline-sm text-primary">Actividad Reciente</h3>
+<a class="text-primary font-label-md text-label-md hover:underline" href="#">Ver todo</a>
+</div>
+<div class="flex flex-col gap-6">
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2"></div>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Documentación aprobada para <span class="font-bold">Juan Perez</span>.</p>
+<p class="text-[12px] text-on-surface-variant">Hace 15 minutos • Por: Dra. Salas</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-2 h-2 rounded-full bg-on-secondary-container mt-2"></div>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Nueva solicitud de asistencia ingresada.</p>
+<p class="text-[12px] text-on-surface-variant">Hace 2 horas • Sistema Automático</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-2 h-2 rounded-full bg-error mt-2"></div>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Alerta de inactividad: Paciente <span class="font-bold">Ana Luz</span> supera los 15 días.</p>
+<p class="text-[12px] text-on-surface-variant">Hoy 8:30 AM • Alerta de Sistema</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Support Ticket / Quick Help -->
+<div class="relative overflow-hidden rounded-2xl bg-primary-container text-on-primary-container p-card-padding flex flex-col justify-center min-h-[200px]">
+<div class="relative z-10">
+<h3 class="font-headline-sm text-headline-sm mb-2">¿Necesitas ayuda con un trámite?</h3>
+<p class="font-body-md text-body-md text-on-primary-container opacity-90 mb-6 max-w-xs">Consulta nuestra guía de procedimientos sociales o contacta con soporte técnico especializado.</p>
+<div class="flex gap-4">
+<button class="bg-primary-fixed text-on-primary-fixed px-6 py-2.5 rounded-xl font-label-md text-label-md hover:brightness-110 transition-all shadow-lg">Manual de Usuario</button>
+<button class="bg-transparent border border-outline-variant text-white px-6 py-2.5 rounded-xl font-label-md text-label-md hover:bg-white/10 transition-all">Reportar Incidencia</button>
+</div>
+</div>
+<!-- Decorative element -->
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-primary-fixed opacity-10 rounded-full blur-3xl"></div>
+<div class="absolute right-4 top-4 opacity-20">
+<span class="material-symbols-outlined text-[80px]">support_agent</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface shadow-lg md:hidden">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-2xl px-3 py-1 active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-sm text-label-sm-mobile">Proceso</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm-mobile">Documentos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-sm text-label-sm-mobile">Citas</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions and effects
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.style.transform = 'scale(0.98)';
+            });
+            el.addEventListener('mouseup', () => {
+                el.style.transform = 'scale(1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

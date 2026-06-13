@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portal INEN - Expediente de Paciente</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadb",
+                        "surface-container-low": "#f2f4f5",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#0f4c5c",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#26322a",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#bdcabe",
+                        "on-tertiary-container": "#aab6ab",
+                        "on-primary-container": "#87bbce",
+                        "secondary-fixed": "#94f990",
+                        "on-surface": "#191c1d",
+                        "on-primary": "#ffffff",
+                        "outline": "#70787c",
+                        "surface-container": "#eceeef",
+                        "on-secondary-fixed-variant": "#005313",
+                        "on-secondary-container": "#00731e",
+                        "surface-variant": "#e1e3e4",
+                        "secondary-container": "#91f78e",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#114d5d",
+                        "inverse-on-surface": "#eff1f2",
+                        "on-primary-fixed": "#001f28",
+                        "on-background": "#191c1d",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#006e1c",
+                        "primary": "#003441",
+                        "surface-tint": "#306576",
+                        "surface-container-high": "#e6e8e9",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface": "#f8fafb",
+                        "surface-bright": "#f8fafb",
+                        "outline-variant": "#c0c8cb",
+                        "on-surface-variant": "#40484b",
+                        "tertiary-fixed": "#d9e6da",
+                        "on-tertiary-fixed": "#131e17",
+                        "primary-fixed-dim": "#9acee1",
+                        "on-secondary-fixed": "#002204",
+                        "tertiary-container": "#3c4840",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#9acee1",
+                        "background": "#f8fafb",
+                        "secondary-fixed-dim": "#78dc77",
+                        "on-tertiary-fixed-variant": "#3e4a41",
+                        "primary-fixed": "#b6ebfe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "card-padding": "24px",
+                        "unit": "8px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .vulnerability-indicator {
+            border-left: 4px solid #7c4dff;
+        }
+        .timeline-line {
+            width: 2px;
+            background-color: #E0E0E0;
+            position: absolute;
+            top: 24px;
+            bottom: 0;
+            left: 11px;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">Portal INEN</span>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full">language</button>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-label-md text-on-surface-variant hidden md:block">Administrador</span>
+<span class="material-symbols-outlined text-primary text-3xl">account_circle</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full z-40 pt-20 pb-8 h-full w-64 hidden md:flex flex-col border-r border-outline-variant bg-surface-container-low dark:bg-inverse-surface">
+<div class="px-6 mb-8">
+<h2 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed-dim">Gestión Admin</h2>
+<p class="text-on-surface-variant text-sm">Control de Expedientes</p>
+</div>
+<nav class="flex-grow">
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Inicio</span>
+</a>
+<a class="flex items-center gap-4 bg-primary-container dark:bg-primary-container text-on-primary-container dark:text-on-primary-fixed-variant rounded-xl px-4 py-3 mx-2 translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-md text-label-md">Pacientes</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-md text-label-md">Citas</span>
+</a>
+</nav>
+<div class="mt-auto px-2 space-y-1">
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Ajustes</span>
+</a>
+<a class="flex items-center gap-4 text-error px-4 py-3 hover:bg-error-container/10 rounded-xl" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 pt-20 px-4 md:px-margin-desktop pb-24 max-w-container-max mx-auto">
+<!-- Header Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+<div>
+<nav class="flex items-center gap-2 text-on-surface-variant text-sm mb-2">
+<span>Pacientes</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="font-semibold text-primary">Expediente #3942-B</span>
+</nav>
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">Carlos Eduardo Méndez</h1>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 border border-outline px-4 py-2 rounded-full font-label-md text-primary hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-lg">print</span> Imprimir Ficha
+                </button>
+<button class="flex items-center gap-2 bg-primary text-white px-6 py-2 rounded-full font-label-md hover:bg-primary-container transition-all shadow-sm">
+<span class="material-symbols-outlined text-lg">edit</span> Editar Perfil
+                </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Patient Profile & Vulnerability -->
+<div class="lg:col-span-4 space-y-gutter">
+<!-- Personal Data Card -->
+<div class="bg-white rounded-xl p-card-padding shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-outline-variant/30">
+<div class="flex items-center gap-4 mb-6">
+<img alt="Carlos Méndez Profile Photo" class="w-20 h-20 rounded-2xl object-cover ring-2 ring-primary-fixed" data-alt="A professional studio portrait of a middle-aged Latino man with short dark hair and a warm, calm expression, looking directly at the camera. He is wearing a simple button-down shirt. The background is a soft, out-of-focus medical clinic setting with muted teal and white tones, creating a clean and professional atmosphere. The lighting is bright and even, highlighting facial features with a supportive and trustworthy mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJy2ssBlpExI7eHY-aB7OX78-mZuJv6HB43F-rpuG9UcDUXtD0RQ0A-E9sZMd3bA7LFgJ9GMyCbnzz7Z287ypCnzKyEKhJPeaWbHRvkdmr242iL3JoyJlxBCaOwdu7-Cc0vOFX_21Dk2zdVTlxptIGTV8WS0-EdvB2fZBTkcSWjJpB_7OELLBajRkzmlVB0j54FCnjNNvG0Oc5osNq4bnUKnwn-_F2NKtxCxW4uWRCnCWY7wYafEG8P1Ome3GaP56K8MNfAXICl4yC"/>
+<div>
+<p class="font-label-md text-on-surface-variant">DNI: 45829103</p>
+<p class="font-label-sm text-secondary font-bold">Estado: Activo</p>
+</div>
+</div>
+<div class="space-y-4 border-t border-outline-variant pt-4">
+<div class="flex justify-between">
+<span class="text-on-surface-variant font-label-md">Edad</span>
+<span class="font-semibold">54 años</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant font-label-md">Teléfono</span>
+<span class="font-semibold">+51 987 654 321</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant font-label-md">Seguro</span>
+<span class="font-semibold">SIS Global</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant font-label-md">Tipo Sangre</span>
+<span class="font-semibold text-error">O+</span>
+</div>
+</div>
+</div>
+<!-- Perfil de Vulnerabilidad Card -->
+<div class="vulnerability-indicator bg-white rounded-xl p-card-padding shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+<div class="flex items-center gap-2 mb-4 text-[#7c4dff]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">stars</span>
+<h3 class="font-headline-sm text-headline-sm">Perfil de Vulnerabilidad</h3>
+</div>
+<p class="text-sm text-on-surface-variant mb-6">Seleccione las condiciones que requieren atención prioritaria por el personal del INEN.</p>
+<div class="space-y-3">
+<label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded text-primary border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="font-label-md text-on-surface group-hover:text-primary">Adulto Mayor (+65)</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="w-5 h-5 rounded text-primary border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="font-label-md text-on-surface group-hover:text-primary">Discapacidad Motriz</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded text-primary border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="font-label-md text-on-surface group-hover:text-primary">Procedencia Regional (Lejana)</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="w-5 h-5 rounded text-primary border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="font-label-md text-on-surface group-hover:text-primary">Bajos Recursos Económicos</span>
+</label>
+</div>
+</div>
+<!-- Internal Notes -->
+<div class="bg-surface-container-low rounded-xl p-card-padding">
+<h3 class="font-label-md text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">sticky_note_2</span> Notas Internas (Solo Admin)
+                    </h3>
+<textarea class="w-full bg-white border border-outline-variant rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all h-32" placeholder="Escriba observaciones relevantes aquí..."></textarea>
+<button class="w-full mt-3 bg-secondary text-white py-2 rounded-lg font-label-md hover:bg-on-secondary-fixed-variant transition-colors">Agregar nota</button>
+<div class="mt-6 space-y-4">
+<div class="bg-white p-3 rounded-lg border-l-2 border-secondary shadow-sm">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-bold text-on-surface-variant">Dra. Espinoza</span>
+<span class="text-[10px] text-outline">12 Oct, 14:20</span>
+</div>
+<p class="text-xs text-on-surface">Paciente requiere coordinación para transporte desde Junín para su próxima quimio.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Timeline & Documents -->
+<div class="lg:col-span-8 space-y-gutter">
+<!-- Vertical Timeline -->
+<div class="bg-white rounded-xl p-card-padding shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-8">Cronograma del Proceso</h3>
+<div class="space-y-8 relative">
+<div class="timeline-line"></div>
+<!-- Step Completed -->
+<div class="relative pl-10">
+<div class="absolute left-0 w-6 h-6 rounded-full bg-secondary flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-label-md text-on-surface">Diagnóstico Inicial</h4>
+<p class="text-sm text-on-surface-variant">Completado el 05 de Septiembre, 2023</p>
+</div>
+<span class="bg-secondary-container text-on-secondary-container text-[10px] px-2 py-0.5 rounded-full font-bold">APROBADO</span>
+</div>
+</div>
+<!-- Step Current -->
+<div class="relative pl-10">
+<div class="absolute left-0 w-6 h-6 rounded-full bg-primary-container border-4 border-white flex items-center justify-center z-10 animate-pulse">
+<div class="w-2 h-2 rounded-full bg-on-primary-container"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-label-md text-primary font-bold">Revisión de Expediente Oncológico</h4>
+<p class="text-sm text-on-surface">En progreso - Esperando validación de documentos adjuntos.</p>
+</div>
+<span class="bg-primary-container text-on-primary-container text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Actual</span>
+</div>
+</div>
+<!-- Step Pending -->
+<div class="relative pl-10">
+<div class="absolute left-0 w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center z-10">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+</div>
+<div>
+<h4 class="font-label-md text-on-surface-variant">Programación de Quimioterapia</h4>
+<p class="text-sm text-outline">Estimado: Semana de Noviembre</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Document Section -->
+<div class="bg-white rounded-xl p-card-padding shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-sm text-headline-sm text-primary">Documentación Recibida</h3>
+<span class="text-xs font-label-md bg-surface-container-high px-3 py-1 rounded-full text-on-surface-variant">2 archivos pendientes</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant">
+<th class="py-4 font-label-md text-on-surface-variant">Nombre del Documento</th>
+<th class="py-4 font-label-md text-on-surface-variant">Fecha</th>
+<th class="py-4 font-label-md text-on-surface-variant">Tipo</th>
+<th class="py-4 font-label-md text-on-surface-variant text-right">Acciones de Control</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error">picture_as_pdf</span>
+<div>
+<p class="font-label-md">Informe_Patologia_V1.pdf</p>
+<p class="text-[10px] text-outline">4.2 MB</p>
+</div>
+</div>
+</td>
+<td class="py-4 text-sm text-on-surface-variant">15 Oct, 2023</td>
+<td class="py-4"><span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full font-bold">MÉDICO</span></td>
+<td class="py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-3 py-1 rounded-md text-xs font-bold transition-all">Aprobar</button>
+<button class="bg-error/10 text-error hover:bg-error hover:text-white px-3 py-1 rounded-md text-xs font-bold transition-all">Rechazar</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">description</span>
+<div>
+<p class="font-label-md">Referencia_Essalud_Carlos.pdf</p>
+<p class="text-[10px] text-outline">1.5 MB</p>
+</div>
+</div>
+</td>
+<td class="py-4 text-sm text-on-surface-variant">14 Oct, 2023</td>
+<td class="py-4"><span class="bg-surface-container-high text-on-surface-variant text-[10px] px-2 py-0.5 rounded-full font-bold">ADMIN</span></td>
+<td class="py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-3 py-1 rounded-md text-xs font-bold transition-all">Aprobar</button>
+<button class="bg-error/10 text-error hover:bg-error hover:text-white px-3 py-1 rounded-md text-xs font-bold transition-all">Rechazar</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Appointment History -->
+<div class="bg-white rounded-xl p-card-padding shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-6">Historial de Citas</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="border border-outline-variant rounded-xl p-4 flex gap-4 items-start bg-surface-bright">
+<div class="w-12 h-12 rounded-lg bg-primary-container flex flex-col items-center justify-center text-on-primary-container">
+<span class="text-[10px] font-bold">SEP</span>
+<span class="text-lg font-bold">28</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h4 class="font-label-md">Triaje Inicial</h4>
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-xs text-on-surface-variant mb-2">Consultorio 102 - Dr. Salazar</p>
+<p class="text-[10px] bg-secondary-container text-on-secondary-container inline-block px-2 py-0.5 rounded">Atendido</p>
+</div>
+</div>
+<div class="border border-outline-variant rounded-xl p-4 flex gap-4 items-start bg-white">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex flex-col items-center justify-center text-on-surface-variant">
+<span class="text-[10px] font-bold">OCT</span>
+<span class="text-lg font-bold">30</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h4 class="font-label-md">Consulta Oncológica</h4>
+<span class="material-symbols-outlined text-primary text-sm">schedule</span>
+</div>
+<p class="text-xs text-on-surface-variant mb-2">Piso 4 - Oncología Médica</p>
+<p class="text-[10px] bg-primary-fixed text-on-primary-fixed-variant inline-block px-2 py-0.5 rounded">Programado</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface dark:bg-inverse-surface shadow-[0_-4px_12px_rgba(0,0,0,0.05)] md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Inicio</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-2xl px-3 py-1 scale-95 duration-100">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+<span class="font-label-sm text-label-sm-mobile">Proceso</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm-mobile">Documentos</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-sm text-label-sm-mobile">Citas</span>
+</button>
+</nav>
+<script>
+        // Simple interactivity for demonstration
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    btn.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+
+        // Search highlight placeholder
+        console.log("Admin Patient File View Loaded - Portal INEN");
+    </script>
+</body></html>

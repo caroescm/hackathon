@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portal INEN - Revisión de Documento</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadb",
+                        "surface-container-low": "#f2f4f5",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#0f4c5c",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#26322a",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#bdcabe",
+                        "on-tertiary-container": "#aab6ab",
+                        "on-primary-container": "#87bbce",
+                        "secondary-fixed": "#94f990",
+                        "on-surface": "#191c1d",
+                        "on-primary": "#ffffff",
+                        "outline": "#70787c",
+                        "surface-container": "#eceeef",
+                        "on-secondary-fixed-variant": "#005313",
+                        "on-secondary-container": "#00731e",
+                        "surface-variant": "#e1e3e4",
+                        "secondary-container": "#91f78e",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#114d5d",
+                        "inverse-on-surface": "#eff1f2",
+                        "on-primary-fixed": "#001f28",
+                        "on-background": "#191c1d",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#006e1c",
+                        "primary": "#003441",
+                        "surface-tint": "#306576",
+                        "surface-container-high": "#e6e8e9",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface": "#f8fafb",
+                        "surface-bright": "#f8fafb",
+                        "outline-variant": "#c0c8cb",
+                        "on-surface-variant": "#40484b",
+                        "tertiary-fixed": "#d9e6da",
+                        "on-tertiary-fixed": "#131e17",
+                        "primary-fixed-dim": "#9acee1",
+                        "on-secondary-fixed": "#002204",
+                        "tertiary-container": "#3c4840",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#9acee1",
+                        "background": "#f8fafb",
+                        "secondary-fixed-dim": "#78dc77",
+                        "on-tertiary-fixed-variant": "#3e4a41",
+                        "primary-fixed": "#b6ebfe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "card-padding": "24px",
+                        "unit": "8px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center gap-4">
+<button class="md:hidden p-2 text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">Portal INEN</span>
+</div>
+<div class="flex items-center gap-2 md:gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">language</span>
+</button>
+<button class="flex items-center gap-2 p-1 pl-3 rounded-full border border-outline-variant hover:bg-surface-container-low transition-colors">
+<span class="hidden md:block text-label-md font-label-md text-on-surface-variant">Administrador</span>
+<span class="material-symbols-outlined text-primary">account_circle</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<aside class="fixed left-0 top-0 h-full z-40 pt-20 pb-8 h-full w-64 hidden md:flex flex-col border-r border-outline-variant bg-surface-container-low dark:bg-inverse-surface">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<div>
+<h3 class="text-label-md font-label-md text-on-surface">Gestión Docs</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Revisión Activa</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-3 mx-2" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Inicio</span>
+</a>
+<a class="flex items-center gap-4 bg-primary-container text-on-primary-container rounded-xl px-4 py-3 mx-2 transition-all translate-x-1" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-label-md font-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-3 mx-2" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-label-md font-label-md">Mi Proceso</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-3 mx-2" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="text-label-md font-label-md">Citas</span>
+</a>
+</nav>
+<div class="mt-auto space-y-1 border-t border-outline-variant pt-4">
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-3 mx-2" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md font-label-md">Ajustes</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-3 mx-2" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md font-label-md">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-16 md:ml-64 p-4 md:p-gutter overflow-y-auto">
+<div class="max-w-container-max mx-auto">
+<!-- Context Header -->
+<div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors" title="Regresar">
+<span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+</button>
+<div>
+<span class="text-label-md font-label-md text-primary uppercase tracking-wider">Revisión de Expediente</span>
+<h1 class="text-headline-md md:text-headline-lg font-headline-md md:font-headline-lg text-on-surface">Step 2: Oncological Evaluation</h1>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-high px-4 py-2 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="text-label-md font-label-md text-on-surface">Paciente: Juan Pérez • DNI: 45892011</span>
+</div>
+</div>
+<!-- Review Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Document Preview Area (Bento-style large card) -->
+<div class="lg:col-span-8 flex flex-col gap-4">
+<div class="bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col min-h-[600px] border border-outline-variant">
+<div class="bg-surface-container px-6 py-3 flex items-center justify-between border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">picture_as_pdf</span>
+<span class="text-label-md font-label-md text-on-surface">informe_oncologico_v2.pdf</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-surface-variant rounded-lg transition-colors"><span class="material-symbols-outlined">zoom_in</span></button>
+<button class="p-2 hover:bg-surface-variant rounded-lg transition-colors"><span class="material-symbols-outlined">zoom_out</span></button>
+<div class="w-px h-4 bg-outline-variant mx-1"></div>
+<button class="p-2 hover:bg-surface-variant rounded-lg transition-colors"><span class="material-symbols-outlined">download</span></button>
+</div>
+</div>
+<div class="flex-1 bg-surface-dim p-4 md:p-8 flex justify-center overflow-auto hide-scrollbar relative">
+<!-- Faked PDF Preview Content -->
+<div class="bg-white w-full max-w-[800px] min-h-[1000px] shadow-lg p-margin-desktop relative" data-alt="A clean professional medical document scan showing structured medical charts, doctor signatures, and institutional logos of INEN. The document is displayed in a bright, modern UI interface with soft clinical lighting and a minimalist medical aesthetic.">
+<div class="flex justify-between items-start mb-12">
+<div class="w-32 h-12 bg-surface-container flex items-center justify-center rounded border border-outline-variant">
+<span class="text-label-sm font-label-sm text-outline">LOGO INEN</span>
+</div>
+<div class="text-right">
+<div class="h-4 w-48 bg-surface-container rounded mb-2"></div>
+<div class="h-3 w-32 bg-surface-container-low rounded ml-auto"></div>
+</div>
+</div>
+<div class="space-y-6">
+<div class="h-8 w-1/3 bg-surface-container rounded"></div>
+<div class="grid grid-cols-2 gap-8">
+<div class="space-y-4">
+<div class="h-4 w-full bg-surface-container-low rounded"></div>
+<div class="h-4 w-full bg-surface-container-low rounded"></div>
+<div class="h-4 w-3/4 bg-surface-container-low rounded"></div>
+</div>
+<div class="space-y-4">
+<div class="h-4 w-full bg-surface-container-low rounded"></div>
+<div class="h-4 w-full bg-surface-container-low rounded"></div>
+</div>
+</div>
+<div class="h-px bg-outline-variant w-full my-8"></div>
+<div class="space-y-4">
+<div class="h-4 w-full bg-surface-container-low rounded"></div>
+<div class="h-4 w-full bg-surface-container-low rounded"></div>
+<div class="h-4 w-full bg-surface-container-low rounded"></div>
+<div class="h-4 w-2/3 bg-surface-container-low rounded"></div>
+</div>
+<!-- Vulnerability Indicator inside document -->
+<div class="p-6 border-l-4 border-primary bg-primary-container/5 rounded-r-lg mt-8">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+<span class="text-label-md font-label-md text-primary">Observación Crítica</span>
+</div>
+<div class="h-4 w-full bg-primary-container/10 rounded"></div>
+</div>
+</div>
+<div class="absolute bottom-margin-desktop right-margin-desktop text-center">
+<div class="w-32 h-16 border-b border-on-surface-variant/30 mb-2"></div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Firma del Especialista</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Sidebar -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Patient Summary Card -->
+<div class="bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] p-card-padding border border-outline-variant">
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-4">Información del Trámite</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/30">
+<span class="text-label-md font-label-md text-on-surface-variant">ID de Documento</span>
+<span class="text-body-md font-body-md text-on-surface">DOC-2023-8812</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/30">
+<span class="text-label-md font-label-md text-on-surface-variant">Fecha de Envío</span>
+<span class="text-body-md font-body-md text-on-surface">24 Oct, 2023</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-label-md font-label-md text-on-surface-variant">Estado Actual</span>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-label-sm font-label-sm">En Revisión</span>
+</div>
+</div>
+</div>
+<!-- Main Decisions Card -->
+<div class="bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] p-card-padding border border-outline-variant flex flex-col gap-6">
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Acciones de Revisión</h3>
+<div class="flex flex-col gap-3">
+<button class="w-full py-4 bg-secondary text-on-secondary rounded-xl font-label-md text-label-md flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all shadow-md" onclick="approveAction()">
+<span class="material-symbols-outlined">check_circle</span>
+                                Aprobar Documento
+                            </button>
+<button class="w-full py-4 border-2 border-error text-error rounded-xl font-label-md text-label-md flex items-center justify-center gap-2 hover:bg-error-container/20 active:scale-[0.98] transition-all" id="btn-reject" onclick="toggleRejection()">
+<span class="material-symbols-outlined">cancel</span>
+                                Rechazar Documento
+                            </button>
+</div>
+<!-- Mandatory Comment Field (Hidden by default) -->
+<div class="hidden fade-in space-y-4 pt-4 border-t border-outline-variant" id="rejection-panel">
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant" for="comment">Comentario (Obligatorio)</label>
+<textarea class="w-full rounded-xl border-2 border-outline-variant focus:border-error focus:ring-0 p-3 text-body-md font-body-md placeholder:text-outline-variant" id="comment" placeholder="Describa el motivo del rechazo..." rows="4"></textarea>
+</div>
+<button class="w-full py-4 bg-error text-on-error rounded-xl font-label-md text-label-md flex items-center justify-center gap-2 hover:opacity-90 transition-all" onclick="confirmReject()">
+                                Confirmar Rechazo
+                            </button>
+</div>
+</div>
+<!-- Guidance Tip -->
+<div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant flex gap-4">
+<span class="material-symbols-outlined text-primary">info</span>
+<div class="flex-1">
+<p class="text-label-md font-label-md text-on-surface mb-1">Guía de Evaluación</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Verifique que el sello de la institución sea legible y que la fecha de expedición no exceda los 3 meses.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface dark:bg-inverse-surface shadow-lg md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-2xl px-3 py-1" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm-mobile">Proceso</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-sm text-label-sm-mobile">Citas</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="font-label-sm text-label-sm-mobile">Perfil</span>
+</a>
+</nav>
+<script>
+        function toggleRejection() {
+            const panel = document.getElementById('rejection-panel');
+            const btnReject = document.getElementById('btn-reject');
+            
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                btnReject.classList.add('bg-error/10');
+                document.getElementById('comment').focus();
+            } else {
+                panel.classList.add('hidden');
+                btnReject.classList.remove('bg-error/10');
+            }
+        }
+
+        function approveAction() {
+            alert('Documento Aprobado Correctamente. Procediendo al siguiente paso.');
+            // Implementation logic for approval
+        }
+
+        function confirmReject() {
+            const comment = document.getElementById('comment').value;
+            if (!comment.trim()) {
+                alert('Por favor ingrese un motivo para el rechazo.');
+                document.getElementById('comment').classList.add('border-error');
+                return;
+            }
+            alert('Documento Rechazado. El paciente recibirá su comentario: ' + comment);
+            // Implementation logic for rejection
+        }
+    </script>
+</body></html>

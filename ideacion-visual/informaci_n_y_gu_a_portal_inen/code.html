@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guía del Paciente - Portal INEN</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-tab-indicator {
+            view-transition-name: active-tab;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c0c8cb;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #70787c;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#0f4c5c",
+                        "on-tertiary-fixed-variant": "#3e4a41",
+                        "surface": "#f8fafb",
+                        "surface-container-high": "#e6e8e9",
+                        "primary-fixed": "#b6ebfe",
+                        "primary": "#003441",
+                        "surface-bright": "#f8fafb",
+                        "secondary-container": "#91f78e",
+                        "primary-fixed-dim": "#9acee1",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#94f990",
+                        "on-tertiary-fixed": "#131e17",
+                        "on-background": "#191c1d",
+                        "surface-dim": "#d8dadb",
+                        "outline-variant": "#c0c8cb",
+                        "on-secondary-container": "#00731e",
+                        "on-primary-fixed-variant": "#114d5d",
+                        "background": "#f8fafb",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#eff1f2",
+                        "inverse-primary": "#9acee1",
+                        "on-primary-container": "#87bbce",
+                        "on-secondary-fixed-variant": "#005313",
+                        "on-secondary-fixed": "#002204",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e1e3e4",
+                        "secondary": "#006e1c",
+                        "on-tertiary-container": "#aab6ab",
+                        "surface-container-low": "#f2f4f5",
+                        "on-surface-variant": "#40484b",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#306576",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#3c4840",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-surface": "#191c1d",
+                        "secondary-fixed-dim": "#78dc77",
+                        "outline": "#70787c",
+                        "tertiary": "#26322a",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#001f28",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface-container": "#eceeef",
+                        "tertiary-fixed": "#d9e6da",
+                        "tertiary-fixed-dim": "#bdcabe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "margin-desktop": "40px",
+                        "card-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface shadow-sm">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-bold text-primary">Portal INEN</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">language</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Side Navigation Bar (Desktop) -->
+<aside class="fixed left-0 top-0 h-full z-40 pt-20 pb-8 h-full w-64 hidden md:flex flex-col border-r border-outline-variant bg-surface-container-low">
+<div class="px-6 mb-8">
+<h2 class="font-headline-sm text-headline-sm text-primary">Paciente INEN</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">DNI: 00000000</p>
+</div>
+<nav class="flex-grow">
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Inicio</span>
+</a>
+<a class="flex items-center gap-4 bg-primary-container text-on-primary-container rounded-xl px-4 py-3 mx-2 translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-md text-label-md">Mi Proceso</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-md text-label-md">Citas</span>
+</a>
+</nav>
+<div class="mt-auto px-4 space-y-2">
+<button class="w-full py-3 bg-secondary-container text-on-secondary-container rounded-xl font-label-md flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">chat</span>
+                Contacto WhatsApp
+            </button>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Ajustes</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 pt-20 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- Header Section -->
+<section class="mb-12">
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-4">Guía Informativa del Paciente</h1>
+<p class="text-body-lg text-on-surface-variant max-w-2xl">Acompañándolo en cada etapa de su recuperación. Encuentre aquí toda la información necesaria para navegar su proceso con tranquilidad.</p>
+</section>
+<!-- Process Tabs Section -->
+<section class="mb-16">
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] overflow-hidden">
+<!-- Tab Headers -->
+<div class="flex overflow-x-auto border-b border-outline-variant no-scrollbar scroll-smooth">
+<button class="tab-btn flex-1 min-w-[120px] py-4 px-2 border-b-2 border-primary text-primary font-label-md flex flex-col items-center gap-1 transition-all" data-tab="0" onclick="switchTab(0)">
+<span class="material-symbols-outlined">search</span>
+<span>Diagnóstico</span>
+</button>
+<button class="tab-btn flex-1 min-w-[120px] py-4 px-2 border-b-2 border-transparent text-on-surface-variant font-label-md flex flex-col items-center gap-1 transition-all" data-tab="1" onclick="switchTab(1)">
+<span class="material-symbols-outlined">rate_review</span>
+<span>Evaluación</span>
+</button>
+<button class="tab-btn flex-1 min-w-[120px] py-4 px-2 border-b-2 border-transparent text-on-surface-variant font-label-md flex flex-col items-center gap-1 transition-all" data-tab="2" onclick="switchTab(2)">
+<span class="material-symbols-outlined">medical_services</span>
+<span>Tratamiento</span>
+</button>
+<button class="tab-btn flex-1 min-w-[120px] py-4 px-2 border-b-2 border-transparent text-on-surface-variant font-label-md flex flex-col items-center gap-1 transition-all" data-tab="3" onclick="switchTab(3)">
+<span class="material-symbols-outlined">history</span>
+<span>Seguimiento</span>
+</button>
+<button class="tab-btn flex-1 min-w-[120px] py-4 px-2 border-b-2 border-transparent text-on-surface-variant font-label-md flex flex-col items-center gap-1 transition-all" data-tab="4" onclick="switchTab(4)">
+<span class="material-symbols-outlined">check_circle</span>
+<span>Alta</span>
+</button>
+</div>
+<!-- Tab Panels -->
+<div class="p-card-padding" id="tab-content">
+<!-- Dynamic Content Injection -->
+<div class="tab-panel grid md:grid-cols-3 gap-gutter" id="panel-0">
+<div class="space-y-4">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-headline-sm">help</span>
+<h3 class="font-headline-sm text-headline-sm">¿Qué es?</h3>
+</div>
+<p class="text-body-md text-on-surface-variant">Es la etapa inicial donde se identifica la naturaleza de la enfermedad mediante diversos estudios y análisis clínicos especializados.</p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-headline-sm">visibility</span>
+<h3 class="font-headline-sm text-headline-sm">¿Qué esperar?</h3>
+</div>
+<p class="text-body-md text-on-surface-variant">Se realizarán exámenes de laboratorio, imágenes (rayos X, tomografías) o biopsias. El equipo médico le explicará cada procedimiento detalladamente.</p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-headline-sm">shopping_bag</span>
+<h3 class="font-headline-sm text-headline-sm">¿Qué llevar?</h3>
+</div>
+<ul class="list-disc list-inside text-body-md text-on-surface-variant space-y-2">
+<li>DNI original y vigente</li>
+<li>Referencia médica</li>
+<li>Informes previos</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="mb-16">
+<h2 class="font-headline-md text-headline-md text-primary mb-8">Preguntas Frecuentes</h2>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="faq-item bg-white p-6 rounded-xl border border-outline-variant cursor-pointer hover:shadow-sm transition-all" onclick="toggleFaq(this)">
+<div class="flex justify-between items-center">
+<h4 class="font-label-md text-label-md text-on-surface">¿Cómo agendo mi primera cita?</h4>
+<span class="material-symbols-outlined transition-transform">expand_more</span>
+</div>
+<p class="faq-answer hidden mt-4 text-body-md text-on-surface-variant">Debe acudir al área de Admisión con su hoja de referencia y DNI. También puede realizar consultas vía telefónica a nuestra central.</p>
+</div>
+<div class="faq-item bg-white p-6 rounded-xl border border-outline-variant cursor-pointer hover:shadow-sm transition-all" onclick="toggleFaq(this)">
+<div class="flex justify-between items-center">
+<h4 class="font-label-md text-label-md text-on-surface">¿Puedo venir con acompañante?</h4>
+<span class="material-symbols-outlined transition-transform">expand_more</span>
+</div>
+<p class="faq-answer hidden mt-4 text-body-md text-on-surface-variant">Sí, se permite un acompañante por paciente, especialmente en citas de diagnóstico y tratamiento para apoyo emocional y logístico.</p>
+</div>
+<div class="faq-item bg-white p-6 rounded-xl border border-outline-variant cursor-pointer hover:shadow-sm transition-all" onclick="toggleFaq(this)">
+<div class="flex justify-between items-center">
+<h4 class="font-label-md text-label-md text-on-surface">¿Qué servicios incluye el seguro?</h4>
+<span class="material-symbols-outlined transition-transform">expand_more</span>
+</div>
+<p class="faq-answer hidden mt-4 text-body-md text-on-surface-variant">Dependerá de su tipo de cobertura (SIS, Essalud o Privado). En plataforma de atención le brindarán el detalle exacto de su cobertura.</p>
+</div>
+<div class="faq-item bg-white p-6 rounded-xl border border-outline-variant cursor-pointer hover:shadow-sm transition-all" onclick="toggleFaq(this)">
+<div class="flex justify-between items-center">
+<h4 class="font-label-md text-label-md text-on-surface">¿Hay atención de emergencia?</h4>
+<span class="material-symbols-outlined transition-transform">expand_more</span>
+</div>
+<p class="faq-answer hidden mt-4 text-body-md text-on-surface-variant">Sí, el servicio de urgencias oncológicas atiende las 24 horas del día, los 365 días del año para pacientes registrados.</p>
+</div>
+</div>
+</section>
+<!-- Map & Location Section -->
+<section class="grid md:grid-cols-2 gap-gutter items-stretch">
+<div class="bg-primary text-on-primary p-card-padding rounded-2xl flex flex-col justify-center">
+<h2 class="font-headline-md text-headline-md mb-6">¿Cómo llegar al INEN?</h2>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined mt-1">location_on</span>
+<div>
+<p class="font-label-md text-label-md">Dirección Principal</p>
+<p class="text-body-md opacity-90">Av. Angamos Este 2520, Surquillo 15038, Lima - Perú</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined mt-1">directions_bus</span>
+<div>
+<p class="font-label-md text-label-md">Transporte Público</p>
+<p class="text-body-md opacity-90">Estación Angamos del Metro de Lima (Línea 1) o Corredor Azul.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined mt-1">call</span>
+<div>
+<p class="font-label-md text-label-md">Teléfono de Central</p>
+<p class="text-body-md opacity-90">(01) 209-6000</p>
+</div>
+</div>
+</div>
+</div>
+<div class="h-[400px] rounded-2xl overflow-hidden relative border border-outline-variant">
+<!-- Static Map Placeholder -->
+<img alt="Mapa de ubicación del INEN" class="w-full h-full object-cover" data-alt="A high-quality, professional digital map interface showing a specific urban location in Surquillo, Lima. The map features clean, modern cartography with soft teal and light grey tones, highlighting the main avenues like Angamos Este. A distinct, branded teal marker identifies the INEN medical complex. The lighting is bright and clear, reflecting a clinical yet accessible healthcare aesthetic." data-location="Av. Angamos Este 2520, Surquillo, Lima" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6J_j3vN2gbxzLaM6xU0zWumtQy2Tm-B2ZxyCqnb1r9UnHvif9DZaruICP0eLiJzi32Jns8NXp_-gHjQ5r0vJx69k5HEO3S2-5dsooDOc0SsYGUEki7PdeOV5bPnVnmdbu6dzOlCPxAyCmdo2HmOVXPFnNAa_wL3uAtj8PC1eBr2XvKco9VtQv2PptylapYdzL8Z_TDY7ucpTqoUmnElXd6M13p1W9We1OYCcq0g6f-8kZGltTVjVIGt6Ct2uyzIjxx3hMlDRe7R5J"/>
+<div class="absolute inset-0 bg-black/5 flex items-center justify-center">
+<button class="bg-white text-primary px-6 py-3 rounded-full font-label-md shadow-lg flex items-center gap-2 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">map</span>
+                        Abrir en Google Maps
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface shadow-lg md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-2xl px-3 py-1 scale-95 duration-100" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-sm text-label-sm-mobile">Proceso</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm-mobile">Documentos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-sm text-label-sm-mobile">Citas</span>
+</a>
+</nav>
+<script>
+        const processData = [
+            {
+                title: "Diagnóstico",
+                whatIs: "Es la etapa inicial donde se identifica la naturaleza de la enfermedad mediante diversos estudios y análisis clínicos especializados.",
+                expect: "Se realizarán exámenes de laboratorio, imágenes (rayos X, tomografías) o biopsias. El equipo médico le explicará cada procedimiento detalladamente.",
+                carry: ["DNI original y vigente", "Referencia médica", "Informes previos"]
+            },
+            {
+                title: "Evaluación",
+                whatIs: "Los especialistas analizan los resultados para determinar la extensión de la enfermedad y el estado general de su salud.",
+                expect: "Entrevistas con oncólogos, cardiólogos y nutricionistas. Es posible que se soliciten estudios complementarios de mayor precisión.",
+                carry: ["Resultados de exámenes externos", "Lista de medicamentos actuales", "Cuaderno para notas"]
+            },
+            {
+                title: "Tratamiento",
+                whatIs: "Fase activa de lucha contra la enfermedad, que puede incluir cirugía, quimioterapia, radioterapia o inmunoterapia.",
+                expect: "Sesiones programadas según su protocolo. El personal de enfermería le brindará cuidados constantes y monitoreo de síntomas.",
+                carry: ["Ropa cómoda", "Carné de paciente INEN", "Un acompañante (si se requiere)"]
+            },
+            {
+                title: "Seguimiento",
+                whatIs: "Control periódico posterior al tratamiento principal para asegurar que la recuperación progrese adecuadamente.",
+                expect: "Consultas externas cada 3, 6 o 12 meses. Análisis de sangre y chequeos preventivos para monitorear su evolución a largo plazo.",
+                carry: ["Agenda de citas", "Resumen de tratamiento previo", "Consultas escritas para el médico"]
+            },
+            {
+                title: "Alta",
+                whatIs: "Culminación de la etapa intensiva de cuidados. Se brindan las pautas finales para retomar su vida cotidiana.",
+                expect: "Recibirá un informe detallado de alta y un plan de vida saludable. Se le asignará su primera fecha de control post-alta.",
+                carry: ["Documentos de egreso", "Recetas de farmacia", "Mucha actitud positiva"]
+            }
+        ];
+
+        function switchTab(index) {
+            const container = document.getElementById('tab-content');
+            const tabs = document.querySelectorAll('.tab-btn');
+            
+            // Update UI Active State
+            tabs.forEach((tab, idx) => {
+                if(idx === index) {
+                    tab.classList.remove('border-transparent', 'text-on-surface-variant');
+                    tab.classList.add('border-primary', 'text-primary');
+                } else {
+                    tab.classList.add('border-transparent', 'text-on-surface-variant');
+                    tab.classList.remove('border-primary', 'text-primary');
+                }
+            });
+
+            const data = processData[index];
+            
+            // Fade out
+            container.style.opacity = 0;
+            
+            setTimeout(() => {
+                container.innerHTML = `
+                    <div class="tab-panel grid md:grid-cols-3 gap-gutter animate-in fade-in slide-in-from-bottom-4 duration-300">
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 text-primary">
+                                <span class="material-symbols-outlined text-headline-sm">help</span>
+                                <h3 class="font-headline-sm text-headline-sm">¿Qué es?</h3>
+                            </div>
+                            <p class="text-body-md text-on-surface-variant">${data.whatIs}</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 text-primary">
+                                <span class="material-symbols-outlined text-headline-sm">visibility</span>
+                                <h3 class="font-headline-sm text-headline-sm">¿Qué esperar?</h3>
+                            </div>
+                            <p class="text-body-md text-on-surface-variant">${data.expect}</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 text-primary">
+                                <span class="material-symbols-outlined text-headline-sm">shopping_bag</span>
+                                <h3 class="font-headline-sm text-headline-sm">¿Qué llevar?</h3>
+                            </div>
+                            <ul class="list-disc list-inside text-body-md text-on-surface-variant space-y-2">
+                                ${data.carry.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                container.style.opacity = 1;
+            }, 150);
+        }
+
+        function toggleFaq(element) {
+            const answer = element.querySelector('.faq-answer');
+            const icon = element.querySelector('.material-symbols-outlined');
+            const isHidden = answer.classList.contains('hidden');
+            
+            // Close all others
+            document.querySelectorAll('.faq-answer').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.faq-item .material-symbols-outlined').forEach(el => el.style.transform = 'rotate(0deg)');
+
+            if (isHidden) {
+                answer.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+        
+        // Ensure smoothness
+        document.getElementById('tab-content').style.transition = 'opacity 0.2s ease-in-out';
+    </script>
+</body></html>

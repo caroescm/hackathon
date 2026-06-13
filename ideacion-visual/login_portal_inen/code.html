@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ingreso | Portal INEN</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#9acee1",
+                      "outline": "#70787c",
+                      "surface-dim": "#d8dadb",
+                      "tertiary-fixed": "#d9e6da",
+                      "secondary": "#006e1c",
+                      "on-secondary-fixed": "#002204",
+                      "inverse-on-surface": "#eff1f2",
+                      "surface-container-highest": "#e1e3e4",
+                      "tertiary-fixed-dim": "#bdcabe",
+                      "surface-container-low": "#f2f4f5",
+                      "surface-tint": "#306576",
+                      "on-secondary-container": "#00731e",
+                      "on-primary-fixed-variant": "#114d5d",
+                      "primary-container": "#0f4c5c",
+                      "surface-variant": "#e1e3e4",
+                      "inverse-primary": "#9acee1",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "inverse-surface": "#2e3132",
+                      "on-tertiary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed": "#131e17",
+                      "tertiary": "#26322a",
+                      "on-surface-variant": "#40484b",
+                      "on-secondary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container": "#eceeef",
+                      "on-primary-fixed": "#001f28",
+                      "background": "#f8fafb",
+                      "primary": "#003441",
+                      "secondary-fixed": "#94f990",
+                      "on-background": "#191c1d",
+                      "secondary-fixed-dim": "#78dc77",
+                      "on-surface": "#191c1d",
+                      "error-container": "#ffdad6",
+                      "surface-bright": "#f8fafb",
+                      "on-primary-container": "#87bbce",
+                      "tertiary-container": "#3c4840",
+                      "surface": "#f8fafb",
+                      "on-secondary-fixed-variant": "#005313",
+                      "outline-variant": "#c0c8cb",
+                      "on-tertiary-container": "#aab6ab",
+                      "secondary-container": "#91f78e",
+                      "on-tertiary-fixed-variant": "#3e4a41",
+                      "surface-container-high": "#e6e8e9",
+                      "primary-fixed": "#b6ebfe"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "unit": "8px",
+                      "container-max": "1280px",
+                      "margin-desktop": "40px",
+                      "card-padding": "24px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "label-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "headline-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-login-hero {
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen flex items-center justify-center font-body-md text-on-surface">
+<!-- Language Selector Dropdown -->
+<div class="fixed top-8 right-8 z-50">
+<div class="relative inline-block text-left" id="language-dropdown">
+<button class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant hover:bg-surface-container-high transition-colors shadow-sm" onclick="toggleDropdown()" type="button">
+<span class="material-symbols-outlined text-primary" data-icon="language">language</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Español</span>
+<span class="material-symbols-outlined text-outline" data-icon="expand_more">expand_more</span>
+</button>
+<div class="hidden absolute right-0 mt-2 w-40 origin-top-right rounded-xl bg-surface shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 overflow-hidden" id="dropdown-menu">
+<div class="py-1">
+<a class="block px-4 py-3 font-label-md text-label-md text-on-surface hover:bg-surface-container transition-colors" href="#">Español</a>
+<a class="block px-4 py-3 font-label-md text-label-md text-on-surface hover:bg-surface-container transition-colors" href="#">Quechua</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<main class="w-full max-w-[1280px] grid md:grid-cols-2 min-h-[819px] md:m-margin-desktop bg-surface rounded-[2rem] shadow-xl overflow-hidden">
+<!-- Branding & Imagery Side -->
+<section class="hidden md:flex flex-col justify-between p-12 relative bg-primary-container overflow-hidden">
+<div class="absolute inset-0 opacity-20 bg-login-hero" data-alt="A serene and modern medical facility atrium with high ceilings, soft natural light streaming through large windows, and lush indoor greenery. The architectural style is minimalist with clean lines in shades of teal and white, reflecting a professional and supportive healthcare atmosphere. The mood is peaceful and advanced, conveying hope and technological excellence in oncology care.">
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-primary-fixed rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="medical_services" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+</div>
+<span class="font-headline-md text-headline-md font-bold text-primary-fixed">Portal INEN</span>
+</div>
+</div>
+<div class="relative z-10 max-w-md">
+<h1 class="font-headline-lg text-headline-lg text-on-primary-container mb-4">Bienvenido a su cuidado integral.</h1>
+<p class="font-body-lg text-body-lg text-primary-fixed-dim leading-relaxed">
+                    Acceda a sus resultados, programe citas y siga su tratamiento con la confianza del Instituto Nacional de Enfermedades Neoplásicas.
+                </p>
+</div>
+<div class="relative z-10 flex gap-4">
+<div class="flex -space-x-4">
+<img alt="Staff member 1" class="w-10 h-10 rounded-full border-2 border-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfV14Zk3bHTyjf5OhY-jkvnoKXztwkCirL1Ev44CqDAdBBGbr-sS3mbgTDOhSaNxAy2Den1iGoQRzZG_ZlKmfG74MPZ6WuRO5AEFukWpNl_YyHBIV7OmtUhzNmq6e4BlqSj1FbsSngECvsRq8-_6NF1SLDZS6ETKgm5IYfP4gi44_oT4QM9cZNRI0iEOglkUiU4lA35hCHYBtooieShhjFoi1dIT4QGjQLoJwvH91oIfSg_A1ePwC5IrtfLq4ozOuJ4TXHGbI3kj6y"/>
+<img alt="Staff member 2" class="w-10 h-10 rounded-full border-2 border-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA_vhetHptIB0JqvC4G6tG86vuLy7In_citiKdON4WJ2EWYw9sMyBzx6wjinh1iTJ7lZfu9q7SijauvGXmJ4qdWqXJB2TheZ8mUgqTAyuI9u8V_3IqFBnZzy3uhP6YKHXP3SCciIYY0Q2gOQwwyFD7lAHudl0nwNgnxWpezRRiEiQgyenKKMuZTU2-c2QBVoupOzuRDJaJ82-wDgx_fiaoesu6Ag2VcumrIyKJCY6SvNwGDRrJNzPdJi7I7pEUL3QMazsIuYM-04jf"/>
+<img alt="Staff member 3" class="w-10 h-10 rounded-full border-2 border-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhec7WVbfmlxX7byueG6Zwn-kqnioiyhFVqu2lkz-Q10gfxb-lvL40dt_4MDWPurWu7viBFkA_nlnJhWCBSGpR6S6FOoFzq_weeOrV-IpFool5fshiFkoKi2gcVvaFEXbVzdgzW2_OGaR-rAeLkGTyr9fNvPXcxOV_TIK36P-9n5p0O3ekfpH_DHo1wuuras2aUI6DOY9o2z4e49_e7F404y4s3h-NvR-EXIyJVnyVwFu5Jl9JEdOn7gEsfsZJFDjX7P0t4yHPyD37"/>
+</div>
+<div class="text-on-primary-container">
+<p class="font-label-md text-label-md">Atención Especializada</p>
+<p class="font-label-sm text-label-sm text-primary-fixed-dim">Estamos para apoyarte</p>
+</div>
+</div>
+</section>
+<!-- Login Form Side -->
+<section class="flex flex-col justify-center items-center p-8 md:p-16 lg:p-24 bg-surface">
+<!-- Mobile Logo -->
+<div class="md:hidden flex flex-col items-center mb-12">
+<span class="material-symbols-outlined text-primary text-5xl mb-2" data-icon="medical_services" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">Portal INEN</span>
+</div>
+<div class="w-full max-w-sm">
+<div class="mb-10 text-center md:text-left">
+<h2 class="font-headline-md text-headline-md-mobile md:text-headline-md text-on-surface mb-2">Iniciar Sesión</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Ingrese sus credenciales de paciente para acceder al portal.</p>
+</div>
+<form class="space-y-6">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2" for="dni">DNI (Número de Identidad)</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline group-focus-within:text-primary transition-colors" data-icon="badge">badge</span>
+</div>
+<input class="block w-full pl-12 pr-4 py-4 rounded-xl bg-surface-container-low border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all outline-none font-body-md" id="dni" name="dni" placeholder="00000000" type="text"/>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<label class="block font-label-md text-label-md text-on-surface-variant" for="password">Contraseña</label>
+<a class="font-label-sm text-label-sm text-primary hover:underline" href="#">¿Olvidó su contraseña?</a>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline group-focus-within:text-primary transition-colors" data-icon="lock">lock</span>
+</div>
+<input class="block w-full pl-12 pr-12 py-4 rounded-xl bg-surface-container-low border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all outline-none font-body-md" id="password" name="password" placeholder="••••••••" type="password"/>
+<button class="absolute inset-y-0 right-0 pr-4 flex items-center text-outline hover:text-on-surface" type="button">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center">
+<input class="h-4 w-4 text-primary focus:ring-primary-fixed-dim border-outline-variant rounded" id="remember-me" name="remember-me" type="checkbox"/>
+<label class="ml-2 block font-label-md text-label-md text-on-surface-variant" for="remember-me">Recordar mi sesión</label>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-label-md text-label-md hover:bg-on-primary-fixed-variant transition-all active:scale-[0.98] shadow-md hover:shadow-lg flex items-center justify-center gap-2" type="submit">
+                        Ingresar
+                        <span class="material-symbols-outlined text-xl" data-icon="login">login</span>
+</button>
+</form>
+<div class="mt-8 pt-8 border-t border-outline-variant text-center">
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">¿Es usted familiar de un paciente?</p>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:underline group" href="#">
+                        ¿Eres familiar? Ingresa aquí
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Footer Small Print -->
+<div class="mt-12 text-center">
+<p class="font-label-sm text-label-sm text-outline">© 2024 Instituto Nacional de Enfermedades Neoplásicas - INEN</p>
+<div class="flex gap-4 justify-center mt-2">
+<a class="font-label-sm text-label-sm text-outline hover:text-primary" href="#">Términos</a>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary" href="#">Privacidad</a>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary" href="#">Ayuda</a>
+</div>
+</div>
+</section>
+</main>
+<script>
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdown-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.closest('#language-dropdown')) {
+                const menu = document.getElementById('dropdown-menu');
+                if (!menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                }
+            }
+        }
+
+        // Form submission prevent default for demo
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Login attempt recorded');
+        });
+    </script>
+</body></html>
