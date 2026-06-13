@@ -16,7 +16,7 @@ export interface Profile {
 export interface Usuario {
   id: string;
   dni: string;
-  nombre_completo: string;
+  nombre: string;
   telefono?: string;
   email?: string;
   rol: UserRole;

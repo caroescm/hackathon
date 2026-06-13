@@ -110,6 +110,11 @@ export default function RegistroPage() {
     const { data: authData, error: signUpError } = await supabase.auth.signUp({
       email,
       password: form.password,
+      options: {
+        // Guarda nombre en user_metadata como fallback para el sidebar
+        // en caso de que la query a usuarios falle por RLS
+        data: { nombre: form.nombreCompleto.trim() },
+      },
     });
 
     if (signUpError) {
@@ -134,7 +139,7 @@ export default function RegistroPage() {
     const { error: usuarioError } = await supabase.from("usuarios").insert({
       id: user.id,
       dni: form.dni,
-      nombre_completo: form.nombreCompleto.trim(),
+      nombre: form.nombreCompleto.trim(),
       telefono: form.telefono,
       email: form.email.trim() || null,
       rol: "paciente",

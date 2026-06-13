@@ -4,16 +4,111 @@ import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import { Calendar, FileText, GitBranch, MessageCircle } from "lucide-react";
 
+type PasoInfo = {
+  id: string;
+  nombre: string;
+  descripcion: string | null;
+  orden: number;
+};
+
+type ProcesoRow = {
+  id: string;
+  estado: string;
+  pasos: PasoInfo | null;
+};
+
+async function getProceso(supabase: ReturnType<typeof createClient>, userId: string): Promise<ProcesoRow[]> {
+  const { data } = await supabase
+    .from("proceso_paciente")
+    .select("id, estado, pasos (id, nombre, descripcion, orden)")
+    .eq("paciente_id", userId)
+    .order("orden", { referencedTable: "pasos", ascending: true });
+
+  return (data as ProcesoRow[] | null) ?? [];
+}
+
 export default async function DashboardPage() {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  const nombre = user?.user_metadata?.full_name?.split(" ")[0] ?? "Paciente";
+  if (!user) return null;
+
+  // auth.uid() garantizado: getUser() valida el JWT con el servidor
+  const userId = user.id;
+
+  // 1. Nombre real desde tabla usuarios; fallback a user_metadata
+  const { data: usuario } = await supabase
+    .from("usuarios")
+    .select("nombre")
+    .eq("id", userId)
+    .single();
+
+  const nombre =
+    (usuario?.nombre ?? (user.user_metadata?.nombre as string | undefined) ?? "")
+      .split(" ")[0] || "Paciente";
+
+  // 2. Proceso del paciente JOIN pasos, ordenado por pasos.orden
+  let proceso = await getProceso(supabase, userId);
+
+  // 3. Auto-crear si no hay registros para este paciente
+  if (proceso.length === 0) {
+    const { data: pasos, error: pasosError } = await supabase
+      .from("pasos")
+      .select("id, orden")
+      .order("orden", { ascending: true });
+
+    if (pasosError) {
+      console.error("[dashboard] Error al leer tabla pasos:", pasosError.message);
+    } else if (pasos && pasos.length > 0) {
+      const { error: insertError } = await supabase
+        .from("proceso_paciente")
+        .insert(
+          pasos.map((paso, i) => ({
+            paciente_id: userId,   // = auth.uid() del usuario autenticado
+            paso_id: paso.id,
+            estado: i === 0 ? "en_curso" : "pendiente",
+          }))
+        );
+
+      if (insertError) {
+        console.error("[dashboard] Error al crear proceso:", insertError.message);
+      } else {
+        // Solo re-queryear si el insert fue exitoso
+        proceso = await getProceso(supabase, userId);
+      }
+    }
+  }
+
+  const etapaActual = proceso.find((p) => p.estado === "en_curso");
 
   const stats = [
-    { label: "Próxima cita", value: "15 Jun", sub: "Oncología", icon: <Calendar size={20} className="text-primary" />, color: "bg-primary-light" },
-    { label: "Documentos", value: "8", sub: "archivos subidos", icon: <FileText size={20} className="text-success" />, color: "bg-green-50" },
-    { label: "Etapa actual", value: "Quimioterapia", sub: "Ciclo 3 de 6", icon: <GitBranch size={20} className="text-warning" />, color: "bg-yellow-50" },
-    { label: "Mensajes", value: "2", sub: "sin leer", icon: <MessageCircle size={20} className="text-purple-600" />, color: "bg-purple-50" },
+    {
+      label: "Próxima cita",
+      value: "—",
+      sub: "Sin citas programadas",
+      icon: <Calendar size={20} className="text-primary" />,
+      color: "bg-primary-light",
+    },
+    {
+      label: "Documentos",
+      value: "0",
+      sub: "archivos subidos",
+      icon: <FileText size={20} className="text-success" />,
+      color: "bg-green-50",
+    },
+    {
+      label: "Etapa actual",
+      value: etapaActual?.pasos?.nombre ?? "—",
+      sub: "en curso",
+      icon: <GitBranch size={20} className="text-warning" />,
+      color: "bg-yellow-50",
+    },
+    {
+      label: "Mensajes",
+      value: "0",
+      sub: "sin leer",
+      icon: <MessageCircle size={20} className="text-purple-600" />,
+      color: "bg-purple-50",
+    },
   ];
 
   return (
@@ -31,7 +126,7 @@ export default async function DashboardPage() {
                 </div>
                 <div>
                   <p className="text-xs text-muted font-medium">{stat.label}</p>
-                  <p className="text-lg font-bold text-foreground">{stat.value}</p>
+                  <p className="text-lg font-bold text-foreground leading-tight">{stat.value}</p>
                   <p className="text-xs text-muted">{stat.sub}</p>
                 </div>
               </div>
@@ -40,63 +135,51 @@ export default async function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Proceso */}
+          {/* Proceso real desde Supabase */}
           <div className="lg:col-span-2">
             <Card title="Mi Proceso de Tratamiento">
-              <div className="space-y-3">
-                {[
-                  { etapa: "Diagnóstico", fecha: "Mar 2024", estado: "completada" },
-                  { etapa: "Cirugía", fecha: "Abr 2024", estado: "completada" },
-                  { etapa: "Quimioterapia", fecha: "Jun 2024", estado: "activa" },
-                  { etapa: "Radioterapia", fecha: "Oct 2024", estado: "pendiente" },
-                  { etapa: "Seguimiento", fecha: "Ene 2025", estado: "pendiente" },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className={`w-3 h-3 rounded-full flex-shrink-0 ${
-                      item.estado === "completada" ? "bg-success" :
-                      item.estado === "activa" ? "bg-primary" : "bg-gray-200"
-                    }`} />
-                    <div className="flex-1 flex items-center justify-between">
-                      <span className={`text-sm font-medium ${item.estado === "pendiente" ? "text-muted" : "text-foreground"}`}>
-                        {item.etapa}
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-muted">{item.fecha}</span>
-                        <Badge variant={
-                          item.estado === "completada" ? "success" :
-                          item.estado === "activa" ? "info" : "default"
-                        }>
-                          {item.estado === "completada" ? "Completada" :
-                           item.estado === "activa" ? "En curso" : "Pendiente"}
-                        </Badge>
+              {proceso.length === 0 ? (
+                <p className="text-sm text-muted text-center py-4">
+                  No se encontraron etapas de tratamiento.
+                </p>
+              ) : (
+                <div className="space-y-3">
+                  {proceso.map((item) => {
+                    const paso = item.pasos;
+                    const estado = item.estado;
+                    return (
+                      <div key={item.id} className="flex items-center gap-3">
+                        <div className={`w-3 h-3 rounded-full flex-shrink-0 ${
+                          estado === "completado" ? "bg-success" :
+                          estado === "en_curso"   ? "bg-primary" : "bg-gray-200"
+                        }`} />
+                        <div className="flex-1 flex items-center justify-between">
+                          <span className={`text-sm font-medium ${
+                            estado === "pendiente" ? "text-muted" : "text-foreground"
+                          }`}>
+                            {paso?.nombre ?? "—"}
+                          </span>
+                          <Badge variant={
+                            estado === "completado" ? "success" :
+                            estado === "en_curso"   ? "info"    : "default"
+                          }>
+                            {estado === "completado" ? "Completado" :
+                             estado === "en_curso"   ? "En curso"  : "Pendiente"}
+                          </Badge>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </Card>
           </div>
 
-          {/* Próximas citas */}
+          {/* Próximas citas — placeholder hasta tener tabla citas */}
           <Card title="Próximas Citas">
-            <div className="space-y-3">
-              {[
-                { tipo: "Oncología", fecha: "15 Jun", hora: "10:00 AM", lugar: "Consultorio 3" },
-                { tipo: "Laboratorio", fecha: "18 Jun", hora: "8:00 AM", lugar: "Lab. Clínico" },
-                { tipo: "Nutrición", fecha: "22 Jun", hora: "3:00 PM", lugar: "Consultorio 7" },
-              ].map((cita, i) => (
-                <div key={i} className="flex gap-3 p-3 rounded-lg bg-gray-50">
-                  <div className="w-10 text-center flex-shrink-0">
-                    <p className="text-xs font-bold text-primary">{cita.fecha.split(" ")[0]}</p>
-                    <p className="text-xs text-muted">{cita.fecha.split(" ")[1]}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{cita.tipo}</p>
-                    <p className="text-xs text-muted">{cita.hora} · {cita.lugar}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <p className="text-sm text-muted text-center py-4">
+              No tienes citas programadas.
+            </p>
           </Card>
         </div>
       </div>

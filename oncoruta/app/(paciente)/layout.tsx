@@ -8,7 +8,18 @@ export default async function PacienteLayout({ children }: { children: React.Rea
 
   if (!user) redirect("/login");
 
-  const userName = user.user_metadata?.full_name ?? user.email ?? "";
+  // Nombre desde tabla usuarios; fallback a user_metadata (guardado en signUp)
+  const { data: usuario } = await supabase
+    .from("usuarios")
+    .select("nombre")
+    .eq("id", user.id)
+    .single();
+
+  const userName =
+    usuario?.nombre ??
+    (user.user_metadata?.nombre as string | undefined) ??
+    user.email ??
+    "";
 
   return (
     <div className="flex min-h-screen bg-background">
