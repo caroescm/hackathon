@@ -49,8 +49,9 @@ export default async function DashboardPage() {
   // 2. Proceso del paciente JOIN pasos, ordenado por pasos.orden
   let proceso = await getProceso(supabase, userId);
 
-  // 3. Auto-crear si no hay registros para este paciente
-  if (proceso.length === 0) {
+  // 3. Auto-crear solo si no existen registros con paso_id válido
+  const tieneProcesoValido = proceso.some(p => p.pasos !== null);
+  if (!tieneProcesoValido) {
     const { data: pasos, error: pasosError } = await supabase
       .from("pasos")
       .select("id, orden")

@@ -30,7 +30,7 @@ export interface PerfilVulnerabilidad {
   id: string;
   paciente_id: string;
   jefa_hogar: boolean;
-  viene_provincia: boolean;
+  de_provincia: boolean;
   tiene_discapacidad: boolean;
   habla_quechua: boolean;
   created_at: string;

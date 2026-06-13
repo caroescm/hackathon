@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Phone, PlayCircle, BookOpen } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { getRolAction } from "@/app/actions/auth";
 import LogoHeader from "@/components/ui/LogoHeader";
 import type { UserRole } from "@/lib/supabase/types";
 
@@ -47,7 +48,7 @@ export default function LoginPage() {
     setErrors({});
 
     const email = `${dni}@inen.gob.pe`;
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data: authData, error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       // Verificar si el DNI existe para dar un error específico
@@ -67,18 +68,12 @@ export default function LoginPage() {
       return;
     }
 
-    // Obtener rol del usuario de la tabla usuarios
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { setLoading(false); return; }
+    const userId = authData.user?.id;
+    if (!userId) { setLoading(false); return; }
 
-    const { data: usuario } = await supabase
-      .from("usuarios")
-      .select("rol")
-      .eq("id", user.id)
-      .single();
-
-    const role = (usuario?.rol ?? "paciente") as UserRole;
-    router.push(dashboardForRole(role));
+    // Server action con service role — bypasa la política RLS de authenticated
+    const rol = await getRolAction(userId);
+    router.push(dashboardForRole(rol as UserRole));
   }
 
   return (

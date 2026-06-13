@@ -8,7 +8,7 @@ import { getPrioridad, type Prioridad } from "@/lib/utils/prioridad";
 
 type PerfilVulnerabilidad = {
   jefa_hogar: boolean | null;
-  viene_provincia: boolean | null;
+  de_provincia: boolean | null;
   tiene_discapacidad: boolean | null;
   habla_quechua: boolean | null;
 } | null;

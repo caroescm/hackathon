@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/server";
 import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
@@ -13,7 +13,7 @@ import { notFound } from "next/navigation";
 
 type PerfilVulnerabilidad = {
   jefa_hogar: boolean | null;
-  viene_provincia: boolean | null;
+  de_provincia: boolean | null;
   tiene_discapacidad: boolean | null;
   habla_quechua: boolean | null;
 } | null;
@@ -72,7 +72,7 @@ const ESTADO_CITA_BADGE: Record<string, { variant: "warning" | "success" | "defa
 
 const FLAGS_VULNERABILIDAD: { key: keyof NonNullable<PerfilVulnerabilidad>; label: string }[] = [
   { key: "jefa_hogar",         label: "Jefa de hogar" },
-  { key: "viene_provincia",    label: "Viene de provincia" },
+  { key: "de_provincia",    label: "Viene de provincia" },
   { key: "tiene_discapacidad", label: "Discapacidad" },
   { key: "habla_quechua",      label: "Habla quechua" },
 ];
@@ -90,7 +90,7 @@ function formatFecha(fecha: string) {
 /* ─── page ───────────────────────────────────────────── */
 
 export default async function PacienteExpedientePage({ params }: { params: { id: string } }) {
-  const supabase = createClient();
+  const supabase = createServiceClient();
 
   const [
     { data: paciente },

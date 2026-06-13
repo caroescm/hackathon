@@ -1,12 +1,14 @@
-import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/server";
 import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
-import TablaPacientes, { type PacienteRow } from "./TablaPacientes";
+import Badge from "@/components/ui/Badge";
+import { getPrioridad } from "@/lib/utils/prioridad";
 import { Users, Calendar, FileText, AlertCircle } from "lucide-react";
+import Link from "next/link";
 
 type PerfilVulnerabilidad = {
   jefa_hogar: boolean | null;
-  viene_provincia: boolean | null;
+  de_provincia: boolean | null;
   tiene_discapacidad: boolean | null;
   habla_quechua: boolean | null;
 } | null;
@@ -16,33 +18,38 @@ type ProcesoPaciente = {
   pasos: { nombre: string; orden: number } | null;
 };
 
-type PacienteRaw = {
+type Paciente = {
   id: string;
   nombre: string;
   dni: string | null;
-  created_at: string;
   perfil_vulnerabilidad: PerfilVulnerabilidad;
   proceso_paciente: ProcesoPaciente[];
 };
 
-function esInactivo(p: PacienteRaw): boolean {
-  const creado = new Date(p.created_at);
-  const diasDesdeRegistro = (Date.now() - creado.getTime()) / (1000 * 60 * 60 * 24);
-  if (diasDesdeRegistro <= 7) return false;
+type Doctor = {
+  id: string;
+  nombre: string;
+  especialidad: string | null;
+  estado: string | null;
+};
 
-  const primerPaso = p.proceso_paciente.find(
-    (pp) => pp.pasos?.orden === 1 && pp.estado === "en_curso"
-  );
-  return !!primerPaso;
+const PRIORIDAD_BADGE = {
+  ALTA:  { variant: "danger"  as const, label: "Alta" },
+  MEDIA: { variant: "warning" as const, label: "Media" },
+} as const;
+
+function etapaActual(procesos: ProcesoPaciente[]): string | null {
+  return procesos.find((p) => p.estado === "en_curso")?.pasos?.nombre ?? null;
 }
 
 export default async function AdminDashboardPage() {
-  const supabase = createClient();
+  const supabase = createServiceClient();
 
   const [
     { count: totalPacientes },
     { count: docsPendientes },
-    { data: pacientes },
+    { data: pacientesData },
+    { data: doctoresData },
   ] = await Promise.all([
     supabase
       .from("usuarios")
@@ -55,26 +62,21 @@ export default async function AdminDashboardPage() {
     supabase
       .from("usuarios")
       .select(`
-        id, nombre, dni, created_at,
-        perfil_vulnerabilidad(jefa_hogar, viene_provincia, tiene_discapacidad, habla_quechua),
+        id, nombre, dni,
+        perfil_vulnerabilidad(jefa_hogar, de_provincia, tiene_discapacidad, habla_quechua),
         proceso_paciente(estado, pasos(nombre, orden))
       `)
       .eq("rol", "paciente")
-      .order("created_at", { ascending: false }),
+      .limit(4),
+    supabase
+      .from("doctores")
+      .select("id, nombre, especialidad, estado")
+      .eq("estado", "activo")
+      .limit(4),
   ]);
 
-  const listaRaw = (pacientes as PacienteRaw[] | null) ?? [];
-
-  const lista: PacienteRow[] = listaRaw.map((p) => ({
-    id: p.id,
-    nombre: p.nombre,
-    dni: p.dni,
-    perfil_vulnerabilidad: p.perfil_vulnerabilidad,
-    proceso_paciente: p.proceso_paciente,
-    inactivo: esInactivo(p),
-  }));
-
-  const totalAlertas = lista.filter((p) => p.inactivo).length;
+  const pacientes = (pacientesData as Paciente[] | null) ?? [];
+  const doctores = (doctoresData as Doctor[] | null) ?? [];
 
   const stats = [
     {
@@ -97,7 +99,7 @@ export default async function AdminDashboardPage() {
     },
     {
       label: "Alertas",
-      value: totalAlertas > 0 ? totalAlertas.toString() : "0",
+      value: "0",
       icon: <AlertCircle size={20} className="text-danger" />,
       color: "bg-red-50",
     },
@@ -124,16 +126,76 @@ export default async function AdminDashboardPage() {
           ))}
         </div>
 
-        {/* Tabla con filtros */}
-        <Card title="Pacientes" description="Lista de pacientes registrados">
-          {lista.length === 0 ? (
-            <p className="text-sm text-muted text-center py-4">
-              No hay pacientes registrados aún.
-            </p>
-          ) : (
-            <TablaPacientes pacientes={lista} />
-          )}
-        </Card>
+        {/* Dos columnas: pacientes recientes + doctores */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Pacientes recientes */}
+          <Card title="Pacientes recientes">
+            {pacientes.length === 0 ? (
+              <p className="text-sm text-muted text-center py-4">No hay pacientes registrados.</p>
+            ) : (
+              <div className="space-y-0">
+                {pacientes.map((p) => {
+                  const etapa = etapaActual(p.proceso_paciente);
+                  const prioridad = getPrioridad(p.perfil_vulnerabilidad);
+                  const badgePrioridad = prioridad !== "BAJA" ? PRIORIDAD_BADGE[prioridad] : null;
+                  return (
+                    <div key={p.id} className="flex items-center justify-between py-3 border-b border-border last:border-0">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <p className="text-sm font-medium text-foreground truncate">{p.nombre}</p>
+                          {badgePrioridad && (
+                            <Badge variant={badgePrioridad.variant}>{badgePrioridad.label}</Badge>
+                          )}
+                        </div>
+                        <p className="text-xs text-muted">{etapa ?? "Sin etapa"}</p>
+                      </div>
+                      <Link
+                        href={`/admin/paciente/${p.id}`}
+                        className="text-primary text-xs font-medium hover:underline flex-shrink-0 ml-3"
+                      >
+                        Ver
+                      </Link>
+                    </div>
+                  );
+                })}
+                <div className="pt-3">
+                  <Link href="/admin/pacientes" className="text-xs text-primary font-medium hover:underline">
+                    Ver todos los pacientes →
+                  </Link>
+                </div>
+              </div>
+            )}
+          </Card>
+
+          {/* Doctores */}
+          <Card title="Doctores">
+            {doctores.length === 0 ? (
+              <div className="space-y-3">
+                <p className="text-sm text-muted text-center py-4">No hay doctores registrados.</p>
+                <Link href="/admin/doctores" className="text-xs text-primary font-medium hover:underline">
+                  Ir a doctores →
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-0">
+                {doctores.map((d) => (
+                  <div key={d.id} className="flex items-center justify-between py-3 border-b border-border last:border-0">
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{d.nombre}</p>
+                      <p className="text-xs text-muted">{d.especialidad ?? "—"}</p>
+                    </div>
+                    <Badge variant="success">Activo</Badge>
+                  </div>
+                ))}
+                <div className="pt-3">
+                  <Link href="/admin/doctores" className="text-xs text-primary font-medium hover:underline">
+                    Ver todos los doctores →
+                  </Link>
+                </div>
+              </div>
+            )}
+          </Card>
+        </div>
       </div>
     </>
   );

@@ -11,6 +11,7 @@ import {
   LogOut,
   Heart,
   Users,
+  Stethoscope,
   LayoutDashboard,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
@@ -38,7 +39,8 @@ const navByRole: Record<UserRole, NavItem[]> = {
   ],
   admin: [
     { href: "/admin/dashboard", label: "Panel", icon: <LayoutDashboard size={18} />, exact: true },
-    { href: "/admin/paciente", label: "Pacientes", icon: <Users size={18} /> },
+    { href: "/admin/pacientes", label: "Pacientes", icon: <Users size={18} /> },
+    { href: "/admin/doctores", label: "Doctores", icon: <Stethoscope size={18} /> },
   ],
 };
 

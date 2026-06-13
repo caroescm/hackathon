@@ -160,7 +160,7 @@ export default function RegistroPage() {
     await supabase.from("perfil_vulnerabilidad").insert({
       paciente_id: user.id,
       jefa_hogar: vulnerabilidad.jefaHogar,
-      viene_provincia: vulnerabilidad.vieneProvincia,
+      de_provincia: vulnerabilidad.vieneProvincia,
       tiene_discapacidad: vulnerabilidad.tieneDiscapacidad,
       habla_quechua: vulnerabilidad.hablaQuechua,
     });
