@@ -8,7 +8,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   if (!user) redirect("/login");
 
-  const userName = user.user_metadata?.full_name ?? user.email ?? "";
+  const { data: usuario } = await supabase
+    .from("usuarios")
+    .select("nombre")
+    .eq("id", user.id)
+    .single();
+
+  const userName = usuario?.nombre ?? user.email ?? "";
 
   return (
     <div className="flex min-h-screen bg-background">

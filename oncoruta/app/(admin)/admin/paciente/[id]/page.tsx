@@ -1,28 +1,134 @@
+import { createClient } from "@/lib/supabase/server";
 import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
-import Button from "@/components/ui/Button";
-import { ArrowLeft, Calendar, FileText, Phone } from "lucide-react";
+import RevisarDocumento from "@/components/admin/RevisarDocumento";
+import { ArrowLeft, Check, Clock, Circle } from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
-export default function PacienteExpedientePage({ params }: { params: { id: string } }) {
-  const paciente = {
-    nombre: "Ana García López",
-    historia: "HC-2024-001",
-    dni: "12345678",
-    telefono: "+51 999 888 777",
-    fechaNacimiento: "15 Mar 1975",
-    diagnostico: "Carcinoma ductal invasivo de mama izquierda",
-    estadio: "IIB",
-    etapa: "Quimioterapia",
-    medico: "Dra. María Torres",
-    fechaDiagnostico: "10 Mar 2024",
-  };
+/* ─── tipos ─────────────────────────────────────────── */
+
+type PerfilVulnerabilidad = {
+  jefa_hogar: boolean | null;
+  viene_provincia: boolean | null;
+  tiene_discapacidad: boolean | null;
+  habla_quechua: boolean | null;
+} | null;
+
+type Paciente = {
+  id: string;
+  nombre: string;
+  dni: string | null;
+  telefono: string | null;
+  idioma: string | null;
+  perfil_vulnerabilidad: PerfilVulnerabilidad;
+};
+
+type PasoProceso = {
+  id: string;
+  estado: string;
+  pasos: { nombre: string; descripcion: string | null; orden: number } | null;
+};
+
+type Documento = {
+  id: string;
+  nombre: string;
+  estado: string;
+  pasos: { nombre: string } | null;
+};
+
+type Cita = {
+  id: string;
+  servicio: string;
+  fecha: string;
+  hora: string | null;
+  piso: string | null;
+  estado: string;
+};
+
+/* ─── helpers ────────────────────────────────────────── */
+
+const ESTADO_DOC_BADGE: Record<string, { variant: "info" | "warning" | "success" | "danger" | "default"; label: string }> = {
+  enviado:     { variant: "info",    label: "Enviado" },
+  en_revision: { variant: "warning", label: "En revisión" },
+  aprobado:    { variant: "success", label: "Aprobado" },
+  rechazado:   { variant: "danger",  label: "Rechazado" },
+};
+
+const ESTADO_CITA_BADGE: Record<string, { variant: "warning" | "success" | "default" | "danger"; label: string }> = {
+  programada: { variant: "warning", label: "Programada" },
+  confirmada: { variant: "success", label: "Confirmada" },
+  completada: { variant: "default", label: "Completada" },
+};
+
+const FLAGS_VULNERABILIDAD: { key: keyof NonNullable<PerfilVulnerabilidad>; label: string }[] = [
+  { key: "jefa_hogar",         label: "Jefa de hogar" },
+  { key: "viene_provincia",    label: "Viene de provincia" },
+  { key: "tiene_discapacidad", label: "Discapacidad" },
+  { key: "habla_quechua",      label: "Habla quechua" },
+];
+
+function formatFecha(fecha: string) {
+  try {
+    return new Date(fecha + "T00:00:00").toLocaleDateString("es-PE", {
+      day: "numeric", month: "short", year: "numeric",
+    });
+  } catch {
+    return fecha;
+  }
+}
+
+/* ─── page ───────────────────────────────────────────── */
+
+export default async function PacienteExpedientePage({ params }: { params: { id: string } }) {
+  const supabase = createClient();
+
+  const [
+    { data: paciente },
+    { data: proceso },
+    { data: documentos },
+    { data: citas },
+  ] = await Promise.all([
+    supabase
+      .from("usuarios")
+      .select("*, perfil_vulnerabilidad(*)")
+      .eq("id", params.id)
+      .single(),
+    supabase
+      .from("proceso_paciente")
+      .select("id, estado, pasos(nombre, descripcion, orden)")
+      .eq("paciente_id", params.id)
+      .order("orden", { referencedTable: "pasos", ascending: true }),
+    supabase
+      .from("documentos")
+      .select("id, nombre, estado, pasos(nombre)")
+      .eq("paciente_id", params.id)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("citas")
+      .select("id, servicio, fecha, hora, piso, estado")
+      .eq("paciente_id", params.id)
+      .order("fecha", { ascending: true }),
+  ]);
+
+  if (!paciente) notFound();
+
+  const p = paciente as Paciente;
+  const pasosProceso = (proceso as PasoProceso[] | null) ?? [];
+  const listaDocumentos = (documentos as Documento[] | null) ?? [];
+  const listaCitas = (citas as Cita[] | null) ?? [];
+
+  const flagsActivos = FLAGS_VULNERABILIDAD.filter(
+    (f) => p.perfil_vulnerabilidad?.[f.key] === true
+  );
 
   return (
     <>
-      <TopBar title="Expediente del Paciente" subtitle={paciente.historia} />
+      <TopBar title="Expediente del Paciente" subtitle={p.nombre} />
+
       <div className="p-6 space-y-6">
+        {/* Volver */}
         <Link
           href="/admin/dashboard"
           className="inline-flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors"
@@ -31,78 +137,136 @@ export default function PacienteExpedientePage({ params }: { params: { id: strin
           Volver al panel
         </Link>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-4">
-            <Card title="Información del Paciente">
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-xs text-muted mb-0.5">Nombre completo</p>
-                  <p className="font-medium text-foreground">{paciente.nombre}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted mb-0.5">DNI</p>
-                  <p className="font-medium text-foreground">{paciente.dni}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted mb-0.5">Fecha de nacimiento</p>
-                  <p className="font-medium text-foreground">{paciente.fechaNacimiento}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted mb-0.5">Teléfono</p>
-                  <p className="font-medium text-foreground">{paciente.telefono}</p>
-                </div>
-                <div className="col-span-2">
-                  <p className="text-xs text-muted mb-0.5">Diagnóstico</p>
-                  <p className="font-medium text-foreground">{paciente.diagnostico}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted mb-0.5">Estadio</p>
-                  <Badge variant="danger">{paciente.estadio}</Badge>
-                </div>
-                <div>
-                  <p className="text-xs text-muted mb-0.5">Fecha de diagnóstico</p>
-                  <p className="font-medium text-foreground">{paciente.fechaDiagnostico}</p>
-                </div>
-              </div>
-            </Card>
-
-            <Card title="Acciones Rápidas">
-              <div className="flex flex-wrap gap-3">
-                <Button size="sm" variant="secondary">
-                  <Calendar size={14} />
-                  Agendar cita
-                </Button>
-                <Button size="sm" variant="secondary">
-                  <FileText size={14} />
-                  Subir documento
-                </Button>
-                <Button size="sm" variant="secondary">
-                  <Phone size={14} />
-                  Enviar WhatsApp
-                </Button>
-              </div>
-            </Card>
+        {/* A. Info del paciente */}
+        <Card title="Información del paciente">
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <p className="text-xs text-muted mb-0.5">Nombre completo</p>
+              <p className="font-medium text-foreground">{p.nombre}</p>
+            </div>
+            <div>
+              <p className="text-xs text-muted mb-0.5">DNI</p>
+              <p className="font-medium text-foreground font-mono">{p.dni ?? "—"}</p>
+            </div>
+            <div>
+              <p className="text-xs text-muted mb-0.5">Teléfono</p>
+              <p className="font-medium text-foreground">{p.telefono ?? "—"}</p>
+            </div>
+            <div>
+              <p className="text-xs text-muted mb-0.5">Idioma</p>
+              <p className="font-medium text-foreground">{p.idioma ?? "—"}</p>
+            </div>
           </div>
+        </Card>
 
-          <div className="space-y-4">
-            <Card title="Estado del Proceso">
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-muted">Etapa actual</span>
-                  <Badge variant="info">{paciente.etapa}</Badge>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted">Médico tratante</span>
-                  <span className="font-medium text-foreground text-xs">{paciente.medico}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted">N° Historia</span>
-                  <span className="font-mono text-xs text-foreground">{paciente.historia}</span>
-                </div>
-              </div>
-            </Card>
-          </div>
-        </div>
+        {/* B. Perfil de vulnerabilidad */}
+        <Card title="Perfil de vulnerabilidad">
+          {flagsActivos.length === 0 ? (
+            <p className="text-sm text-muted">Sin factores de vulnerabilidad registrados.</p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {flagsActivos.map((f) => (
+                <Badge key={f.key} variant="danger">{f.label}</Badge>
+              ))}
+            </div>
+          )}
+        </Card>
+
+        {/* C. Proceso */}
+        <Card title="Proceso oncológico">
+          {pasosProceso.length === 0 ? (
+            <p className="text-sm text-muted">El proceso aún no ha sido configurado.</p>
+          ) : (
+            <ol className="relative space-y-0">
+              {pasosProceso.map((pp, i) => {
+                const esUltimo = i === pasosProceso.length - 1;
+                const completado = pp.estado === "completado";
+                const enCurso = pp.estado === "en_curso";
+
+                return (
+                  <li key={pp.id} className="flex gap-4">
+                    {/* línea + ícono */}
+                    <div className="flex flex-col items-center">
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 z-10 ${
+                        completado ? "bg-success text-white" :
+                        enCurso    ? "bg-primary text-white ring-4 ring-primary/20" :
+                        "bg-gray-100 text-gray-400"
+                      }`}>
+                        {completado ? <Check size={13} /> : enCurso ? <Clock size={13} /> : <Circle size={13} />}
+                      </div>
+                      {!esUltimo && <div className="w-px flex-1 bg-gray-200 my-1" />}
+                    </div>
+
+                    {/* contenido */}
+                    <div className={`pb-6 ${esUltimo ? "" : ""}`}>
+                      <p className={`text-sm font-semibold ${completado || enCurso ? "text-foreground" : "text-muted"}`}>
+                        {pp.pasos?.nombre ?? `Paso ${i + 1}`}
+                      </p>
+                      {pp.pasos?.descripcion && (
+                        <p className="text-xs text-muted mt-0.5">{pp.pasos.descripcion}</p>
+                      )}
+                      {enCurso && (
+                        <span className="inline-block mt-1 text-xs font-medium text-primary">En curso</span>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          )}
+        </Card>
+
+        {/* D. Documentos */}
+        <Card title="Documentos" description={listaDocumentos.length > 0 ? `${listaDocumentos.length} archivo${listaDocumentos.length !== 1 ? "s" : ""}` : undefined}>
+          {listaDocumentos.length === 0 ? (
+            <p className="text-sm text-muted">La paciente aún no ha subido documentos.</p>
+          ) : (
+            <div className="space-y-3">
+              {listaDocumentos.map((doc) => {
+                const badge = ESTADO_DOC_BADGE[doc.estado] ?? { variant: "default" as const, label: doc.estado };
+                const revisable = doc.estado === "enviado" || doc.estado === "en_revision";
+                return (
+                  <div key={doc.id} className="border border-border rounded-lg p-3 space-y-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{doc.nombre}</p>
+                        {doc.pasos?.nombre && (
+                          <p className="text-xs text-muted">{doc.pasos.nombre}</p>
+                        )}
+                      </div>
+                      <Badge variant={badge.variant}>{badge.label}</Badge>
+                    </div>
+                    {revisable && <RevisarDocumento documentoId={doc.id} />}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </Card>
+
+        {/* E. Citas */}
+        <Card title="Citas">
+          {listaCitas.length === 0 ? (
+            <p className="text-sm text-muted">No hay citas registradas para esta paciente.</p>
+          ) : (
+            <div className="space-y-2">
+              {listaCitas.map((cita) => {
+                const badge = ESTADO_CITA_BADGE[cita.estado] ?? { variant: "default" as const, label: cita.estado };
+                return (
+                  <div key={cita.id} className="flex items-center justify-between p-3 border border-border rounded-lg">
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{cita.servicio}</p>
+                      <p className="text-xs text-muted">
+                        {formatFecha(cita.fecha)}{cita.hora ? ` · ${cita.hora}` : ""}{cita.piso ? ` · ${cita.piso}` : ""}
+                      </p>
+                    </div>
+                    <Badge variant={badge.variant}>{badge.label}</Badge>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </Card>
       </div>
     </>
   );
