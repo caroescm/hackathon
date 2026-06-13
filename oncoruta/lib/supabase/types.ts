@@ -1,5 +1,7 @@
 export type UserRole = "paciente" | "familiar" | "admin";
 
+// ─── Auth / Profiles ─────────────────────────────────────────────────────────
+
 export interface Profile {
   id: string;
   email: string;
@@ -8,6 +10,54 @@ export interface Profile {
   phone?: string;
   created_at: string;
 }
+
+// ─── Tabla: usuarios ─────────────────────────────────────────────────────────
+
+export interface Usuario {
+  id: string;
+  dni: string;
+  nombre_completo: string;
+  telefono?: string;
+  email?: string;
+  rol: UserRole;
+  idioma: "es" | "qu";
+  created_at: string;
+}
+
+// ─── Tabla: perfil_vulnerabilidad ────────────────────────────────────────────
+
+export interface PerfilVulnerabilidad {
+  id: string;
+  paciente_id: string;
+  jefa_hogar: boolean;
+  viene_provincia: boolean;
+  tiene_discapacidad: boolean;
+  habla_quechua: boolean;
+  created_at: string;
+}
+
+// ─── Tabla: proceso_paciente ─────────────────────────────────────────────────
+
+export type EstadoEtapa = "pendiente" | "en_curso" | "completado";
+
+export interface ProcesoPaciente {
+  id: string;
+  paciente_id: string;
+  etapa: EtapaProceso;
+  estado: EstadoEtapa;
+  orden: number;
+  created_at: string;
+}
+
+// ─── Tipos médicos ────────────────────────────────────────────────────────────
+
+export type EtapaProceso =
+  | "diagnostico"
+  | "cirugia"
+  | "quimioterapia"
+  | "radioterapia"
+  | "hormonoterapia"
+  | "seguimiento";
 
 export interface Paciente {
   id: string;
@@ -19,14 +69,6 @@ export interface Paciente {
   etapa_actual: EtapaProceso;
   familiar_id?: string;
 }
-
-export type EtapaProceso =
-  | "diagnostico"
-  | "cirugia"
-  | "quimioterapia"
-  | "radioterapia"
-  | "hormonoterapia"
-  | "seguimiento";
 
 export interface Cita {
   id: string;
