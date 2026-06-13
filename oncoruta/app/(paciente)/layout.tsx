@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import Sidebar from "@/components/layout/Sidebar";
+import ChatBot from "@/components/chat/ChatBot";
 
 export default async function PacienteLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient();
@@ -25,6 +26,7 @@ export default async function PacienteLayout({ children }: { children: React.Rea
     <div className="flex min-h-screen bg-background">
       <Sidebar role="paciente" userName={userName} />
       <main className="flex-1 flex flex-col min-w-0">{children}</main>
+      <ChatBot />
     </div>
   );
 }
