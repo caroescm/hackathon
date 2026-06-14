@@ -46,10 +46,35 @@ export default async function DashboardPage() {
     (usuario?.nombre ?? (user.user_metadata?.nombre as string | undefined) ?? "")
       .split(" ")[0] || "Paciente";
 
-  // 2. Proceso del paciente JOIN pasos, ordenado por pasos.orden
+  const hoy = new Date().toISOString().split("T")[0];
+
+  // 2. Stats dinámicos + proceso en paralelo
+  const [{ data: proximaCita }, { count: totalDocumentos }] = await Promise.all([
+    supabase
+      .from("citas")
+      .select("servicio, fecha, estado")
+      .eq("paciente_id", userId)
+      .in("estado", ["programada", "confirmada", "solicitada"])
+      .gte("fecha", hoy)
+      .order("fecha", { ascending: true })
+      .limit(1)
+      .maybeSingle(),
+    supabase
+      .from("documentos")
+      .select("id", { count: "exact", head: true })
+      .eq("paciente_id", userId),
+  ]);
+
+  const citaFechaFormateada = proximaCita
+    ? new Date(proximaCita.fecha + "T00:00:00").toLocaleDateString("es-PE", {
+        day: "numeric", month: "short",
+      })
+    : null;
+
+  // 3. Proceso del paciente JOIN pasos, ordenado por pasos.orden
   let proceso = await getProceso(supabase, userId);
 
-  // 3. Auto-crear solo si no existen registros con paso_id válido
+  // 4. Auto-crear solo si no existen registros con paso_id válido
   const tieneProcesoValido = proceso.some(p => p.pasos !== null);
   if (!tieneProcesoValido) {
     const { data: pasos, error: pasosError } = await supabase
@@ -79,14 +104,14 @@ export default async function DashboardPage() {
   const stats = [
     {
       label: "Próxima cita",
-      value: "—",
-      sub: "Sin citas programadas",
+      value: citaFechaFormateada ?? "—",
+      sub: citaFechaFormateada ? (proximaCita!.servicio ?? "Cita programada") : "Sin citas programadas",
       icon: <Calendar size={20} className="text-primary" />,
       color: "bg-primary-light",
     },
     {
       label: "Documentos",
-      value: "0",
+      value: (totalDocumentos ?? 0).toString(),
       sub: "archivos subidos",
       icon: <FileText size={20} className="text-success" />,
       color: "bg-green-50",
@@ -171,11 +196,24 @@ export default async function DashboardPage() {
             </Card>
           </div>
 
-          {/* Próximas citas — placeholder hasta tener tabla citas */}
           <Card title="Próximas Citas">
-            <p className="text-sm text-muted text-center py-4">
-              No tienes citas programadas.
-            </p>
+            {proximaCita ? (
+              <div className="border border-border rounded-lg p-4 space-y-2">
+                <p className="text-sm font-semibold text-foreground">{proximaCita.servicio}</p>
+                {proximaCita.estado === "solicitada" ? (
+                  <Badge variant="warning">Pendiente de confirmación</Badge>
+                ) : (
+                  <div className="flex items-center gap-1.5 text-xs text-muted">
+                    <Calendar size={12} />
+                    {citaFechaFormateada}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-sm text-muted text-center py-4">
+                No tienes citas programadas.
+              </p>
+            )}
           </Card>
         </div>
       </div>

@@ -30,13 +30,6 @@ interface FieldErrors {
   general?: string;
 }
 
-const ETAPAS_PROCESO = [
-  { etapa: "diagnostico", orden: 1, estado: "en_curso" },
-  { etapa: "cirugia", orden: 2, estado: "pendiente" },
-  { etapa: "quimioterapia", orden: 3, estado: "pendiente" },
-  { etapa: "radioterapia", orden: 4, estado: "pendiente" },
-  { etapa: "seguimiento", orden: 5, estado: "pendiente" },
-] as const;
 
 export default function RegistroPage() {
   const router = useRouter();
@@ -171,13 +164,23 @@ export default function RegistroPage() {
       return;
     }
 
-    // 4. Crear los 5 registros del proceso de tratamiento
+    // 4. Obtener pasos reales de la DB y crear el proceso
+    const { data: pasos, error: pasosError } = await supabase
+      .from("pasos")
+      .select("id")
+      .order("orden", { ascending: true });
+
+    if (pasosError || !pasos || pasos.length === 0) {
+      setErrors({ general: "No se pudieron obtener las etapas de tratamiento. Contacte al administrador." });
+      setLoading(false);
+      return;
+    }
+
     const { error: procesoError } = await supabase.from("proceso_paciente").insert(
-      ETAPAS_PROCESO.map((e) => ({
+      pasos.map((paso, i) => ({
         paciente_id: user.id,
-        etapa: e.etapa,
-        estado: e.estado,
-        orden: e.orden,
+        paso_id: paso.id,
+        estado: i === 0 ? "en_curso" : "pendiente",
       }))
     );
 

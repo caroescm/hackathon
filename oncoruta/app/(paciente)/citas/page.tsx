@@ -17,8 +17,17 @@ type Cita = {
 const estadoVariant: Record<string, "success" | "info" | "warning" | "default" | "danger"> = {
   confirmada: "success",
   programada: "warning",
+  solicitada: "warning",
   completada: "default",
   cancelada: "danger",
+};
+
+const estadoLabel: Record<string, string> = {
+  confirmada: "Confirmada",
+  programada: "Programada",
+  solicitada: "Solicitada",
+  completada: "Completada",
+  cancelada: "Cancelada",
 };
 
 function formatFecha(fecha: string) {
@@ -67,25 +76,31 @@ export default async function CitasPage() {
                   <div className="flex items-start justify-between mb-3">
                     <h3 className="text-sm font-semibold text-foreground">{cita.servicio}</h3>
                     <Badge variant={estadoVariant[cita.estado] ?? "default"}>
-                      {cita.estado.charAt(0).toUpperCase() + cita.estado.slice(1)}
+                      {estadoLabel[cita.estado] ?? cita.estado}
                     </Badge>
                   </div>
-                  <div className="grid grid-cols-2 gap-2 text-xs text-muted">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar size={12} />
-                      {formatFecha(cita.fecha)}
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <Clock size={12} />
-                      {cita.hora ?? "Por confirmar"}
-                    </div>
-                    {cita.piso && (
-                      <div className="flex items-center gap-1.5 col-span-2">
-                        <MapPin size={12} />
-                        {cita.piso}
+                  {cita.estado === "solicitada" ? (
+                    <p className="text-xs text-muted italic">
+                      Solicitud enviada — pendiente de confirmación
+                    </p>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-2 text-xs text-muted">
+                      <div className="flex items-center gap-1.5">
+                        <Calendar size={12} />
+                        {formatFecha(cita.fecha)}
                       </div>
-                    )}
-                  </div>
+                      <div className="flex items-center gap-1.5">
+                        <Clock size={12} />
+                        {cita.hora ?? "Por confirmar"}
+                      </div>
+                      {cita.piso && (
+                        <div className="flex items-center gap-1.5 col-span-2">
+                          <MapPin size={12} />
+                          {cita.piso}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

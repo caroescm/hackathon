@@ -45,9 +45,14 @@ function etapaActual(procesos: ProcesoPaciente[]): string | null {
 export default async function AdminDashboardPage() {
   const supabase = createServiceClient();
 
+  const hoy = new Date().toISOString().split("T")[0];
+  const haceSeteDias = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
   const [
     { count: totalPacientes },
     { count: docsPendientes },
+    { count: citasHoy },
+    { count: alertas },
     { data: pacientesData },
     { data: doctoresData },
   ] = await Promise.all([
@@ -59,6 +64,15 @@ export default async function AdminDashboardPage() {
       .from("documentos")
       .select("id", { count: "exact", head: true })
       .eq("estado", "enviado"),
+    supabase
+      .from("citas")
+      .select("id", { count: "exact", head: true })
+      .eq("fecha", hoy),
+    supabase
+      .from("proceso_paciente")
+      .select("id", { count: "exact", head: true })
+      .neq("estado", "completado")
+      .lt("created_at", haceSeteDias),
     supabase
       .from("usuarios")
       .select(`
@@ -87,7 +101,7 @@ export default async function AdminDashboardPage() {
     },
     {
       label: "Citas hoy",
-      value: "—",
+      value: citasHoy?.toString() ?? "—",
       icon: <Calendar size={20} className="text-success" />,
       color: "bg-green-50",
     },
@@ -99,7 +113,7 @@ export default async function AdminDashboardPage() {
     },
     {
       label: "Alertas",
-      value: "0",
+      value: alertas?.toString() ?? "0",
       icon: <AlertCircle size={20} className="text-danger" />,
       color: "bg-red-50",
     },
