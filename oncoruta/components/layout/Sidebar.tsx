@@ -34,9 +34,6 @@ const navByRole: Record<UserRole, NavItem[]> = {
     { href: "/citas", label: "Mis Citas", icon: <Calendar size={18} /> },
     { href: "/informacion", label: "Información", icon: <Info size={18} /> },
   ],
-  familiar: [
-    { href: "/familiar/dashboard", label: "Inicio", icon: <Home size={18} />, exact: true },
-  ],
   admin: [
     { href: "/admin/dashboard", label: "Panel", icon: <LayoutDashboard size={18} />, exact: true },
     { href: "/admin/pacientes", label: "Pacientes", icon: <Users size={18} /> },

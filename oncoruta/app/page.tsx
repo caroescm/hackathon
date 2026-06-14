@@ -4,7 +4,6 @@ import type { UserRole } from "@/lib/supabase/types";
 
 function dashboardForRole(role: UserRole): string {
   if (role === "admin") return "/admin/dashboard";
-  if (role === "familiar") return "/familiar/dashboard";
   return "/dashboard";
 }
 

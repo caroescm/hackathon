@@ -1,4 +1,4 @@
-export type UserRole = "paciente" | "familiar" | "admin";
+export type UserRole = "paciente" | "admin";
 
 // ─── Auth / Profiles ─────────────────────────────────────────────────────────
 

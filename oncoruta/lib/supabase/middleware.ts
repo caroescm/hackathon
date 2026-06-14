@@ -9,7 +9,6 @@ const PUBLIC_PATHS = ["/login", "/registro"];
 // Rutas por rol: el prefijo de pathname determina el rol requerido
 const ROLE_ROUTES: { prefix: string; role: UserRole }[] = [
   { prefix: "/admin", role: "admin" },
-  { prefix: "/familiar", role: "familiar" },
   // Las rutas de paciente son el resto de rutas protegidas
 ];
 
@@ -19,7 +18,6 @@ const PACIENTE_PATHS = ["/dashboard", "/proceso", "/documentos", "/citas", "/inf
 // Redirige al dashboard correspondiente según el rol
 function dashboardForRole(role: UserRole): string {
   if (role === "admin") return "/admin/dashboard";
-  if (role === "familiar") return "/familiar/dashboard";
   return "/dashboard";
 }
 
