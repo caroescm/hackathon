@@ -2,20 +2,23 @@
 
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
 
 type Message = {
   role: "user" | "assistant";
   content: string;
 };
 
-const MENSAJE_INICIAL: Message = {
+const MENSAJE_ELECCION: Message = {
   role: "assistant",
-  content: "Hola, estoy aquí para acompañarte en cada paso de tu proceso en el INEN. Puedes preguntarme lo que necesites — estoy para ayudarte. 💙",
+  content: "Hola 💙 ¿En qué idioma prefieres que te acompañe?\n\nRimaykullayki 💙 ¿Ima simipi rimanayki munawanki?\n\n🇵🇪 Español  ·  Quechua",
 };
 
 export default function ChatBot() {
+  const { t } = useIdioma();
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([MENSAJE_INICIAL]);
+  const [chatIdioma, setChatIdioma] = useState<"es" | "qu" | null>(null);
+  const [messages, setMessages] = useState<Message[]>([MENSAJE_ELECCION]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -26,10 +29,18 @@ export default function ChatBot() {
   }, [messages, loading]);
 
   useEffect(() => {
-    if (open) {
+    if (open && chatIdioma !== null) {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
-  }, [open]);
+  }, [open, chatIdioma]);
+
+  function seleccionarIdioma(lang: "es" | "qu") {
+    setChatIdioma(lang);
+    const bienvenida: Message = lang === "es"
+      ? { role: "assistant", content: t.chatBienvenida }
+      : { role: "assistant", content: "Allinllachu kashanki 💙 Imaynallataq yanapasunki atini? Tapukuyniykikunata nin — kaypim kachkani." };
+    setMessages((prev) => [...prev, bienvenida]);
+  }
 
   async function sendMessage() {
     const text = input.trim();
@@ -43,17 +54,19 @@ export default function ChatBot() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({ message: text, chatIdioma }),
       });
       const data = await res.json();
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.reply ?? "No pude procesar tu mensaje." },
+        { role: "assistant", content: data.reply ?? (chatIdioma === "qu" ? "Mana atinimi. Kutimuytaq." : "No pude procesar tu mensaje.") },
       ]);
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Hubo un error al conectar. Por favor intenta de nuevo." },
+        { role: "assistant", content: chatIdioma === "qu"
+            ? "Conexión pantam. Kutimuytaq."
+            : "Hubo un error al conectar. Por favor intenta de nuevo." },
       ]);
     } finally {
       setLoading(false);
@@ -69,10 +82,11 @@ export default function ChatBot() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
-      {/* Ventana de chat */}
       {open && (
-        <div className="flex flex-col bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
-          style={{ width: 380, height: 540 }}>
+        <div
+          className="flex flex-col bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
+          style={{ width: 380, height: 540 }}
+        >
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-[#1a56db]">
             <div className="flex items-center gap-2">
@@ -80,8 +94,8 @@ export default function ChatBot() {
                 <MessageCircle size={16} className="text-white" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-white leading-tight">Asistente INEN</p>
-                <p className="text-xs text-blue-200 leading-tight">En línea</p>
+                <p className="text-sm font-semibold text-white leading-tight">{t.chatNombreAsistente}</p>
+                <p className="text-xs text-blue-200 leading-tight">{t.chatEnLinea}</p>
               </div>
             </div>
             <button
@@ -96,12 +110,9 @@ export default function ChatBot() {
           {/* Mensajes */}
           <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2 bg-gray-50">
             {messages.map((msg, i) => (
-              <div
-                key={i}
-                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-              >
+              <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm leading-snug ${
+                  className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm leading-snug whitespace-pre-wrap ${
                     msg.role === "user"
                       ? "bg-[#1a56db] text-white rounded-br-sm"
                       : "bg-white text-gray-800 border border-gray-200 rounded-bl-sm shadow-sm"
@@ -126,27 +137,44 @@ export default function ChatBot() {
             <div ref={bottomRef} />
           </div>
 
-          {/* Input */}
-          <div className="flex items-center gap-2 px-3 py-2.5 bg-white border-t border-gray-200">
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Escribe tu mensaje..."
-              disabled={loading}
-              className="flex-1 text-sm bg-gray-100 rounded-full px-4 py-2 outline-none placeholder:text-gray-400 disabled:opacity-60"
-            />
-            <button
-              onClick={sendMessage}
-              disabled={!input.trim() || loading}
-              className="w-9 h-9 rounded-full bg-[#1a56db] flex items-center justify-center text-white disabled:opacity-40 hover:bg-[#1648c4] transition-colors flex-shrink-0"
-              aria-label="Enviar"
-            >
-              <Send size={15} />
-            </button>
-          </div>
+          {/* Input area — language picker o input normal */}
+          {chatIdioma === null ? (
+            <div className="flex gap-2 px-3 py-2.5 bg-white border-t border-gray-200">
+              <button
+                onClick={() => seleccionarIdioma("es")}
+                className="flex-1 py-2 rounded-full border border-[#1a56db] text-[#1a56db] text-sm font-medium hover:bg-blue-50 transition-colors"
+              >
+                🇵🇪 Español
+              </button>
+              <button
+                onClick={() => seleccionarIdioma("qu")}
+                className="flex-1 py-2 rounded-full border border-[#1a56db] text-[#1a56db] text-sm font-medium hover:bg-blue-50 transition-colors"
+              >
+                Quechua
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 px-3 py-2.5 bg-white border-t border-gray-200">
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder={t.chatPlaceholder}
+                disabled={loading}
+                className="flex-1 text-sm bg-gray-100 rounded-full px-4 py-2 outline-none placeholder:text-gray-400 disabled:opacity-60"
+              />
+              <button
+                onClick={sendMessage}
+                disabled={!input.trim() || loading}
+                className="w-9 h-9 rounded-full bg-[#1a56db] flex items-center justify-center text-white disabled:opacity-40 hover:bg-[#1648c4] transition-colors flex-shrink-0"
+                aria-label="Enviar"
+              >
+                <Send size={15} />
+              </button>
+            </div>
+          )}
         </div>
       )}
 

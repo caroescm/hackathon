@@ -98,7 +98,7 @@ export async function updateSession(request: NextRequest) {
   const isPacienteRoute = PACIENTE_PATHS.some((p) => pathname.startsWith(p));
 
   if (matchedRoleRoute) {
-    // Ruta con prefijo explícito (/admin/*, /familiar/*)
+    // Ruta con prefijo explícito (/admin/*)
     if (role !== matchedRoleRoute.role) {
       const url = request.nextUrl.clone();
       url.pathname = dashboardForRole(role);

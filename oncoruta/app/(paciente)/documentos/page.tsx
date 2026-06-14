@@ -1,8 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import Card from "@/components/ui/Card";
-import Badge from "@/components/ui/Badge";
-import SubirDocumento from "@/components/paciente/SubirDocumento";
-import { FileText } from "lucide-react";
+import DocumentosCliente from "./DocumentosCliente";
 
 type Documento = {
   id: string;
@@ -11,23 +8,6 @@ type Documento = {
   created_at: string;
   pasos: { nombre: string } | null;
 };
-
-const estadoVariant: Record<string, "info" | "warning" | "success" | "danger" | "default"> = {
-  enviado:     "info",
-  en_revision: "warning",
-  aprobado:    "success",
-  rechazado:   "danger",
-};
-
-function formatFecha(fechaISO: string) {
-  try {
-    return new Date(fechaISO).toLocaleDateString("es-PE", {
-      day: "numeric", month: "short", year: "numeric",
-    });
-  } catch {
-    return fechaISO;
-  }
-}
 
 export default async function DocumentosPage() {
   const supabase = createClient();
@@ -43,51 +23,5 @@ export default async function DocumentosPage() {
 
   const documentos = (data as Documento[] | null) ?? [];
 
-  return (
-    <>
-      <div className="px-8 pt-7 pb-2">
-        <h1 className="text-lg font-bold text-gray-900">Mis Documentos</h1>
-        <p className="text-sm text-gray-500">Historial médico y resultados</p>
-      </div>
-      <div className="p-6 space-y-6">
-        <div className="flex justify-end">
-          <SubirDocumento />
-        </div>
-
-        <Card
-          title="Documentos"
-          description={documentos.length > 0 ? `${documentos.length} archivo${documentos.length !== 1 ? "s" : ""} en tu expediente` : undefined}
-        >
-          {documentos.length === 0 ? (
-            <p className="text-sm text-muted text-center py-4">Aún no has subido documentos.</p>
-          ) : (
-            <div className="space-y-2">
-              {documentos.map((doc) => (
-                <div
-                  key={doc.id}
-                  className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-primary-light rounded-lg flex items-center justify-center flex-shrink-0">
-                      <FileText size={16} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-foreground">{doc.nombre}</p>
-                      <p className="text-xs text-muted">
-                        {formatFecha(doc.created_at)}
-                        {doc.pasos?.nombre ? ` · ${doc.pasos.nombre}` : ""}
-                      </p>
-                    </div>
-                  </div>
-                  <Badge variant={estadoVariant[doc.estado] ?? "default"}>
-                    {doc.estado === "en_revision" ? "En revisión" : doc.estado.charAt(0).toUpperCase() + doc.estado.slice(1)}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          )}
-        </Card>
-      </div>
-    </>
-  );
+  return <DocumentosCliente documentos={documentos} />;
 }

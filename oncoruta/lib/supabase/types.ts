@@ -67,7 +67,6 @@ export interface Paciente {
   tipo_cancer?: string;
   estadio?: string;
   etapa_actual: EtapaProceso;
-  familiar_id?: string;
 }
 
 export interface Cita {

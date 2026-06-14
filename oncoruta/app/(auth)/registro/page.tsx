@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, ShieldCheck, Shield, Search, FileText } from "lucide-react";
+import { Eye, EyeOff, ShieldCheck } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import LogoHeader from "@/components/ui/LogoHeader";
 
@@ -202,9 +202,9 @@ export default function RegistroPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-10 px-4">
       <div className="w-full max-w-xl mx-auto">
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
 
           {/* Header con logos */}
           <div className="px-8 pt-8 pb-6 border-b border-gray-100">
@@ -237,8 +237,8 @@ export default function RegistroPage() {
                 placeholder="Ej: Ana García López"
                 value={form.nombreCompleto}
                 onChange={(e) => updateForm("nombreCompleto", e.target.value)}
-                className={`w-full border rounded-lg px-3 py-2.5 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
-                  errors.nombreCompleto ? "border-red-400 bg-red-50" : "border-gray-300"
+                className={`w-full border rounded-xl h-12 px-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.nombreCompleto ? "border-red-400 bg-red-50" : "border-gray-200"
                 }`}
               />
               {errors.nombreCompleto && (
@@ -258,8 +258,8 @@ export default function RegistroPage() {
                 maxLength={8}
                 value={form.dni}
                 onChange={(e) => updateForm("dni", e.target.value.replace(/\D/g, ""))}
-                className={`w-full border rounded-lg px-3 py-2.5 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
-                  errors.dni ? "border-red-400 bg-red-50" : "border-gray-300"
+                className={`w-full border rounded-xl h-12 px-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.dni ? "border-red-400 bg-red-50" : "border-gray-200"
                 }`}
               />
               {errors.dni && (
@@ -279,8 +279,8 @@ export default function RegistroPage() {
                 maxLength={9}
                 value={form.telefono}
                 onChange={(e) => updateForm("telefono", e.target.value.replace(/\D/g, ""))}
-                className={`w-full border rounded-lg px-3 py-2.5 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
-                  errors.telefono ? "border-red-400 bg-red-50" : "border-gray-300"
+                className={`w-full border rounded-xl h-12 px-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.telefono ? "border-red-400 bg-red-50" : "border-gray-200"
                 }`}
               />
               {errors.telefono && (
@@ -299,7 +299,7 @@ export default function RegistroPage() {
                 placeholder="correo@ejemplo.com"
                 value={form.email}
                 onChange={(e) => updateForm("email", e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full border border-gray-200 rounded-xl h-12 px-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -314,8 +314,8 @@ export default function RegistroPage() {
                   placeholder="Mínimo 8 caracteres"
                   value={form.password}
                   onChange={(e) => updateForm("password", e.target.value)}
-                  className={`w-full border rounded-lg px-3 py-2.5 pr-11 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
-                    errors.password ? "border-red-400 bg-red-50" : "border-gray-300"
+                  className={`w-full border rounded-xl h-12 px-4 pr-12 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    errors.password ? "border-red-400 bg-red-50" : "border-gray-200"
                   }`}
                 />
                 <button
@@ -340,32 +340,30 @@ export default function RegistroPage() {
               <p className="text-xs text-gray-500 mb-4 leading-relaxed">
                 Esto nos ayuda a mostrarte el proceso adecuado para tu caso.
               </p>
-              <div className="flex flex-col gap-3">
-                {([
-                  { value: "preventivo" as const, Icon: Shield, label: "Vengo a un chequeo preventivo" },
-                  { value: "sospecha" as const, Icon: Search, label: "Tengo sospecha de cáncer" },
-                  { value: "diagnosticado" as const, Icon: FileText, label: "Ya tengo un diagnóstico" },
-                ] as const).map(({ value, Icon, label }) => {
-                  const selected = tipoPaciente === value;
-                  return (
-                    <button
-                      key={value}
-                      type="button"
-                      onClick={() => {
-                        setTipoPaciente(value);
-                        setErrors((prev) => ({ ...prev, tipoPaciente: undefined }));
-                      }}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-lg border-2 text-sm font-medium text-left transition-all duration-150 ${
-                        selected
-                          ? "border-primary bg-primary-light text-primary"
-                          : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50"
-                      }`}
-                    >
-                      <Icon size={18} className="flex-shrink-0" />
-                      <span>{label}</span>
-                    </button>
-                  );
-                })}
+              <div className="grid grid-cols-1 gap-3">
+                {[
+                  { value: "preventivo" as const,   icon: "🔍", label: "Vengo a un chequeo preventivo", desc: "Mamografía o Papanicolaou sin síntomas" },
+                  { value: "sospecha" as const,      icon: "⚕️", label: "Tengo sospecha de cáncer",      desc: "Me enviaron del centro de salud o tengo síntomas" },
+                  { value: "diagnosticado" as const, icon: "📋", label: "Ya tengo un diagnóstico",        desc: "Confirman cáncer y empiezo tratamiento en el INEN" },
+                ].map(({ value, icon, label, desc }) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => {
+                      setTipoPaciente(value);
+                      setErrors((prev) => ({ ...prev, tipoPaciente: undefined }));
+                    }}
+                    className={`text-left p-4 rounded-xl border-2 transition-all duration-150 ${
+                      tipoPaciente === value
+                        ? "border-[#1a56db] bg-blue-50"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                  >
+                    <span className="text-lg mr-2">{icon}</span>
+                    <span className="font-medium text-sm text-gray-800">{label}</span>
+                    <p className="text-xs text-gray-500 mt-1 ml-7">{desc}</p>
+                  </button>
+                ))}
               </div>
               {errors.tipoPaciente && (
                 <p className="mt-2 text-xs text-red-500">{errors.tipoPaciente}</p>
@@ -412,7 +410,7 @@ export default function RegistroPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-primary hover:bg-primary-dark disabled:opacity-60 text-white font-bold py-3 rounded-lg text-sm uppercase tracking-widest transition-colors duration-200 flex items-center justify-center gap-2"
+                className="w-full h-12 bg-[#1a56db] hover:bg-[#1648c4] disabled:opacity-60 text-white font-semibold rounded-xl text-sm tracking-wide transition-colors duration-200 flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>

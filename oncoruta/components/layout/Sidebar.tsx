@@ -22,6 +22,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { UserRole } from "@/lib/supabase/types";
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
 
 interface SidebarProps {
   role?: UserRole;
@@ -41,6 +42,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [consultasOpen, setConsultasOpen] = useState(true);
   const [configOpen, setConfigOpen] = useState(false);
+  const { idioma, setIdioma, t } = useIdioma();
 
   async function handleLogout() {
     await supabase.auth.signOut();
@@ -53,7 +55,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
   /* ─── ADMIN ─────────────────────────────────────────── */
   if (role === "admin") {
     return (
-      <aside className="w-64 min-h-screen bg-white border-r border-border flex flex-col flex-shrink-0">
+      <aside className="w-64 h-full bg-white border-r border-border flex flex-col flex-shrink-0">
         <div className="px-4 py-4 border-b border-border min-h-[64px] flex items-center">
           <Image
             src="/logos/minsa_inen.png"
@@ -90,7 +92,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:bg-red-50 hover:text-red-600 transition-colors w-full"
           >
             <LogOut size={18} />
-            Cerrar sesión
+            {t.cerrarSesion}
           </button>
         </div>
       </aside>
@@ -101,7 +103,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "min-h-screen bg-white border-r border-border flex flex-col transition-all duration-200 flex-shrink-0",
+        "h-full bg-white border-r border-border flex flex-col transition-all duration-200 flex-shrink-0",
         collapsed ? "w-16" : "w-64"
       )}
     >
@@ -140,7 +142,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
           )}
         >
           <Home size={18} className="flex-shrink-0" />
-          {!collapsed && "Inicio"}
+          {!collapsed && t.inicio}
         </Link>
 
         {/* Consultas group */}
@@ -164,7 +166,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
             >
               <div className="flex items-center gap-3">
                 <Search size={18} />
-                Consultas
+                {t.consultas}
               </div>
               {consultasOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
             </button>
@@ -180,7 +182,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
                   )}
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0" />
-                  Mis Citas
+                  {t.misCitas}
                 </Link>
                 <Link
                   href="/documentos"
@@ -192,7 +194,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
                   )}
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0" />
-                  Documentos Digitales
+                  {t.misDocumentos}
                 </Link>
               </div>
             )}
@@ -211,7 +213,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
           )}
         >
           <GitBranch size={18} className="flex-shrink-0" />
-          {!collapsed && "Mi Proceso"}
+          {!collapsed && t.misProceso}
         </Link>
 
         {/* Información */}
@@ -226,7 +228,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
           )}
         >
           <Info size={18} className="flex-shrink-0" />
-          {!collapsed && "Información"}
+          {!collapsed && t.informacion}
         </Link>
 
         {/* Configuración group */}
@@ -242,7 +244,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
             >
               <div className="flex items-center gap-3">
                 <Settings size={18} />
-                Configuración
+                {t.configuracion}
               </div>
               {configOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
             </button>
@@ -262,8 +264,25 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
         )}
       </nav>
 
-      {/* Logout */}
-      <div className="px-3 py-4 border-t border-border">
+      {/* Logout + Language toggle */}
+      <div className="px-3 py-4 border-t border-border space-y-1">
+        {!collapsed && (
+          <div className="px-2 pb-1">
+            <button
+              onClick={() => setIdioma(idioma === "es" ? "qu" : "es")}
+              className="flex items-center gap-2 text-xs text-gray-400 hover:text-gray-700 transition-colors px-2 py-1 rounded-md hover:bg-gray-100"
+            >
+              <span className="font-medium">{idioma === "es" ? "ES" : "QU"}</span>
+              <span className="text-gray-300">|</span>
+              <span>{idioma === "es" ? "Quechua" : "Español"}</span>
+            </button>
+            {idioma === "qu" && (
+              <p className="text-[10px] text-gray-400 mt-1 px-2 leading-snug">
+                {t.disclaimerQuechua}
+              </p>
+            )}
+          </div>
+        )}
         <button
           onClick={handleLogout}
           className={cn(
@@ -272,7 +291,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
           )}
         >
           <LogOut size={18} className="flex-shrink-0" />
-          {!collapsed && "Cerrar sesión"}
+          {!collapsed && t.cerrarSesion}
         </button>
       </div>
     </aside>

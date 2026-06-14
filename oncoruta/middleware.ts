@@ -13,8 +13,7 @@ export const config = {
      * - _next/image (optimización de imágenes)
      * - favicon.ico
      * - Archivos de imagen/fuente (svg, png, jpg, etc.)
-     * - /api/whatsapp/webhook (endpoint público para verificación de Meta)
      */
-    "/((?!_next/static|_next/image|favicon.ico|api/whatsapp|.*\\.(?:svg|png|jpg|jpeg|gif|webp|woff|woff2|ttf)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|woff|woff2|ttf)$).*)",
   ],
 };

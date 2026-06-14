@@ -14,7 +14,7 @@ type Paso = {
 const TIPOS_ACEPTADOS = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
 const MAX_SIZE_MB = 10;
 
-export default function SubirDocumento() {
+export default function SubirDocumento({ triggerLabel }: { triggerLabel?: string } = {}) {
   const supabase = createClient();
   const router = useRouter();
 
@@ -120,7 +120,7 @@ export default function SubirDocumento() {
     <>
       <Button size="sm" onClick={() => setIsOpen(true)}>
         <Upload size={16} />
-        Subir documento
+        {triggerLabel ?? "Subir documento"}
       </Button>
 
       {isOpen && (

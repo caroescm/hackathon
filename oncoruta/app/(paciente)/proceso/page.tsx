@@ -1,17 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
-import Card from "@/components/ui/Card";
-import Badge from "@/components/ui/Badge";
-import { Check } from "lucide-react";
+import ProcesoCliente, { type PasoDisplay } from "./ProcesoCliente";
 
 type EstadoPaso = "completado" | "en_curso" | "pendiente";
 type TipoPaciente = "preventivo" | "sospecha" | "diagnosticado";
-
-type PasoDisplay = {
-  id: string;
-  nombre: string;
-  descripcion: string | null;
-  estado: EstadoPaso;
-};
 
 type ProcesoPasoRow = {
   id: string;
@@ -44,12 +35,6 @@ const PASOS_HARDCODED: Record<TipoPaciente, Array<{ nombre: string; descripcion:
     { nombre: "Control y seguimiento", descripcion: "Citas de control periódicas" },
     { nombre: "Alta o mantenimiento", descripcion: null },
   ],
-};
-
-const TIPO_LABEL: Record<TipoPaciente, string> = {
-  preventivo: "Chequeo Preventivo",
-  sospecha: "Evaluación por Sospecha",
-  diagnosticado: "Tratamiento Oncológico",
 };
 
 export default async function ProcesoPage() {
@@ -85,6 +70,7 @@ export default async function ProcesoPage() {
         nombre: p.pasos!.nombre,
         descripcion: p.pasos!.descripcion,
         estado: p.estado,
+        orden: p.pasos!.orden,
       }));
   } else {
     const hardcoded = PASOS_HARDCODED[tipoPaciente] ?? PASOS_HARDCODED.sospecha;
@@ -93,65 +79,9 @@ export default async function ProcesoPage() {
       nombre: p.nombre,
       descripcion: p.descripcion,
       estado: (i === 0 ? "en_curso" : "pendiente") as EstadoPaso,
+      orden: i,
     }));
   }
 
-  const subtitulo = TIPO_LABEL[tipoPaciente] ?? "Tu recorrido en el INEN";
-
-  return (
-    <>
-      <div className="px-8 pt-7 pb-2">
-        <h1 className="text-lg font-bold text-gray-900">Mi Proceso</h1>
-        <p className="text-sm text-gray-500">Seguimiento de tu tratamiento oncológico</p>
-      </div>
-      <div className="p-6 space-y-6">
-        <Card title="Etapas del Tratamiento" description={subtitulo}>
-          <div className="relative">
-            <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-border" />
-            <div className="space-y-6">
-              {pasos.map((paso, i) => {
-                const estado = paso.estado;
-
-                const circleClass =
-                  estado === "completado"
-                    ? "bg-success text-white"
-                    : estado === "en_curso"
-                    ? "bg-primary text-white ring-4 ring-primary-light"
-                    : "bg-white border-2 border-border text-muted";
-
-                const badgeVariant =
-                  estado === "completado" ? "success" :
-                  estado === "en_curso"   ? "info"    : "default";
-
-                const badgeLabel =
-                  estado === "completado" ? "Completado" :
-                  estado === "en_curso"   ? "En curso"  : "Pendiente";
-
-                return (
-                  <div key={paso.id} className="flex gap-4 relative">
-                    <div className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold ${circleClass}`}>
-                      {estado === "completado"
-                        ? <Check size={16} strokeWidth={3} />
-                        : i + 1}
-                    </div>
-                    <div className="flex-1 pb-2">
-                      <div className="flex items-center gap-3 mb-1">
-                        <h3 className={`text-sm font-semibold ${estado === "pendiente" ? "text-muted" : "text-foreground"}`}>
-                          {paso.nombre}
-                        </h3>
-                        <Badge variant={badgeVariant}>{badgeLabel}</Badge>
-                      </div>
-                      {paso.descripcion && (
-                        <p className="text-sm text-muted">{paso.descripcion}</p>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </Card>
-      </div>
-    </>
-  );
+  return <ProcesoCliente pasos={pasos} tipoPaciente={tipoPaciente} />;
 }

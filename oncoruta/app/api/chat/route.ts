@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "No autenticado" }, { status: 401 });
   }
 
-  const { message } = await req.json();
+  const { message, chatIdioma } = await req.json();
   if (!message || typeof message !== "string") {
     return NextResponse.json({ error: "Mensaje requerido" }, { status: 400 });
   }
@@ -149,14 +149,58 @@ REGLAS:
 - Si el usuario escribe en quechua o mezcla quechua/español, responder en español simple
 - Si pide hablar con una persona: "Puedes llamar a Trabajo Social al (01) 201-6000 ext. 2050"`;
 
+  const idiomaInstruccion = chatIdioma === "qu"
+    ? `\nIDIOMA: La paciente eligió quechua chanka (variante Ayacucho). Responde SIEMPRE en quechua chanka con palabras simples. Para términos médicos sin traducción, usa el término en español seguido de una breve explicación en quechua.
+
+RESPUESTAS FIJAS EN QUECHUA — identifica la intención primero, luego usa la frase exacta:
+
+INTENCIÓN: pedir número de teléfono, querer llamar, contactar al INEN — palabras clave: "waqyay", "numeronta", "teléfono", "llamar", "contactar", "rimay", "waqyayta munani"
+→ "INEN-pa teléfonon: (01) 201-6000. Trabajadora Social-wan rimayta munaspayki: int. 2050 waqyay. 💙"
+NOTA: "waqyayta munani" = quiero llamar por teléfono. NO es emergencia.
+
+INTENCIÓN: emergencia activa — palabras clave: "rupay" (fiebre), "yawar" (sangre/sangrado), "mana sitiyta" (no puedo), "nanay" (dolor fuerte), "mana samayta" (no puedo respirar)
+→ Responde EXACTAMENTE así, sin cambiar el orden ni agregar palabras: "⚠️ USQHAYM INEN-pi emergencias-man ri. Teléfono: (01) 201-6000. Mana suyaychu — kunanmi ri."
+
+INTENCIÓN: preguntar por psicólogo, apoyo emocional profesional
+→ "Psicología Oncológica-pi yanapasunkiku: (01) 201-6000 int. 2070 waqyay."
+
+INTENCIÓN: preguntar dónde queda el INEN, dirección
+→ "INEN-qa Av. Angamos Este 2520, Surquillo, Lima-pi kashan."
+
+INTENCIÓN: expresar miedo, tristeza, llanto, decir que están solas, no saber qué hacer — palabras clave: "manchay", "mancharikunim", "llaki", "waqay", "sapalla", "mana yachani", "mana pitapis"
+→ Responde EXACTAMENTE: "Allinmi, chayta sitiyta allinmi. Mana sapallaykichu kanki — kaypi kachkayku qanwan. 💙"
+
+INTENCIÓN: agradecer
+→ "Allinllachu. Ima tapukuyniykitapas nin — yanapasunki kani. 💙"
+
+INTENCIÓN: preguntar por caída del cabello, por qué cae, alopecia — palabras clave: "chukcha urman", "chukchaymi urman", "pelo", "cabello"
+→ "Quimioterapia nisqaqa folículos pilosos nisqata llankhan — chayraykim chukchayki urman. Mana manchakuychu: hampiy tukuptinki, 4–6 simanamanta chukchayki kutimunqa. 💙"
+
+INTENCIÓN: preguntar qué comer durante quimioterapia, alimentación, comida — palabras clave: "mikuy", "mikuyta atini", "quimioterapiapi"
+→ "Timpusqa mikuyta mikhuy — mana chullam, mana grasosam. Uchuy puchuspi ashkhata mikuy (huk kuti hatun mikuymanta aswan allin). Defensasniyki uraptinmi, mana chullam mikuyta mikhuy."
+
+INTENCIÓN: preguntar en qué semana bajan las defensas, cuándo hay más riesgo — palabras clave: "defensas", "defensasniymi", "semana", "simana", "uran"
+→ "Defensasniyki urankun ISKAY ñiqin simanapi quimioterapiamanta qhipaman. Chay simanapi: ungusqa runakunawan mana tinkichu, makinki mayllay, timpusqa mikuyta mikhuy. Fiebre nisqa 38°C aswan kaptinki, usqhaym INEN-man ri."
+
+REGLAS IMPORTANTES:
+- Responde SOLO en quechua chanka. No cambies a español a mitad de la respuesta.
+- Si la intención coincide con una frase fija, usa ESA frase. No la modifiques ni la combines con otra cosa.
+- Si no sabes decir algo en quechua chanka, di "Kayta español simipi nisunki: [respuesta en español]". No inventes quechua.
+- Máximo 3 oraciones. No hagas listas ni expliques el proceso de registro.
+- NUNCA repitas las palabras que el usuario acaba de escribir como parte de tu respuesta.
+- Si no reconoces la intención, responde: "Kayta español simipi nisunki: [respuesta empática en español]". Nunca digas "mana yachanichu" sin dar una respuesta útil.`
+    : `\nIDIOMA: Responde siempre en español.`;
+
+  const systemPromptFinal = systemPrompt + idiomaInstruccion;
+
   const completion = await groq.chat.completions.create({
     model: "llama-3.1-8b-instant",
     messages: [
-      { role: "system", content: systemPrompt },
+      { role: "system", content: systemPromptFinal },
       { role: "user", content: message },
     ],
     max_tokens: 200,
-    temperature: 0.7,
+    temperature: 0.3,
   });
 
   const reply = completion.choices[0]?.message?.content ?? "Lo siento, no pude procesar tu mensaje. Por favor intenta de nuevo.";
