@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, ShieldCheck } from "lucide-react";
+import { Eye, EyeOff, ShieldCheck, Shield, Search, FileText } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import LogoHeader from "@/components/ui/LogoHeader";
 
@@ -22,11 +22,14 @@ interface VulnerabilidadState {
   hablaQuechua: boolean;
 }
 
+type TipoPaciente = "preventivo" | "sospecha" | "diagnosticado";
+
 interface FieldErrors {
   nombreCompleto?: string;
   dni?: string;
   telefono?: string;
   password?: string;
+  tipoPaciente?: string;
   general?: string;
 }
 
@@ -48,6 +51,7 @@ export default function RegistroPage() {
     tieneDiscapacidad: false,
     hablaQuechua: false,
   });
+  const [tipoPaciente, setTipoPaciente] = useState<TipoPaciente | "">("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -83,6 +87,10 @@ export default function RegistroPage() {
       next.password = "La contraseña es requerida";
     } else if (form.password.length < 8) {
       next.password = "La contraseña debe tener al menos 8 caracteres";
+    }
+
+    if (!tipoPaciente) {
+      next.tipoPaciente = "Selecciona tu situación actual para continuar";
     }
 
     setErrors(next);
@@ -137,6 +145,7 @@ export default function RegistroPage() {
       email: form.email.trim() || null,
       rol: "paciente",
       idioma: vulnerabilidad.hablaQuechua ? "qu" : "es",
+      tipo_paciente: tipoPaciente,
     });
 
     if (usuarioError) {
@@ -164,30 +173,20 @@ export default function RegistroPage() {
       return;
     }
 
-    // 4. Obtener pasos reales de la DB y crear el proceso
-    const { data: pasos, error: pasosError } = await supabase
+    // 4. Intentar crear proceso desde pasos DB (no bloquea — proceso usa fallback hardcoded)
+    const { data: pasos } = await supabase
       .from("pasos")
       .select("id")
       .order("orden", { ascending: true });
 
-    if (pasosError || !pasos || pasos.length === 0) {
-      setErrors({ general: "No se pudieron obtener las etapas de tratamiento. Contacte al administrador." });
-      setLoading(false);
-      return;
-    }
-
-    const { error: procesoError } = await supabase.from("proceso_paciente").insert(
-      pasos.map((paso, i) => ({
-        paciente_id: user.id,
-        paso_id: paso.id,
-        estado: i === 0 ? "en_curso" : "pendiente",
-      }))
-    );
-
-    if (procesoError) {
-      setErrors({ general: `Error al crear proceso de tratamiento: ${procesoError.message}` });
-      setLoading(false);
-      return;
+    if (pasos && pasos.length > 0) {
+      await supabase.from("proceso_paciente").insert(
+        pasos.map((paso, i) => ({
+          paciente_id: user.id,
+          paso_id: paso.id,
+          estado: i === 0 ? "en_curso" : "pendiente",
+        }))
+      );
     }
 
     router.push("/dashboard");
@@ -330,6 +329,46 @@ export default function RegistroPage() {
               </div>
               {errors.password && (
                 <p className="mt-1 text-xs text-red-500">{errors.password}</p>
+              )}
+            </div>
+
+            {/* ── Tipo de paciente ── */}
+            <div className="mt-2 pt-5 border-t border-gray-100">
+              <h3 className="text-sm font-semibold text-gray-800 mb-1">
+                ¿Cuál es tu situación? <span className="text-red-500">*</span>
+              </h3>
+              <p className="text-xs text-gray-500 mb-4 leading-relaxed">
+                Esto nos ayuda a mostrarte el proceso adecuado para tu caso.
+              </p>
+              <div className="flex flex-col gap-3">
+                {([
+                  { value: "preventivo" as const, Icon: Shield, label: "Vengo a un chequeo preventivo" },
+                  { value: "sospecha" as const, Icon: Search, label: "Tengo sospecha de cáncer" },
+                  { value: "diagnosticado" as const, Icon: FileText, label: "Ya tengo un diagnóstico" },
+                ] as const).map(({ value, Icon, label }) => {
+                  const selected = tipoPaciente === value;
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => {
+                        setTipoPaciente(value);
+                        setErrors((prev) => ({ ...prev, tipoPaciente: undefined }));
+                      }}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg border-2 text-sm font-medium text-left transition-all duration-150 ${
+                        selected
+                          ? "border-primary bg-primary-light text-primary"
+                          : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50"
+                      }`}
+                    >
+                      <Icon size={18} className="flex-shrink-0" />
+                      <span>{label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              {errors.tipoPaciente && (
+                <p className="mt-2 text-xs text-red-500">{errors.tipoPaciente}</p>
               )}
             </div>
 
