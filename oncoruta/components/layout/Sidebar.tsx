@@ -13,6 +13,8 @@ import {
   LayoutDashboard,
   Users,
   Stethoscope,
+  GitBranch,
+  Info,
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils/cn";
@@ -178,19 +180,7 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
                   )}
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0" />
-                  Solicitud Citas
-                </Link>
-                <Link
-                  href="/citas"
-                  className={cn(
-                    "flex items-center gap-2.5 py-1.5 px-2 text-sm rounded-md transition-colors",
-                    pathname === "/citas"
-                      ? "text-[#3B52A2] font-medium"
-                      : "text-gray-500 hover:text-gray-800"
-                  )}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0" />
-                  Consulta tu cita
+                  Mis Citas
                 </Link>
                 <Link
                   href="/documentos"
@@ -208,6 +198,36 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
             )}
           </div>
         )}
+
+        {/* Mi Proceso */}
+        <Link
+          href="/proceso"
+          className={cn(
+            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+            isActive("/proceso")
+              ? "bg-[#1a2f5a] text-white"
+              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
+            collapsed && "justify-center"
+          )}
+        >
+          <GitBranch size={18} className="flex-shrink-0" />
+          {!collapsed && "Mi Proceso"}
+        </Link>
+
+        {/* Información */}
+        <Link
+          href="/informacion"
+          className={cn(
+            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+            isActive("/informacion")
+              ? "bg-[#1a2f5a] text-white"
+              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
+            collapsed && "justify-center"
+          )}
+        >
+          <Info size={18} className="flex-shrink-0" />
+          {!collapsed && "Información"}
+        </Link>
 
         {/* Configuración group */}
         {collapsed ? (

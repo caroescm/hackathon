@@ -23,7 +23,12 @@ function hoyISO() {
   return new Date().toISOString().split("T")[0];
 }
 
-export default function SolicitarCita() {
+interface Props {
+  triggerLabel?: string;
+  triggerClassName?: string;
+}
+
+export default function SolicitarCita({ triggerLabel, triggerClassName }: Props = {}) {
   const supabase = createClient();
   const router = useRouter();
 
@@ -73,10 +78,16 @@ export default function SolicitarCita() {
 
   return (
     <>
-      <Button size="sm" onClick={() => setIsOpen(true)}>
-        <CalendarPlus size={16} />
-        Solicitar cita
-      </Button>
+      {triggerLabel ? (
+        <button className={triggerClassName} onClick={() => setIsOpen(true)}>
+          {triggerLabel}
+        </button>
+      ) : (
+        <Button size="sm" onClick={() => setIsOpen(true)}>
+          <CalendarPlus size={16} />
+          Solicitar cita
+        </Button>
+      )}
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

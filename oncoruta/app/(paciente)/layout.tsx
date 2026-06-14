@@ -26,9 +26,9 @@ export default async function PacienteLayout({ children }: { children: React.Rea
   const initial = userName.charAt(0).toUpperCase();
 
   return (
-    <div className="flex min-h-screen bg-[#eef0f8]">
+    <div className="flex h-screen overflow-hidden bg-[#eef0f8]">
       <Sidebar role="paciente" userName={userName} />
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Top bar */}
         <header className="h-16 bg-white border-b border-border flex items-center justify-between px-6 flex-shrink-0">
           <div />
@@ -52,7 +52,7 @@ export default async function PacienteLayout({ children }: { children: React.Rea
             </div>
           </div>
         </header>
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
       <ChatBot />
     </div>

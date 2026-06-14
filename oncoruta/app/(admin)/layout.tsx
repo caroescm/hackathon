@@ -17,9 +17,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const userName = usuario?.nombre ?? user.email ?? "";
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar role="admin" userName={userName} />
-      <main className="flex-1 flex flex-col min-w-0">{children}</main>
+      <div className="flex-1 min-w-0 overflow-y-auto">
+        {children}
+      </div>
     </div>
   );
 }

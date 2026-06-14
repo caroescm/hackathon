@@ -35,7 +35,7 @@ async function getProceso(
 
 /* ─── tarjetas de acción (top) ───────────────────────── */
 
-const ACTION_CARDS = [
+const TOP_CARDS = [
   {
     icon: Lock,
     iconBg: "#E8EAF0",
@@ -45,17 +45,6 @@ const ACTION_CARDS = [
     href: "/documentos",
     btnClassName:
       "bg-[#1a2f5a] hover:bg-[#152248] text-white font-semibold py-2.5 px-6 rounded-lg text-sm transition-colors",
-  },
-  {
-    icon: Calendar,
-    iconBg: "#FCE4EC",
-    iconColor: "#C2185B",
-    title: "SOLICITUD DE CITAS",
-    description:
-      "Solicita tu cita según la disponibilidad del servicio o departamento correspondiente.",
-    href: "/citas",
-    btnClassName:
-      "bg-[#C2185B] hover:bg-[#a01549] text-white font-semibold py-2.5 px-6 rounded-lg text-sm transition-colors",
   },
   {
     icon: Search,
@@ -166,9 +155,9 @@ export default async function DashboardPage() {
 
   return (
     <div className="p-6 space-y-6">
-      {/* ── 3 tarjetas de acción ── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {ACTION_CARDS.map((card) => {
+      {/* ── Fila superior: Resultados + Consulta cita ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {TOP_CARDS.map((card) => {
           const Icon = card.icon;
           return (
             <div
@@ -194,6 +183,7 @@ export default async function DashboardPage() {
           );
         })}
       </div>
+
 
       {/* ── Stats ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

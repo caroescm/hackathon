@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import SolicitarCita from "@/components/paciente/SolicitarCita";
-import { Calendar, Clock, MapPin } from "lucide-react";
+import { Calendar, Clock, MapPin, Search } from "lucide-react";
 
 type Cita = {
   id: string;
@@ -59,9 +59,48 @@ export default async function CitasPage() {
         <p className="text-sm text-gray-500">Agenda médica en el INEN</p>
       </div>
       <div className="p-6 space-y-6">
-        <div className="flex justify-end">
-          <SolicitarCita />
+        {/* Módulo de acciones */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Solicitud de citas */}
+          <div className="bg-white rounded-xl border border-gray-200 p-7 flex flex-col gap-4 shadow-sm">
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "#FCE4EC" }}>
+              <Calendar size={22} style={{ color: "#C2185B" }} />
+            </div>
+            <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 leading-snug">
+              Solicitud de Citas
+            </h2>
+            <p className="text-sm text-gray-500 leading-relaxed flex-1">
+              Solicita tu cita según la disponibilidad del servicio o departamento correspondiente.
+            </p>
+            <div>
+              <SolicitarCita
+                triggerLabel="Ingresar"
+                triggerClassName="bg-[#C2185B] hover:bg-[#a01549] text-white font-semibold py-2.5 px-6 rounded-lg text-sm transition-colors"
+              />
+            </div>
+          </div>
+
+          {/* Consulta tu cita */}
+          <div className="bg-white rounded-xl border border-gray-200 p-7 flex flex-col gap-4 shadow-sm">
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "#EDE7F6" }}>
+              <Search size={22} style={{ color: "#5E35B1" }} />
+            </div>
+            <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 leading-snug">
+              Consulta Tu Cita
+            </h2>
+            <p className="text-sm text-gray-500 leading-relaxed flex-1">
+              ¿Quieres saber cuándo es tu próxima cita? Haz clic aquí y revisa los detalles al instante.
+            </p>
+            <div>
+              <a href="#mis-citas">
+                <button className="bg-[#5E35B1] hover:bg-[#4a2990] text-white font-semibold py-2.5 px-6 rounded-lg text-sm transition-colors">
+                  Ingresar
+                </button>
+              </a>
+            </div>
+          </div>
         </div>
+        <div id="mis-citas" />
         <Card
           title="Próximas Citas"
           description={proximas.length > 0 ? `${proximas.length} cita${proximas.length !== 1 ? "s" : ""} programada${proximas.length !== 1 ? "s" : ""}` : undefined}
