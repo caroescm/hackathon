@@ -46,21 +46,21 @@ export default function CitasCliente({ proximas, pasadas }: { proximas: Cita[]; 
   return (
     <>
       <div className="px-8 pt-7 pb-2">
-        <h1 className="text-lg font-bold text-gray-900">{t.misCitasTitulo}</h1>
-        <p className="text-sm text-gray-500">{t.misCitasSubtitle}</p>
+        <h1 className="text-lg font-bold text-gray-900 dark:text-slate-100">{t.misCitasTitulo}</h1>
+        <p className="text-sm text-gray-500 dark:text-slate-400">{t.misCitasSubtitle}</p>
       </div>
       <div className="p-6 space-y-6">
         {/* Módulo de acciones */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Solicitud de citas */}
-          <div className="bg-white rounded-xl border border-gray-200 p-7 flex flex-col gap-4 shadow-sm">
+          <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-7 flex flex-col gap-4 shadow-sm">
             <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "#FCE4EC" }}>
               <Calendar size={22} style={{ color: "#C2185B" }} />
             </div>
-            <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 leading-snug">
+            <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 dark:text-slate-100 leading-snug">
               {idioma === "es" ? "SOLICITUD DE CITAS" : "TUPANAKUY MAÑAY"}
             </h2>
-            <p className="text-sm text-gray-500 leading-relaxed flex-1">
+            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed flex-1">
               {idioma === "es"
                 ? "Solicita tu cita según la disponibilidad del servicio o departamento correspondiente."
                 : "Tupanakuykita mañay hampiq wasimanta."}
@@ -74,14 +74,14 @@ export default function CitasCliente({ proximas, pasadas }: { proximas: Cita[]; 
           </div>
 
           {/* Consulta tu cita */}
-          <div className="bg-white rounded-xl border border-gray-200 p-7 flex flex-col gap-4 shadow-sm">
+          <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-7 flex flex-col gap-4 shadow-sm">
             <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "#EDE7F6" }}>
               <Search size={22} style={{ color: "#5E35B1" }} />
             </div>
-            <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 leading-snug">
+            <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 dark:text-slate-100 leading-snug">
               {idioma === "es" ? "CONSULTA TU CITA" : "TUPANAKUYNIYKITA MASK'AY"}
             </h2>
-            <p className="text-sm text-gray-500 leading-relaxed flex-1">
+            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed flex-1">
               {idioma === "es"
                 ? "¿Quieres saber cuándo es tu próxima cita? Haz clic aquí y revisa los detalles al instante."
                 : "Qatiq tupanakuyniykita yachanki munajtinki? Kaypim tarinki."}
@@ -143,7 +143,7 @@ export default function CitasCliente({ proximas, pasadas }: { proximas: Cita[]; 
           <Card title={t.citasAnteriores}>
             <div className="space-y-3">
               {pasadas.map((cita) => (
-                <div key={cita.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div key={cita.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
                   <div>
                     <p className="text-sm font-medium text-muted">{cita.servicio}</p>
                     <p className="text-xs text-muted">{formatFecha(cita.fecha)}{cita.hora ? ` · ${cita.hora}` : ""}</p>

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import Sidebar from "@/components/layout/Sidebar";
 import TopBarCliente from "@/components/layout/TopBarCliente";
 import ChatBot from "@/components/chat/ChatBot";
@@ -11,7 +11,8 @@ export default async function PacienteLayout({ children }: { children: React.Rea
 
   if (!user) redirect("/login");
 
-  const { data: usuario } = await supabase
+  const service = createServiceClient();
+  const { data: usuario } = await service
     .from("usuarios")
     .select("nombre, dni, telefono")
     .eq("id", user.id)
@@ -29,7 +30,7 @@ export default async function PacienteLayout({ children }: { children: React.Rea
 
   return (
     <IdiomaProvider>
-      <div className="flex h-screen overflow-hidden bg-[#eef0f8] dark:bg-gray-950">
+      <div className="flex h-screen overflow-hidden bg-[#eef0f8] dark:bg-slate-950">
         <Sidebar role="paciente" userName={userName} />
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <TopBarCliente

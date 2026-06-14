@@ -9,9 +9,9 @@ interface CardProps {
 
 export default function Card({ children, className, title, description }: CardProps) {
   return (
-    <div className={cn("bg-white rounded-lg border border-border shadow-sm", className)}>
+    <div className={cn("bg-white dark:bg-slate-800 rounded-lg border border-border dark:border-slate-700 shadow-sm", className)}>
       {(title || description) && (
-        <div className="px-6 py-4 border-b border-border">
+        <div className="px-6 py-4 border-b border-border dark:border-slate-700">
           {title && <h3 className="text-base font-semibold text-foreground">{title}</h3>}
           {description && <p className="text-sm text-muted mt-0.5">{description}</p>}
         </div>

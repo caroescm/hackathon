@@ -84,7 +84,7 @@ export default function ChatBot() {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       {open && (
         <div
-          className="flex flex-col bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
+          className="flex flex-col bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden"
           style={{ width: 380, height: 540 }}
         >
           {/* Header */}
@@ -108,14 +108,14 @@ export default function ChatBot() {
           </div>
 
           {/* Mensajes */}
-          <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2 bg-gray-50">
+          <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2 bg-gray-50 dark:bg-slate-900">
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
                   className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm leading-snug whitespace-pre-wrap ${
                     msg.role === "user"
                       ? "bg-[#1a56db] text-white rounded-br-sm"
-                      : "bg-white text-gray-800 border border-gray-200 rounded-bl-sm shadow-sm"
+                      : "bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 border border-gray-200 dark:border-slate-600 rounded-bl-sm shadow-sm"
                   }`}
                 >
                   {msg.content}
@@ -125,7 +125,7 @@ export default function ChatBot() {
 
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-4 py-2.5 shadow-sm">
+                <div className="bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-2xl rounded-bl-sm px-4 py-2.5 shadow-sm">
                   <div className="flex gap-1 items-center h-4">
                     <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
                     <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
@@ -139,22 +139,22 @@ export default function ChatBot() {
 
           {/* Input area — language picker o input normal */}
           {chatIdioma === null ? (
-            <div className="flex gap-2 px-3 py-2.5 bg-white border-t border-gray-200">
+            <div className="flex gap-2 px-3 py-2.5 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700">
               <button
                 onClick={() => seleccionarIdioma("es")}
-                className="flex-1 py-2 rounded-full border border-[#1a56db] text-[#1a56db] text-sm font-medium hover:bg-blue-50 transition-colors"
+                className="flex-1 py-2 rounded-full border border-[#1a56db] text-[#1a56db] text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-700 transition-colors"
               >
                 🇵🇪 Español
               </button>
               <button
                 onClick={() => seleccionarIdioma("qu")}
-                className="flex-1 py-2 rounded-full border border-[#1a56db] text-[#1a56db] text-sm font-medium hover:bg-blue-50 transition-colors"
+                className="flex-1 py-2 rounded-full border border-[#1a56db] text-[#1a56db] text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-700 transition-colors"
               >
                 Quechua
               </button>
             </div>
           ) : (
-            <div className="flex items-center gap-2 px-3 py-2.5 bg-white border-t border-gray-200">
+            <div className="flex items-center gap-2 px-3 py-2.5 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700">
               <input
                 ref={inputRef}
                 type="text"
@@ -163,7 +163,7 @@ export default function ChatBot() {
                 onKeyDown={handleKeyDown}
                 placeholder={t.chatPlaceholder}
                 disabled={loading}
-                className="flex-1 text-sm bg-gray-100 rounded-full px-4 py-2 outline-none placeholder:text-gray-400 disabled:opacity-60"
+                className="flex-1 text-sm bg-gray-100 dark:bg-slate-700 dark:text-slate-100 dark:placeholder:text-slate-400 rounded-full px-4 py-2 outline-none placeholder:text-gray-400 disabled:opacity-60"
               />
               <button
                 onClick={sendMessage}

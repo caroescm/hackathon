@@ -103,18 +103,18 @@ export default function ProcesoCliente({ pasos, tipoPaciente }: Props) {
     <>
       <div className="px-8 pt-7 pb-2">
         <div className="flex items-center gap-3 mb-1">
-          <h1 className="text-lg font-bold text-gray-900">{t.tituloRoadmap}</h1>
+          <h1 className="text-lg font-bold text-gray-900 dark:text-slate-100">{t.tituloRoadmap}</h1>
           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${badgeColors.bg} ${badgeColors.text}`}>
             {tipoBadgeLabel[tipoPaciente]}
           </span>
         </div>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 dark:text-slate-400">
           {tipoSubtitle[tipoPaciente]}
         </p>
       </div>
 
       <div className="p-6">
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 shadow-sm p-6">
           <RoadmapPasos pasos={roadmapPasos} />
         </div>
       </div>

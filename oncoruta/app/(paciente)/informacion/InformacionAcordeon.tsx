@@ -27,7 +27,7 @@ function MiniTimeline({ idioma }: { idioma: string }) {
             <div className="w-8 h-8 rounded-full bg-blue-100 border-2 border-blue-300 flex items-center justify-center text-xs font-bold text-blue-700">
               {p.n}
             </div>
-            <span className="text-[10px] text-center text-gray-500 leading-tight">{p.label}</span>
+            <span className="text-[10px] text-center text-gray-500 dark:text-slate-400 leading-tight">{p.label}</span>
           </div>
           {i < pasos.length - 1 && <div className="w-6 h-px bg-blue-200 mb-4 flex-shrink-0" />}
         </div>
@@ -64,20 +64,20 @@ function FaqAccordion({ faqs, idioma }: { faqs: FaqItem[]; idioma: string }) {
   return (
     <div className="space-y-2">
       {faqs.map((faq, i) => (
-        <div key={i} className="border border-gray-100 rounded-lg overflow-hidden">
+        <div key={i} className="border border-gray-100 dark:border-slate-700 rounded-lg overflow-hidden">
           <button
             type="button"
             onClick={() => setOpenI(prev => prev === i ? null : i)}
-            className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left bg-gray-50 hover:bg-gray-100 transition-colors"
+            className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
           >
-            <span className="text-sm font-medium text-gray-800 leading-snug">{faq.q}</span>
+            <span className="text-sm font-medium text-gray-800 dark:text-slate-100 leading-snug">{faq.q}</span>
             <ChevronDown
               size={15}
-              className={`flex-shrink-0 text-gray-400 transition-transform duration-200 ${openI === i ? "rotate-180" : ""}`}
+              className={`flex-shrink-0 text-gray-400 dark:text-slate-500 transition-transform duration-200 ${openI === i ? "rotate-180" : ""}`}
             />
           </button>
           <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openI === i ? "max-h-64 opacity-100" : "max-h-0 opacity-0"}`}>
-            <p className="px-4 py-3 text-sm text-gray-600 leading-relaxed border-t border-gray-100 bg-white">
+            <p className="px-4 py-3 text-sm text-gray-600 dark:text-slate-300 leading-relaxed border-t border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800">
               {faq.a}
             </p>
           </div>
@@ -98,7 +98,7 @@ function FaqAccordion({ faqs, idioma }: { faqs: FaqItem[]; idioma: string }) {
 
 function Cat1Content({ idioma }: { idioma: string }) {
   return (
-    <div className="space-y-5 text-sm text-gray-600 leading-relaxed">
+    <div className="space-y-5 text-sm text-gray-600 dark:text-slate-300 leading-relaxed">
       <MiniTimeline idioma={idioma} />
       {idioma === "es" ? (
         <>
@@ -121,7 +121,7 @@ function Cat1Content({ idioma }: { idioma: string }) {
 
 function Cat2Content({ idioma }: { idioma: string }) {
   return (
-    <div className="space-y-5 text-sm text-gray-600 leading-relaxed">
+    <div className="space-y-5 text-sm text-gray-600 dark:text-slate-300 leading-relaxed">
       {idioma === "es" ? (
         <>
           <p>Para cualquier cita en el INEN, lleva siempre tu DNI original. Si tienes SIS, ESSALUD u otro seguro, lleva también ese carnet. Trae todos los exámenes, ecografías, mamografías o biopsias que hayas hecho antes — aunque sean de otro hospital.</p>
@@ -143,34 +143,34 @@ function Cat2Content({ idioma }: { idioma: string }) {
 
 function Cat3Content({ idioma }: { idioma: string }) {
   return (
-    <div className="space-y-5 text-sm text-gray-600 leading-relaxed">
-      <div className="p-4 rounded-lg bg-blue-50 border border-blue-100">
-        <p className="font-semibold text-blue-800 mb-2">Mamografía</p>
-        <p className="text-blue-700">
+    <div className="space-y-5 text-sm text-gray-600 dark:text-slate-300 leading-relaxed">
+      <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800">
+        <p className="font-semibold text-blue-800 dark:text-blue-300 mb-2">Mamografía</p>
+        <p className="text-blue-700 dark:text-blue-300">
           {idioma === "es"
             ? "Es una radiografía especial de los senos. Dura entre 15 y 20 minutos. Puede haber algo de presión o incomodidad, pero no es dolorosa para la mayoría. No uses desodorante, cremas ni talco ese día."
             : "Ukhu pechomanta radiografía nisqa. 15–20 minutom. Uchuylla ñak'ariymi kanman — mana nanasqachu. Chay p'unchayim mana desodorante ni crema churakuychu."}
         </p>
       </div>
-      <div className="p-4 rounded-lg bg-green-50 border border-green-100">
-        <p className="font-semibold text-green-800 mb-2">Ecografía</p>
-        <p className="text-green-700">
+      <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
+        <p className="font-semibold text-green-800 dark:text-green-300 mb-2">Ecografía</p>
+        <p className="text-green-700 dark:text-green-300">
           {idioma === "es"
             ? "Usa ondas de sonido para crear imágenes. Se aplica un gel frío y se pasa un transductor suavemente. No emite radiación, no duele y tarda entre 20 y 30 minutos. No requiere preparación especial."
             : "Sonido phututawan imagen ruranam. Frío gel churanku, transductor suave pasaynin. Mana radiación, mana nanasqa, 20–30 minutom. Mana ima allichakuychu."}
         </p>
       </div>
-      <div className="p-4 rounded-lg bg-purple-50 border border-purple-100">
-        <p className="font-semibold text-purple-800 mb-2">Colposcopía</p>
-        <p className="text-purple-700">
+      <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-100 dark:border-purple-800">
+        <p className="font-semibold text-purple-800 dark:text-purple-300 mb-2">Colposcopía</p>
+        <p className="text-purple-700 dark:text-purple-300">
           {idioma === "es"
             ? "Es una revisión del cuello uterino con un aparato especial llamado colposcopio, como una lupa de alta potencia. Puede haber una ligera molestia, similar a un Papanicolaou. Dura entre 15 y 30 minutos."
             : "Qosqo sikinmanta colposcopio nisqawan qhawanakum — hatun lupapa hina. Uchuy molestia kanman. 15–30 minutom."}
         </p>
       </div>
-      <div className="p-4 rounded-lg bg-orange-50 border border-orange-100">
-        <p className="font-semibold text-orange-800 mb-2">Biopsia</p>
-        <p className="text-orange-700">
+      <div className="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-100 dark:border-orange-800">
+        <p className="font-semibold text-orange-800 dark:text-orange-300 mb-2">Biopsia</p>
+        <p className="text-orange-700 dark:text-orange-300">
           {idioma === "es"
             ? "Se toma una pequeña muestra de tejido para analizarla en el laboratorio. El médico aplica anestesia local, por lo que no sientes dolor durante la extracción. Los resultados suelen tardar entre 1 y 3 semanas."
             : "Uchuy aycha muestra laboratoriopin qhawanankupaqm. Hampiqmi anestesia local churan, mana nanasqachu. Tarisqakuna 1–3 simanamanta sayaykamunqa."}
@@ -182,39 +182,39 @@ function Cat3Content({ idioma }: { idioma: string }) {
 
 function Cat4Content({ idioma }: { idioma: string }) {
   return (
-    <div className="space-y-5 text-sm text-gray-600 leading-relaxed">
+    <div className="space-y-5 text-sm text-gray-600 dark:text-slate-300 leading-relaxed">
       <p>
         {idioma === "es"
           ? "El tratamiento que se indica depende del tipo de cáncer, la etapa y las características de tu caso. En muchas situaciones se combinan varios tipos. Tu oncólogo te explicará con detalle cuál es el plan para ti."
           : "Hampiy ñanqa onqoy rikch'aqmanta, estadiomanta, qanmanta hinallataqmi. Achkha kutim huñusqam. Hampiqniykim willasuniki."}
       </p>
-      <div className="p-4 rounded-lg bg-blue-50 border border-blue-100">
-        <p className="font-semibold text-blue-800 mb-2">{idioma === "es" ? "Cirugía" : "Cirugía / Operación"}</p>
-        <p className="text-blue-700">
+      <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800">
+        <p className="font-semibold text-blue-800 dark:text-blue-300 mb-2">{idioma === "es" ? "Cirugía" : "Cirugía / Operación"}</p>
+        <p className="text-blue-700 dark:text-blue-300">
           {idioma === "es"
             ? "Se opera para retirar el tumor. Puede ser una tumorectomía (solo el tumor) o una mastectomía (todo el seno). La cirugía no siempre es el primer paso — a veces se indica quimioterapia antes para reducir el tumor."
             : "Operacionpi tumorm orqonkiku. Uchuylla operación (tumorectomía) icha llapan pecho (mastectomía) kanman. Mana ñawpaqchus — mayniqpin quimioterapia ñawpaqtan."}
         </p>
       </div>
-      <div className="p-4 rounded-lg bg-purple-50 border border-purple-100">
-        <p className="font-semibold text-purple-800 mb-2">Quimioterapia</p>
-        <p className="text-purple-700">
+      <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-100 dark:border-purple-800">
+        <p className="font-semibold text-purple-800 dark:text-purple-300 mb-2">Quimioterapia</p>
+        <p className="text-purple-700 dark:text-purple-300">
           {idioma === "es"
             ? "Son medicamentos que destruyen las células cancerosas. Se aplican en ciclos con períodos de descanso. Puede causar cansancio, náuseas o caída del cabello — efectos que mejoran al terminar el tratamiento."
             : "Onqoy wañuchiq hampikuna. Ciclos nisqapin churanku, samaykuywantaq. Chukcha urmananmi, qonqaymi, suqiymi — tukuytawan allinyanqam."}
         </p>
       </div>
-      <div className="p-4 rounded-lg bg-orange-50 border border-orange-100">
-        <p className="font-semibold text-orange-800 mb-2">Radioterapia</p>
-        <p className="text-orange-700">
+      <div className="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-100 dark:border-orange-800">
+        <p className="font-semibold text-orange-800 dark:text-orange-300 mb-2">Radioterapia</p>
+        <p className="text-orange-700 dark:text-orange-300">
           {idioma === "es"
             ? "Usa rayos de alta energía para destruir células cancerosas en una zona específica. Las sesiones son cortas y no duelen durante la aplicación. La piel puede irritarse hacia el final del tratamiento."
             : "Hatun energía rayoswan onqoy wañuchin. Sesionkuna utqaylla, mana nanasqa. Qara irritakunanmi tukuyman."}
         </p>
       </div>
-      <div className="p-4 rounded-lg bg-green-50 border border-green-100">
-        <p className="font-semibold text-green-800 mb-2">Hormonoterapia</p>
-        <p className="text-green-700">
+      <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
+        <p className="font-semibold text-green-800 dark:text-green-300 mb-2">Hormonoterapia</p>
+        <p className="text-green-700 dark:text-green-300">
           {idioma === "es"
             ? "Son pastillas o inyecciones que bloquean las hormonas que alimentan ciertos tipos de tumor. Generalmente se toma por varios años después del tratamiento principal. Los efectos secundarios suelen ser leves."
             : "Pastilla icha inyección nisqam hormonata suyunkunakuq. Achkha watam tomanki, hampiy tukuytawan. Efectokuna uchuylla."}
@@ -226,7 +226,7 @@ function Cat4Content({ idioma }: { idioma: string }) {
 
 function Cat5Content({ idioma }: { idioma: string }) {
   return (
-    <div className="space-y-5 text-sm text-gray-600 leading-relaxed">
+    <div className="space-y-5 text-sm text-gray-600 dark:text-slate-300 leading-relaxed">
       {idioma === "es" ? (
         <>
           <p>Durante el tratamiento, tu cuerpo pasa por cambios importantes. Conocerlos de antemano te ayuda a manejarlos mejor y a saber cuándo necesitas llamar a tu médico.</p>
@@ -266,28 +266,28 @@ function AcordeonItem({
   isOpen: boolean; onToggle: () => void;
 }) {
   return (
-    <div className={`border rounded-xl overflow-hidden transition-all duration-200 ${isOpen ? "border-blue-200 shadow-sm" : "border-gray-200"}`}>
+    <div className={`border rounded-xl overflow-hidden transition-all duration-200 ${isOpen ? "border-blue-200 dark:border-blue-700 shadow-sm" : "border-gray-200 dark:border-slate-700"}`}>
       <button
         type="button"
         onClick={onToggle}
-        className={`w-full flex items-center gap-4 px-5 py-4 text-left transition-colors ${isOpen ? "bg-blue-50" : "bg-white hover:bg-gray-50"}`}
+        className={`w-full flex items-center gap-4 px-5 py-4 text-left transition-colors ${isOpen ? "bg-blue-50 dark:bg-blue-900/20" : "bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700"}`}
       >
-        <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${isOpen ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-500"}`}>
+        <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${isOpen ? "bg-blue-600 text-white" : "bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-400"}`}>
           {icon}
         </div>
         <div className="flex-1 min-w-0">
-          <p className={`text-sm font-semibold leading-tight ${isOpen ? "text-blue-700" : "text-gray-800"}`}>
+          <p className={`text-sm font-semibold leading-tight ${isOpen ? "text-blue-700 dark:text-blue-300" : "text-gray-800 dark:text-slate-100"}`}>
             {titulo}
           </p>
-          {!isOpen && <p className="text-xs text-gray-400 mt-0.5">{descripcion}</p>}
+          {!isOpen && <p className="text-xs text-gray-400 dark:text-slate-500 mt-0.5">{descripcion}</p>}
         </div>
         <ChevronDown
           size={18}
-          className={`flex-shrink-0 transition-transform duration-200 ${isOpen ? "rotate-180 text-blue-500" : "text-gray-400"}`}
+          className={`flex-shrink-0 transition-transform duration-200 ${isOpen ? "rotate-180 text-blue-500" : "text-gray-400 dark:text-slate-500"}`}
         />
       </button>
       <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[1400px] opacity-100" : "max-h-0 opacity-0"}`}>
-        <div className="px-5 py-5 border-t border-gray-100 bg-white">
+        <div className="px-5 py-5 border-t border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800">
           {content}
         </div>
       </div>

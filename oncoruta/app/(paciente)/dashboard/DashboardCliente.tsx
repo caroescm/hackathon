@@ -102,7 +102,7 @@ export default function DashboardCliente({
           return (
             <div
               key={card.title}
-              className="bg-white rounded-xl border border-gray-200 p-7 flex flex-col gap-4 shadow-sm"
+              className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-7 flex flex-col gap-4 shadow-sm"
             >
               <div
                 className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -110,10 +110,10 @@ export default function DashboardCliente({
               >
                 <Icon size={22} style={{ color: card.iconColor }} />
               </div>
-              <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 leading-snug">
+              <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 dark:text-slate-100 leading-snug">
                 {card.title}
               </h2>
-              <p className="text-sm text-gray-500 leading-relaxed flex-1">{card.description}</p>
+              <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed flex-1">{card.description}</p>
               <div>
                 <Link href={card.href}>
                   <button className={card.btnClassName}>{idioma === "es" ? "Ingresar" : "Yaykuy"}</button>

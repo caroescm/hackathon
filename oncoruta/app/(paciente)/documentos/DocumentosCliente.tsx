@@ -45,8 +45,8 @@ export default function DocumentosCliente({ documentos }: { documentos: Document
   return (
     <>
       <div className="px-8 pt-7 pb-2">
-        <h1 className="text-lg font-bold text-gray-900">{t.misDocumentosTitulo}</h1>
-        <p className="text-sm text-gray-500">{t.misDocumentosSubtitle}</p>
+        <h1 className="text-lg font-bold text-gray-900 dark:text-slate-100">{t.misDocumentosTitulo}</h1>
+        <p className="text-sm text-gray-500 dark:text-slate-400">{t.misDocumentosSubtitle}</p>
       </div>
       <div className="p-6 space-y-6">
         <div className="flex justify-end">
@@ -64,7 +64,7 @@ export default function DocumentosCliente({ documentos }: { documentos: Document
               {documentos.map((doc) => (
                 <div
                   key={doc.id}
-                  className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-gray-50 transition-colors"
+                  className="flex items-center justify-between p-3 rounded-lg border border-border dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 bg-primary-light rounded-lg flex items-center justify-center flex-shrink-0">

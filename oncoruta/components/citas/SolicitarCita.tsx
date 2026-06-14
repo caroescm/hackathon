@@ -101,14 +101,14 @@ export default function SolicitarCita({ triggerLabel, triggerClassName }: Props 
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/40" onClick={cerrarModal} />
 
-          <div className="relative bg-white rounded-xl shadow-xl w-full max-w-md p-6 space-y-5">
+          <div className="relative bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-md p-6 space-y-5">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-semibold text-foreground">
                 {es ? "Solicitar cita" : "Tupanakuy mañay"}
               </h2>
               <button
                 onClick={cerrarModal}
-                className="p-1 rounded-lg text-muted hover:text-foreground hover:bg-gray-100 transition-colors"
+                className="p-1 rounded-lg text-muted hover:text-foreground hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
               >
                 <X size={18} />
               </button>
@@ -141,13 +141,13 @@ export default function SolicitarCita({ triggerLabel, triggerClassName }: Props 
 
                 {/* Servicio */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">
                     {es ? "Servicio" : "Hampiy ñan"} <span className="text-red-500">*</span>
                   </label>
                   <select
                     value={servicio}
                     onChange={(e) => { setServicio(e.target.value); setError(""); }}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   >
                     {SERVICIOS.map((s) => (
                       <option key={s} value={s}>{s}</option>
@@ -157,9 +157,9 @@ export default function SolicitarCita({ triggerLabel, triggerClassName }: Props 
 
                 {/* Fecha preferida */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">
                     {es ? "Fecha preferida" : "Munasqa p'unchay"}{" "}
-                    <span className="text-gray-400 font-normal">
+                    <span className="text-gray-400 dark:text-slate-500 font-normal">
                       {es ? "(Opcional)" : "(Mana wakichisqachu)"}
                     </span>
                   </label>
@@ -168,7 +168,7 @@ export default function SolicitarCita({ triggerLabel, triggerClassName }: Props 
                     value={fecha}
                     min={mananaISO()}
                     onChange={(e) => { setFecha(e.target.value); setError(""); }}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
                   <p className="mt-1 text-xs text-muted">
                     {es
@@ -179,9 +179,9 @@ export default function SolicitarCita({ triggerLabel, triggerClassName }: Props 
 
                 {/* Notas */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">
                     {es ? "Motivo o indicaciones adicionales" : "Imapaqmi o yapa willay"}{" "}
-                    <span className="text-gray-400 font-normal">
+                    <span className="text-gray-400 dark:text-slate-500 font-normal">
                       {es ? "(Opcional)" : "(Mana wakichisqachu)"}
                     </span>
                   </label>
@@ -192,7 +192,7 @@ export default function SolicitarCita({ triggerLabel, triggerClassName }: Props 
                     placeholder={es
                       ? "Ej: Me derivaron para segunda opinión oncológica"
                       : "Ej: Qhawachiwanku onqoyniymanta"}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                    className="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder:text-slate-400 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
                   />
                 </div>
 

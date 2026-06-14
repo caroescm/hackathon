@@ -10,16 +10,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#f9fafb",
-        foreground: "#111928",
+        background: "var(--color-background)",
+        foreground: "var(--color-foreground)",
         primary: {
           DEFAULT: "#1a56db",
           dark: "#1e429f",
           light: "#e8f0fe",
         },
-        sidebar: "#ffffff",
-        border: "#e5e7eb",
-        muted: "#6b7280",
+        sidebar: "var(--color-sidebar)",
+        border: "var(--color-border)",
+        muted: "var(--color-muted)",
         success: "#0e9f6e",
         warning: "#c27803",
         danger: "#e02424",

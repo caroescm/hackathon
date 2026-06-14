@@ -134,14 +134,14 @@ export default function SubirDocumento({ triggerLabel }: { triggerLabel?: string
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/40" onClick={cerrarModal} />
 
-          <div className="relative bg-white rounded-xl shadow-xl w-full max-w-md p-6 space-y-5">
+          <div className="relative bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-md p-6 space-y-5">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-semibold text-foreground">
                 {es ? "Subir documento" : "Qillqa apachiy"}
               </h2>
               <button
                 onClick={cerrarModal}
-                className="p-1 rounded-lg text-muted hover:text-foreground hover:bg-gray-100 transition-colors"
+                className="p-1 rounded-lg text-muted hover:text-foreground hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
               >
                 <X size={18} />
               </button>
@@ -166,13 +166,13 @@ export default function SubirDocumento({ triggerLabel }: { triggerLabel?: string
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Tipo de documento */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">
                     {es ? "Tipo de documento" : "Qillqa rikch'aq"} <span className="text-red-500">*</span>
                   </label>
                   <select
                     value={tipo}
                     onChange={(e) => setTipo(e.target.value)}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   >
                     {TIPOS_DOCUMENTO.map((doc) => (
                       <option key={doc.value} value={doc.value}>{doc.label}</option>
@@ -182,7 +182,7 @@ export default function SubirDocumento({ triggerLabel }: { triggerLabel?: string
 
                 {/* Archivo */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">
                     {es ? "Archivo" : "Qillqa"} <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -195,7 +195,7 @@ export default function SubirDocumento({ triggerLabel }: { triggerLabel?: string
                   />
                   <label
                     htmlFor="doc-file-input"
-                    className="flex flex-col items-center gap-2 w-full border-2 border-dashed border-gray-200 rounded-lg px-4 py-5 cursor-pointer hover:border-primary hover:bg-primary-light/30 transition-colors"
+                    className="flex flex-col items-center gap-2 w-full border-2 border-dashed border-gray-200 dark:border-slate-600 rounded-lg px-4 py-5 cursor-pointer hover:border-primary hover:bg-primary-light/30 dark:hover:bg-slate-700/50 transition-colors"
                   >
                     {file ? (
                       <>
@@ -219,9 +219,9 @@ export default function SubirDocumento({ triggerLabel }: { triggerLabel?: string
 
                 {/* Descripción */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">
                     {es ? "Descripción o notas" : "Willakuy o qillqay"}{" "}
-                    <span className="text-gray-400 font-normal">
+                    <span className="text-gray-400 dark:text-slate-500 font-normal">
                       {es ? "(Opcional)" : "(Mana wakichisqachu)"}
                     </span>
                   </label>
@@ -232,7 +232,7 @@ export default function SubirDocumento({ triggerLabel }: { triggerLabel?: string
                     placeholder={es
                       ? "Ej: Resultado de mamografía del 10 de junio"
                       : "Ej: Mamografía tarisqan huniy killapi"}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                    className="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder:text-slate-400 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
                   />
                 </div>
 

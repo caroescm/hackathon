@@ -43,7 +43,7 @@ export default function RoadmapPasos({ pasos }: Props) {
   return (
     <div className="relative">
       {/* Línea vertical punteada */}
-      <div className="absolute left-5 top-5 bottom-5 border-l-2 border-dashed border-gray-200 z-0" />
+      <div className="absolute left-5 top-5 bottom-5 border-l-2 border-dashed border-gray-200 dark:border-slate-600 z-0" />
 
       <div className="space-y-2">
         {pasos.map((paso, i) => {
@@ -78,8 +78,8 @@ export default function RoadmapPasos({ pasos }: Props) {
                       isDone
                         ? "bg-[#16a34a] text-white shadow-sm"
                         : isActive
-                        ? "bg-[#1a56db] text-white shadow-md ring-4 ring-blue-100"
-                        : "bg-white border-2 border-gray-200 text-gray-400"
+                        ? "bg-[#1a56db] text-white shadow-md ring-4 ring-blue-100 dark:ring-blue-900"
+                        : "bg-white dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-600 text-gray-400 dark:text-slate-400"
                     }`}
                   >
                     {isDone ? <Check size={16} strokeWidth={3} /> : paso.numero}
@@ -92,7 +92,7 @@ export default function RoadmapPasos({ pasos }: Props) {
                     <div className="flex items-center gap-2 flex-wrap">
                       <span
                         className={`text-sm font-semibold leading-snug ${
-                          isDone ? "text-gray-500 line-through-none" : isActive ? "text-gray-900" : "text-gray-400"
+                          isDone ? "text-gray-500 dark:text-slate-400 line-through-none" : isActive ? "text-gray-900 dark:text-slate-100" : "text-gray-400 dark:text-slate-500"
                         }`}
                       >
                         {paso.nombre}
@@ -103,7 +103,7 @@ export default function RoadmapPasos({ pasos }: Props) {
                             ? "bg-green-100 text-green-700"
                             : isActive
                             ? "bg-blue-100 text-blue-700"
-                            : "bg-gray-100 text-gray-500"
+                            : "bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-400"
                         }`}
                       >
                         {isDone ? t.completado : isActive ? t.enCurso : t.pendiente}
@@ -113,7 +113,7 @@ export default function RoadmapPasos({ pasos }: Props) {
                     {!isDone && (paso.info_adicional || paso.descripcion) && (
                       <ChevronDown
                         size={16}
-                        className={`flex-shrink-0 text-gray-400 transition-transform duration-200 ${
+                        className={`flex-shrink-0 text-gray-400 dark:text-slate-500 transition-transform duration-200 ${
                           isOpen ? "rotate-180" : ""
                         }`}
                       />
@@ -122,7 +122,7 @@ export default function RoadmapPasos({ pasos }: Props) {
 
                   {/* Siempre visible: descripcion breve */}
                   {!isDone && paso.descripcion && (
-                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                    <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 leading-relaxed">
                       {paso.descripcion}
                     </p>
                   )}
@@ -135,13 +135,13 @@ export default function RoadmapPasos({ pasos }: Props) {
                   >
                     {paso.info_adicional && (
                       <div className={`rounded-lg px-4 py-3 text-xs leading-relaxed ${
-                        isActive ? "bg-blue-50 text-blue-800 border border-blue-100" : "bg-gray-50 text-gray-600 border border-gray-100"
+                        isActive ? "bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 border border-blue-100 dark:border-blue-800" : "bg-gray-50 dark:bg-slate-700 text-gray-600 dark:text-slate-300 border border-gray-100 dark:border-slate-600"
                       }`}>
                         {paso.info_adicional}
                       </div>
                     )}
                     {paso.tiempo_estimado && (
-                      <div className="flex items-center gap-1.5 mt-2 text-xs text-gray-400">
+                      <div className="flex items-center gap-1.5 mt-2 text-xs text-gray-400 dark:text-slate-500">
                         <Clock size={12} />
                         <span>{paso.tiempo_estimado}</span>
                       </div>
