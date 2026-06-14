@@ -10,7 +10,7 @@ type Message = {
 
 const MENSAJE_INICIAL: Message = {
   role: "assistant",
-  content: "Hola, soy tu asistente del INEN. ¿En qué puedo ayudarte hoy?",
+  content: "Hola, estoy aquí para acompañarte en cada paso de tu proceso en el INEN. Puedes preguntarme lo que necesites — estoy para ayudarte. 💙",
 };
 
 export default function ChatBot() {
@@ -72,7 +72,7 @@ export default function ChatBot() {
       {/* Ventana de chat */}
       {open && (
         <div className="flex flex-col bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
-          style={{ width: 300, height: 420 }}>
+          style={{ width: 380, height: 540 }}>
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-[#1a56db]">
             <div className="flex items-center gap-2">
