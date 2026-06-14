@@ -2,8 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
-import Button from "@/components/ui/Button";
-import { FileText, Upload } from "lucide-react";
+import SubirDocumento from "@/components/paciente/SubirDocumento";
+import { FileText } from "lucide-react";
 
 type Documento = {
   id: string;
@@ -49,10 +49,7 @@ export default async function DocumentosPage() {
       <TopBar title="Mis Documentos" subtitle="Historial médico y resultados" />
       <div className="p-6 space-y-6">
         <div className="flex justify-end">
-          <Button size="sm">
-            <Upload size={16} />
-            Subir documento
-          </Button>
+          <SubirDocumento />
         </div>
 
         <Card

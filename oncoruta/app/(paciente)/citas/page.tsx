@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
+import SolicitarCita from "@/components/paciente/SolicitarCita";
 import { Calendar, Clock, MapPin } from "lucide-react";
 
 type Cita = {
@@ -50,6 +51,9 @@ export default async function CitasPage() {
     <>
       <TopBar title="Mis Citas" subtitle="Agenda médica en el INEN" />
       <div className="p-6 space-y-6">
+        <div className="flex justify-end">
+          <SolicitarCita />
+        </div>
         <Card
           title="Próximas Citas"
           description={proximas.length > 0 ? `${proximas.length} cita${proximas.length !== 1 ? "s" : ""} programada${proximas.length !== 1 ? "s" : ""}` : undefined}
