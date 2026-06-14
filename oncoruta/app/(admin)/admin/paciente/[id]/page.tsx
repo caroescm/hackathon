@@ -4,7 +4,6 @@ import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import RevisarDocumento from "@/components/admin/RevisarDocumento";
 import AgregarNota from "@/components/admin/AgregarNota";
-import AprobarCita from "@/components/admin/AprobarCita";
 import { getPrioridad } from "@/lib/utils/prioridad";
 import { ArrowLeft, Check, Clock, Circle, LockKeyhole } from "lucide-react";
 import Link from "next/link";
@@ -65,8 +64,8 @@ const ESTADO_DOC_BADGE: Record<string, { variant: "info" | "warning" | "success"
   rechazado:   { variant: "danger",  label: "Rechazado" },
 };
 
-const ESTADO_CITA_BADGE: Record<string, { variant: "warning" | "success" | "default" | "danger"; label: string }> = {
-  solicitada: { variant: "warning", label: "Solicitud pendiente" },
+// Enum real de la DB: public.estado_cita = ["programada", "confirmada", "completada"]
+const ESTADO_CITA_BADGE: Record<string, { variant: "warning" | "success" | "default"; label: string }> = {
   programada: { variant: "warning", label: "Programada" },
   confirmada: { variant: "success", label: "Confirmada" },
   completada: { variant: "default", label: "Completada" },
@@ -283,21 +282,14 @@ export default async function PacienteExpedientePage({ params }: { params: { id:
               {listaCitas.map((cita) => {
                 const badge = ESTADO_CITA_BADGE[cita.estado] ?? { variant: "default" as const, label: cita.estado };
                 return (
-                  <div key={cita.id} className="p-3 border border-border rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-foreground">{cita.servicio}</p>
-                        {cita.estado !== "solicitada" && (
-                          <p className="text-xs text-muted">
-                            {formatFecha(cita.fecha)}{cita.hora ? ` · ${cita.hora}` : ""}{cita.piso ? ` · ${cita.piso}` : ""}
-                          </p>
-                        )}
-                      </div>
-                      <Badge variant={badge.variant}>{badge.label}</Badge>
+                  <div key={cita.id} className="flex items-center justify-between p-3 border border-border rounded-lg">
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{cita.servicio}</p>
+                      <p className="text-xs text-muted">
+                        {formatFecha(cita.fecha)}{cita.hora ? ` · ${cita.hora}` : ""}{cita.piso ? ` · ${cita.piso}` : ""}
+                      </p>
                     </div>
-                    {cita.estado === "solicitada" && (
-                      <AprobarCita citaId={cita.id} servicioLabel={cita.servicio} />
-                    )}
+                    <Badge variant={badge.variant}>{badge.label}</Badge>
                   </div>
                 );
               })}

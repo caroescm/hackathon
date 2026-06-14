@@ -1,4 +1,3 @@
-import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import { Phone } from "lucide-react";
 import InformacionAcordeon from "./InformacionAcordeon";
@@ -12,8 +11,10 @@ const CONTACTOS = [
 export default function InformacionPage() {
   return (
     <>
-      <TopBar title="Información" subtitle="Guía paso a paso de tu proceso en el INEN" />
-
+      <div className="px-8 pt-7 pb-2">
+        <h1 className="text-lg font-bold text-gray-900">Información</h1>
+        <p className="text-sm text-gray-500">Guía paso a paso de tu proceso en el INEN</p>
+      </div>
       <div className="p-6 space-y-6">
         <InformacionAcordeon />
 

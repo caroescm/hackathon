@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import SolicitarCita from "@/components/paciente/SolicitarCita";
@@ -14,20 +13,17 @@ type Cita = {
   estado: string;
 };
 
-const estadoVariant: Record<string, "success" | "info" | "warning" | "default" | "danger"> = {
+// Enum real de la DB: public.estado_cita = ["programada", "confirmada", "completada"]
+const estadoVariant: Record<string, "success" | "warning" | "default"> = {
   confirmada: "success",
   programada: "warning",
-  solicitada: "warning",
   completada: "default",
-  cancelada: "danger",
 };
 
 const estadoLabel: Record<string, string> = {
   confirmada: "Confirmada",
   programada: "Programada",
-  solicitada: "Solicitada",
   completada: "Completada",
-  cancelada: "Cancelada",
 };
 
 function formatFecha(fecha: string) {
@@ -53,12 +49,15 @@ export default async function CitasPage() {
     : { data: null };
 
   const citas = (data as Cita[] | null) ?? [];
-  const proximas = citas.filter((c) => c.estado !== "completada" && c.estado !== "cancelada");
-  const pasadas = citas.filter((c) => c.estado === "completada" || c.estado === "cancelada");
+  const proximas = citas.filter((c) => c.estado !== "completada");
+  const pasadas = citas.filter((c) => c.estado === "completada");
 
   return (
     <>
-      <TopBar title="Mis Citas" subtitle="Agenda médica en el INEN" />
+      <div className="px-8 pt-7 pb-2">
+        <h1 className="text-lg font-bold text-gray-900">Mis Citas</h1>
+        <p className="text-sm text-gray-500">Agenda médica en el INEN</p>
+      </div>
       <div className="p-6 space-y-6">
         <div className="flex justify-end">
           <SolicitarCita />
@@ -79,28 +78,22 @@ export default async function CitasPage() {
                       {estadoLabel[cita.estado] ?? cita.estado}
                     </Badge>
                   </div>
-                  {cita.estado === "solicitada" ? (
-                    <p className="text-xs text-muted italic">
-                      Solicitud enviada — pendiente de confirmación
-                    </p>
-                  ) : (
-                    <div className="grid grid-cols-2 gap-2 text-xs text-muted">
-                      <div className="flex items-center gap-1.5">
-                        <Calendar size={12} />
-                        {formatFecha(cita.fecha)}
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Clock size={12} />
-                        {cita.hora ?? "Por confirmar"}
-                      </div>
-                      {cita.piso && (
-                        <div className="flex items-center gap-1.5 col-span-2">
-                          <MapPin size={12} />
-                          {cita.piso}
-                        </div>
-                      )}
+                  <div className="grid grid-cols-2 gap-2 text-xs text-muted">
+                    <div className="flex items-center gap-1.5">
+                      <Calendar size={12} />
+                      {formatFecha(cita.fecha)}
                     </div>
-                  )}
+                    <div className="flex items-center gap-1.5">
+                      <Clock size={12} />
+                      {cita.hora ?? "Por confirmar"}
+                    </div>
+                    {cita.piso && (
+                      <div className="flex items-center gap-1.5 col-span-2">
+                        <MapPin size={12} />
+                        {cita.piso}
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

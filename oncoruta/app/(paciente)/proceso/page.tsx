@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import { Check } from "lucide-react";
@@ -35,7 +34,10 @@ export default async function ProcesoPage() {
 
   return (
     <>
-      <TopBar title="Mi Proceso" subtitle="Seguimiento de tu tratamiento oncológico" />
+      <div className="px-8 pt-7 pb-2">
+        <h1 className="text-lg font-bold text-gray-900">Mi Proceso</h1>
+        <p className="text-sm text-gray-500">Seguimiento de tu tratamiento oncológico</p>
+      </div>
       <div className="p-6 space-y-6">
         <Card title="Etapas del Tratamiento" description="Tu recorrido personalizado en el INEN">
           {pasos.length === 0 ? (

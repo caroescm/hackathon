@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import TopBar from "@/components/layout/TopBar";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import SubirDocumento from "@/components/paciente/SubirDocumento";
@@ -46,7 +45,10 @@ export default async function DocumentosPage() {
 
   return (
     <>
-      <TopBar title="Mis Documentos" subtitle="Historial médico y resultados" />
+      <div className="px-8 pt-7 pb-2">
+        <h1 className="text-lg font-bold text-gray-900">Mis Documentos</h1>
+        <p className="text-sm text-gray-500">Historial médico y resultados</p>
+      </div>
       <div className="p-6 space-y-6">
         <div className="flex justify-end">
           <SubirDocumento />
