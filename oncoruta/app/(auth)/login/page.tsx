@@ -82,7 +82,7 @@ export default function LoginPage() {
       }}
     >
       <div className="absolute inset-0 bg-[#1a2340]/70" />
-      <div className="flex w-full max-w-5xl shadow-2xl overflow-hidden" style={{ minHeight: 600 }}>
+      <div className="relative z-10 flex w-full max-w-5xl shadow-2xl overflow-hidden" style={{ minHeight: 600 }}>
 
         {/* ── Panel izquierdo — formulario ── */}
         <div className="w-1/2 bg-white px-14 py-10 flex flex-col">
