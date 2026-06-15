@@ -261,7 +261,7 @@ export default function LoginPage() {
           </div>
 
           <p className="text-xs text-white/60 text-center leading-relaxed mt-8">
-            Para consultas con el portal o soporte técnico, comuníquese al (01) 201-6000 Anexo 1051.
+            Para consultas con el portal o soporte técnico, comuníquese al (01) 201-6500 Anexo 1051.
           </p>
         </div>
 

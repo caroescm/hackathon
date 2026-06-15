@@ -47,13 +47,13 @@ const FAQS_ES = [
   { q: "¿La quimioterapia siempre hace caer el cabello?", a: "No siempre. Depende del tipo y dosis de quimioterapia. Tu oncólogo te explicará qué esperar. La caída es temporal — el cabello vuelve a crecer después del tratamiento." },
   { q: "¿Qué pasa si no puedo pagar los medicamentos?", a: "El INEN tiene programas de apoyo y trabaja con el SIS para cubrir medicamentos esenciales. El área de Trabajo Social puede orientarte sobre fondos de ayuda. No dejes un tratamiento por razones económicas sin consultar primero." },
   { q: "¿Puedo traer a un familiar a mis citas?", a: "Sí, y se recomienda. Tener a alguien de confianza te ayuda a recordar lo que dice el médico y te brinda apoyo emocional. Tu acompañante puede entrar contigo a la consulta salvo indicación contraria." },
-  { q: "¿Cuándo debo ir a emergencias del INEN?", a: "Ve a emergencias de inmediato si tienes fiebre mayor a 38°C, sangrado que no cede, sangre en la orina, dificultad para respirar o pérdida del conocimiento. Llama al (01) 201-6000." },
+  { q: "¿Cuándo debo ir a emergencias del INEN?", a: "Ve a emergencias de inmediato si tienes fiebre mayor a 38°C, sangrado que no cede, sangre en la orina, dificultad para respirar o pérdida del conocimiento. Llama al (01) 201-6500." },
   { q: "¿Cómo cuido mi alimentación durante el tratamiento?", a: "Prioriza proteínas, frutas y verduras cocidas, y bebe suficiente agua. Si tienes náuseas, come en porciones pequeñas y frecuentes. Evita alimentos crudos cuando tus defensas estén bajas. Solicita una consulta de nutrición oncológica en el INEN." },
 ];
 
 const FAQS_QU = [
   { q: "¿INEN-pi atinchu mana pagaspa?", a: "SIS kasqaykiwan mana pagasqachu kanki. Mana seguruyki kaptinqa, Trabajo Social-pi tapukuy — yanapasunkiku." },
-  { q: "¿38°C aswan rupaptiy, ima runayman rinay?", a: "Usqhaym INEN-pi emergencias-man ri. (01) 201-6000 waqyay. Mana suyaychu." },
+  { q: "¿38°C aswan rupaptiy, ima runayman rinay?", a: "Usqhaym INEN-pi emergencias-man ri. (01) 201-6500 waqyay. Mana suyaychu." },
   { q: "¿Chukcha urmaptinmi kutimunqachu?", a: "Arí — hampiy tukuptinki, 4–6 simanamanta kutimunqa. Mana wiñaypaqchu." },
 ];
 

@@ -6,9 +6,9 @@ import InformacionAcordeon from "./InformacionAcordeon";
 import { useIdioma } from "@/lib/i18n/IdiomaContext";
 
 const CONTACTOS = [
-  { label: "Central telefónica",    valor: "(01) 201-6000", ext: null   },
-  { label: "Trabajo Social",        valor: "(01) 201-6000", ext: "2050" },
-  { label: "Psicología Oncológica", valor: "(01) 201-6000", ext: "2070" },
+  { label: "Central telefónica",    valor: "(01) 201-6500", ext: null   },
+  { label: "Trabajo Social",        valor: "(01) 201-6500", ext: "2050" },
+  { label: "Psicología Oncológica", valor: "(01) 201-6500", ext: "2070" },
 ];
 
 export default function InformacionPage() {
@@ -43,7 +43,7 @@ export default function InformacionPage() {
               <p className="text-sm text-red-700 leading-relaxed">
                 Ve a emergencias del INEN si tienes <span className="font-semibold">fiebre mayor a 38 °C</span>, sangrado que no para, o sangre en la orina.
               </p>
-              <p className="text-sm font-semibold text-red-800 mt-1.5">Central: (01) 201-6000</p>
+              <p className="text-sm font-semibold text-red-800 mt-1.5">Central: (01) 201-6500</p>
             </div>
           </div>
         </div>

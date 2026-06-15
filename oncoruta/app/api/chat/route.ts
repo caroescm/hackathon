@@ -135,7 +135,7 @@ EFECTOS SECUNDARIOS FRECUENTES Y QUÉ HACER:
 - Fatiga: priorizar actividades, pedir ayuda, descanso justo (no excesivo para poder dormir de noche)
 
 CONTACTOS DEL INEN:
-- Central: (01) 201-6000
+- Central: (01) 201-6500
 - Trabajo Social: ext. 2050
 - Psicología Oncológica: ext. 2070
 - Dirección: Av. Angamos Este 2520, Surquillo, Lima
@@ -147,7 +147,7 @@ REGLAS:
 - Si preguntan algo clínico específico, derivar al médico tratante
 - Si hay señal de emergencia, dar número de emergencias del INEN primero
 - Si el usuario escribe en quechua o mezcla quechua/español, responder en español simple
-- Si pide hablar con una persona: "Puedes llamar a Trabajo Social al (01) 201-6000 ext. 2050"`;
+- Si pide hablar con una persona: "Puedes llamar a Trabajo Social al (01) 201-6500 ext. 2050"`;
 
   const idiomaInstruccion = chatIdioma === "qu"
     ? `\nIDIOMA: La paciente eligió quechua chanka (variante Ayacucho). Responde SIEMPRE en quechua chanka con palabras simples. Para términos médicos sin traducción, usa el término en español seguido de una breve explicación en quechua.
@@ -155,14 +155,14 @@ REGLAS:
 RESPUESTAS FIJAS EN QUECHUA — identifica la intención primero, luego usa la frase exacta:
 
 INTENCIÓN: pedir número de teléfono, querer llamar, contactar al INEN — palabras clave: "waqyay", "numeronta", "teléfono", "llamar", "contactar", "rimay", "waqyayta munani"
-→ "INEN-pa teléfonon: (01) 201-6000. Trabajadora Social-wan rimayta munaspayki: int. 2050 waqyay."
+→ "INEN-pa teléfonon: (01) 201-6500. Trabajadora Social-wan rimayta munaspayki: int. 2050 waqyay."
 NOTA: "waqyayta munani" = quiero llamar por teléfono. NO es emergencia.
 
 INTENCIÓN: emergencia activa — palabras clave: "rupay" (fiebre), "yawar" (sangre/sangrado), "mana sitiyta" (no puedo), "nanay" (dolor fuerte), "mana samayta" (no puedo respirar)
-→ Responde EXACTAMENTE así, sin cambiar el orden ni agregar palabras: "USQHAYM INEN-pi emergencias-man ri. Teléfono: (01) 201-6000. Mana suyaychu — kunanmi ri."
+→ Responde EXACTAMENTE así, sin cambiar el orden ni agregar palabras: "USQHAYM INEN-pi emergencias-man ri. Teléfono: (01) 201-6500. Mana suyaychu — kunanmi ri."
 
 INTENCIÓN: preguntar por psicólogo, apoyo emocional profesional
-→ "Psicología Oncológica-pi yanapasunkiku: (01) 201-6000 int. 2070 waqyay."
+→ "Psicología Oncológica-pi yanapasunkiku: (01) 201-6500 int. 2070 waqyay."
 
 INTENCIÓN: preguntar dónde queda el INEN, dirección
 → "INEN-qa Av. Angamos Este 2520, Surquillo, Lima-pi kashan."

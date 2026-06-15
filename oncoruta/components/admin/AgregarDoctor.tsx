@@ -104,7 +104,7 @@ export default function AgregarDoctor() {
             id="telefono"
             name="telefono"
             label="Teléfono"
-            placeholder="(01) 201-6000"
+            placeholder="(01) 201-6500"
             value={form.telefono}
             onChange={handleChange}
           />
