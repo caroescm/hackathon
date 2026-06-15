@@ -160,7 +160,7 @@ export default function RegistroPage() {
 
     // 3. Insertar perfil de vulnerabilidad
     const { error: vulnError } = await supabase.from("perfil_vulnerabilidad").insert({
-      paciente_id: user.id,
+      usuario_id: user.id,
       jefa_hogar: vulnerabilidad.jefaHogar,
       de_provincia: vulnerabilidad.vieneProvincia,
       tiene_discapacidad: vulnerabilidad.tieneDiscapacidad,
@@ -342,10 +342,10 @@ export default function RegistroPage() {
               </p>
               <div className="grid grid-cols-1 gap-3">
                 {[
-                  { value: "preventivo" as const,   icon: "🔍", label: "Vengo a un chequeo preventivo", desc: "Mamografía o Papanicolaou sin síntomas" },
-                  { value: "sospecha" as const,      icon: "⚕️", label: "Tengo sospecha de cáncer",      desc: "Me enviaron del centro de salud o tengo síntomas" },
-                  { value: "diagnosticado" as const, icon: "📋", label: "Ya tengo un diagnóstico",        desc: "Confirman cáncer y empiezo tratamiento en el INEN" },
-                ].map(({ value, icon, label, desc }) => (
+                  { value: "preventivo" as const,   label: "Vengo a un chequeo preventivo", desc: "Mamografía o Papanicolaou sin síntomas" },
+                  { value: "sospecha" as const,      label: "Tengo sospecha de cáncer",      desc: "Me enviaron del centro de salud o tengo síntomas" },
+                  { value: "diagnosticado" as const, label: "Ya tengo un diagnóstico",        desc: "Confirman cáncer y empiezo tratamiento en el INEN" },
+                ].map(({ value, label, desc }) => (
                   <button
                     key={value}
                     type="button"
@@ -359,9 +359,8 @@ export default function RegistroPage() {
                         : "border-gray-200 hover:border-gray-300"
                     }`}
                   >
-                    <span className="text-lg mr-2">{icon}</span>
                     <span className="font-medium text-sm text-gray-800">{label}</span>
-                    <p className="text-xs text-gray-500 mt-1 ml-7">{desc}</p>
+                    <p className="text-xs text-gray-500 mt-1">{desc}</p>
                   </button>
                 ))}
               </div>

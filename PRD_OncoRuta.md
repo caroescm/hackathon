@@ -1,6 +1,6 @@
 # PRD — Mejora del Portal de Paciente INEN: Capa de Navegación Diagnóstica
 **Hackatón Transformagob 2026 | INEN**
-**Versión 3.0 | Junio 2026**
+**Versión 4.0 | Junio 2026**
 
 ---
 
@@ -28,24 +28,22 @@ Fuente: Sistema de Información del INEN / Departamento de Epidemiología y Esta
 - **89.55% de pacientes son SIS** — confirma la vulnerabilidad económica del grupo objetivo.
 - Pacientes de todo el país: Lima, Piura, Ancash, Ayacucho, Huancavelica, Junín, Cajamarca.
 
-### Lo que el portal actual tiene vs. lo que falta
+### Lo que el portal actual tiene vs. lo que construimos
 
-| Funcionalidad | Portal actual | Mejora propuesta |
+| Funcionalidad | Portal actual | OncoRuta (construido) |
 |---|---|---|
-| Consultar citas | ✅ | ✅ se mantiene |
-| Ver resultados / documentos | ✅ | ✅ se mantiene |
+| Consultar citas | ✅ | ✅ se mantiene y amplía |
+| Ver resultados / documentos | ✅ | ✅ se mantiene y amplía |
 | Solicitar citas | ✅ | ✅ se mantiene |
-| Ver ruta diagnóstica completa (5 pasos) | ❌ | ✅ nuevo |
-| Estado actual del proceso | ❌ | ✅ nuevo |
-| Tiempo estimado por paso | ❌ | ✅ nuevo |
-| Subida de documentos con aprobación | ❌ | ✅ nuevo |
-| Recordatorios automáticos por WhatsApp | ❌ | ✅ nuevo |
-| Chatbot de acompañamiento | ❌ | ✅ nuevo |
-| Panel para asistenta social | ❌ | ✅ nuevo |
-| Priorización por vulnerabilidad | ❌ | ✅ nuevo |
-| Acceso para familiar cuidador | ❌ | ✅ nuevo |
-| Soporte en quechua | ❌ | ✅ nuevo |
-| Alertas de pacientes inactivas | ❌ | ✅ nuevo |
+| Ver ruta diagnóstica completa (adaptada por tipo) | ❌ | ✅ implementado |
+| Estado actual del proceso con tiempo estimado | ❌ | ✅ implementado |
+| Subida de documentos con aprobación | ❌ | ✅ implementado |
+| Chatbot de acompañamiento (español y quechua) | ❌ | ✅ implementado |
+| Panel admin con priorización por vulnerabilidad | ❌ | ✅ implementado |
+| Soporte en quechua chanka | ❌ | ✅ implementado |
+| Modo oscuro | ❌ | ✅ implementado |
+| Recordatorios automáticos por WhatsApp | ❌ | 🔜 post-hackathon |
+| Acceso para familiar cuidador | ❌ | 🔜 post-hackathon |
 
 ### Los tres problemas que el portal actual no resuelve
 
@@ -77,12 +75,7 @@ El portal muestra citas y documentos de forma aislada, sin conectarlos en una ru
 - Necesita: interfaz muy simple, letras grandes, apoyo audiovisual
 - Dificultades: poco manejo de tecnología, problemas visuales
 
-### Perfil 4 — Familiar cuidador (nivel digital alto)
-- 45 años, hija de paciente
-- Necesita: seguimiento del proceso de su familiar, alertas y recordatorios
-- Rol: acceso de solo lectura, vinculado al perfil de la paciente
-
-### Perfil 5 — Asistenta social / Navegadora (Admin)
+### Perfil 4 — Asistenta social / Navegadora (Admin)
 - Personal del INEN
 - Necesita: visibilidad de todas sus pacientes, alertas de quién está atrasada, gestión de documentos
 - Acceso desde computadora del hospital
@@ -102,90 +95,94 @@ Basado en el flujograma oficial del reto Hackatón INEN 2026.
 | 4 | Exámenes de apoyo diagnóstico | Mamografía, ecografía, colposcopía, biopsia |
 | 5 | Evaluación diagnóstica y resultado | Resultado final → inicio de tratamiento |
 
+OncoRuta adapta la ruta mostrada según el tipo de paciente registrado: **preventivo** (chequeo sin síntomas), **sospecha** (referida con síntomas), o **diagnosticado** (confirmación e inicio de tratamiento).
+
 ---
 
-## 5. Nuevas Funcionalidades a Agregar al Portal
+## 5. Funcionalidades Implementadas
 
-### 5.1 Nuevas secciones en el perfil de paciente
+### 5.1 Registro y autenticación
 
-#### Mi Proceso *(nuevo)*
-- Línea de tiempo con los 5 pasos reales del proceso diagnóstico del INEN
-- Estado por paso: Pendiente / En curso / En revisión / Completado
+- Registro de paciente con: nombre completo, DNI (usado como usuario), teléfono, email opcional, contraseña
+- Selección del tipo de situación al registrarse: **chequeo preventivo**, **sospecha de cáncer**, o **diagnóstico confirmado** — determina la ruta diagnóstica que se muestra
+- Perfil de vulnerabilidad al registrarse: jefa de hogar, viene de provincia, tiene discapacidad, habla quechua → genera etiqueta de prioridad visible para el admin
+- Login con DNI como identificador
+- Autenticación gestionada por Supabase Auth con RLS
+
+### 5.2 Portal paciente — Dashboard
+
+- Resumen visual: próxima cita, total de documentos, etapa actual del proceso
+- Accesos directos a documentos y citas
+- Vista rápida del proceso diagnóstico con estado por paso
+
+### 5.3 Portal paciente — Mi Proceso
+
+- Roadmap visual adaptado al tipo de paciente (preventivo / sospecha / diagnosticado)
+- Estado por paso: Pendiente / En curso / Completado
 - Tiempo estimado por paso
-- Indicador visual del paso actual
+- Descripción e información adicional por paso (qué llevar, qué esperar)
+- Disponible en español y quechua chanka
 
-#### Mis Documentos — ampliado *(mejora)*
-- Subir documentos por paso (foto desde celular o PDF)
-- Estado del documento: Enviado / En revisión / Aprobado / Rechazado + comentario
-- Historial de todos los documentos subidos
-- *(El portal actual solo permite ver documentos ya existentes, no subirlos)*
+### 5.4 Portal paciente — Mis Documentos
 
-#### Mis Citas — ampliado *(mejora)*
-- Se mantiene la funcionalidad actual de consulta y solicitud
-- Se agrega: detalle de qué llevar a cada cita
-- Se agrega: habilitación de la siguiente cita solo tras aprobación del paso actual
+- Listado de documentos subidos con estado: Enviado / En revisión / Aprobado / Rechazado
+- Subida de documentos por paso (formulario con nombre, tipo, archivo)
+- Historial completo de documentos del expediente
 
-#### Información *(nuevo)*
-- Qué es cada examen y qué esperar
-- Qué documentos llevar en cada paso
-- Preguntas frecuentes: cómo llegar, qué pasa si no puedo ir, cuánto demora
-- En español y quechua
-- Modo accesible: texto grande, íconos
+### 5.5 Portal paciente — Mis Citas
 
-#### Botón WhatsApp *(nuevo)*
-- Fijo en toda la plataforma
-- Acceso directo al chatbot de acompañamiento
+- Ver próximas citas con detalle: servicio, fecha, hora, ubicación (piso), estado
+- Ver historial de citas pasadas
+- Solicitar nueva cita (queda en estado "pendiente de confirmación")
 
-### 5.2 Nuevas opciones al registrarse *(mejora del registro)*
+### 5.6 Portal paciente — Información
 
-- Selección de idioma: español o quechua
-- Perfil de vulnerabilidad: jefa de hogar, viene de provincia, tiene discapacidad, habla quechua → genera etiqueta de "alta prioridad" visible para la asistenta social
+- Acordeón con preguntas frecuentes del proceso INEN (qué llevar, cuánto demora, qué son los exámenes)
+- Contactos del INEN: central, Trabajo Social, Psicología Oncológica
+- Aviso de emergencias médicas siempre visible (fiebre, sangrado, dificultad respiratoria)
+- Nota informativa en quechua cuando se usa ese idioma
 
-### 5.3 Nuevo perfil: Familiar cuidador *(nuevo)*
+### 5.7 Chatbot de acompañamiento
 
-- Acceso autorizado al proceso de la paciente (previa vinculación)
-- Vista de solo lectura: pasos, citas, estado de documentos
-- Recibe las mismas notificaciones de WhatsApp que la paciente
+- Botón flotante presente en toda la plataforma (paciente y admin)
+- Selección de idioma al iniciar la conversación: español o quechua chanka
+- Responde con el contexto real de la paciente: tipo de paciente, paso actual, próximas citas, documentos pendientes
+- Respuestas empáticas, no clínicas — valida emociones antes de dar información
+- Soporte en quechua chanka con frases fijas para escenarios críticos (emergencia, miedo, contactos)
+- Escalamiento a humano: "Llama a Trabajo Social al (01) 201-6000 ext. 2050"
+- Powered by Groq API con modelo `llama-3.1-8b-instant`
 
-### 5.4 Nuevo perfil: Asistenta social / Admin *(nuevo)*
+### 5.8 Panel admin — Dashboard
 
-#### Panel principal
-- Lista de pacientes con estado del proceso
-- Etiqueta "alta prioridad" para pacientes vulnerables
-- Filtros: por estado, por días sin avanzar, por prioridad
-- Alerta automática de pacientes sin actividad
+- Estadísticas: total de pacientes activos, citas del día, documentos pendientes de revisión, alertas de procesos sin avance
+- Lista de pacientes recientes con etapa actual y badge de prioridad
+- Lista de doctores activos
+- Contador de alertas: procesos sin avanzar en más de 7 días
 
-#### Gestión de documentos
-- Revisar documentos subidos por las pacientes
-- Aprobar o rechazar con comentario
-- Al aprobar: habilita automáticamente el agendamiento de la siguiente cita
+### 5.9 Panel admin — Pacientes
 
-#### Ficha de paciente
-- Historial completo: pasos, documentos, citas, perfil de vulnerabilidad
-- Notas internas (no visibles para la paciente)
+- Tabla completa de todos los pacientes registrados
+- Filtros por prioridad (Alta / Media / Baja) y por etapa del proceso
+- Badge de prioridad calculado automáticamente del perfil de vulnerabilidad
+- Acceso directo al expediente de cada paciente
 
-### 5.5 WhatsApp y chatbot *(nuevo)*
+### 5.10 Panel admin — Expediente de paciente
 
-**Notificaciones automáticas:**
+- Datos personales: nombre, DNI, teléfono, idioma
+- Perfil de vulnerabilidad con badge de prioridad (Alta / Media)
+- Proceso oncológico completo con estado visual por paso
+- Documentos del paciente con opción de aprobar o rechazar con comentario
+- Historial de citas
+- Notas internas del equipo (solo visible para admin)
 
-| Evento | Mensaje |
-|---|---|
-| Registro exitoso | Bienvenida + resumen de los 5 pasos |
-| Cita asignada | Fecha, hora, servicio, qué llevar |
-| Recordatorio | 24h antes y 2h antes de cada cita |
-| Documento aprobado | "Ya puedes agendar tu siguiente paso" |
-| Documento rechazado | Qué corregir + comentario de la asistenta |
-| Paso completado | Qué viene después |
+### 5.11 Panel admin — Citas
 
-En español o quechua según preferencia de la paciente.
+- Confirmar solicitudes de cita enviadas por pacientes: asignar fecha y hora
 
-**Chatbot:**
-- "¿En qué paso estoy?"
-- "¿Cuál es mi próxima cita?"
-- "¿Qué tengo que llevar?"
-- "¿Cómo llego al servicio X?"
-- "¿Qué pasa si no puedo ir?"
-- "Quiero hablar con una asistenta" → escala a humano
+### 5.12 Panel admin — Doctores
+
+- Lista de doctores registrados con especialidad, contacto y estado
+- Formulario para agregar nuevo doctor
 
 ---
 
@@ -193,47 +190,52 @@ En español o quechua según preferencia de la paciente.
 
 ### Flujo Paciente
 ```
-Login al portal existente
+Registro → selección de tipo de paciente + perfil de vulnerabilidad
      ↓
-Nueva sección: Ver Mi Proceso (5 pasos)
+Dashboard → resumen del proceso, próxima cita, documentos
      ↓
-Subir documento del paso actual
+Mi Proceso → roadmap adaptado con tiempo estimado por paso
      ↓
-Esperar aprobación → notificación por WhatsApp
+Mis Documentos → subir documento del paso actual
      ↓
-Agendar siguiente cita (habilitado al aprobar)
+Admin revisa → aprueba o rechaza con comentario
      ↓
-Recordatorio 24h y 2h antes por WhatsApp
+Mis Citas → solicitar cita para el siguiente paso
      ↓
-Paso completado → avanza al siguiente
+Admin confirma → asigna fecha y hora
      ↓
-[Repite hasta diagnóstico definitivo]
+Información → consultar qué llevar, contactos INEN
+     ↓
+Chatbot → resolver dudas en español o quechua
 ```
 
 ### Flujo Admin
 ```
-Login como asistenta social
+Login como admin
      ↓
-Panel: ver pacientes con alertas y prioridades
+Dashboard → ver métricas, pacientes con alerta, documentos pendientes
      ↓
-Revisar documento → aprobar o rechazar
+Expediente de paciente → revisar perfil de vulnerabilidad + proceso
      ↓
-Sistema notifica a paciente por WhatsApp
+Revisar documentos → aprobar o rechazar con comentario
      ↓
-Monitorear avance del panel
+Confirmar cita solicitada → asignar fecha y hora
+     ↓
+Notas internas → registrar observaciones del caso
 ```
 
 ---
 
 ## 7. Tech Stack
 
-| Capa | Tecnología | Rol |
+| Capa | Tecnología | Detalle |
 |---|---|---|
-| Frontend | Next.js 14 + Tailwind CSS | Framework principal, responsivo, mobile-first |
-| Backend | Next.js API Routes | Endpoints del servidor, sin servidor separado |
-| Base de datos + Auth + Storage | Supabase | PostgreSQL + autenticación + almacenamiento de documentos |
-| Mensajería y chatbot | Twilio WhatsApp API | Notificaciones automáticas y chatbot |
-| Hosting | Vercel | Deploy automático, URL pública real, tier gratuito |
+| Frontend | Next.js 14 App Router + Tailwind CSS | `darkMode: "class"`, mobile-first, App Router con layouts por grupo de ruta |
+| Backend | Next.js API Routes (`app/api/`) | Sin servidor separado — endpoints del servidor en el mismo repo |
+| Base de datos + Auth + Storage | Supabase | PostgreSQL + Row Level Security (RLS) + Supabase Auth |
+| IA / Chatbot | Groq API | Modelo `llama-3.1-8b-instant` vía `groq-sdk`, `app/api/chat/route.ts` |
+| Internacionalización | IdiomaContext propio (`lib/i18n/`) | Español y quechua chanka — switch en runtime sin dependencias externas |
+| Hosting | Vercel | Deploy automático desde rama main |
 
 ---
 
@@ -241,23 +243,25 @@ Monitorear avance del panel
 
 | Requisito | Detalle |
 |---|---|
-| Accesibilidad | Modo texto grande, íconos claros, lenguaje simple (WCAG 2.1) |
+| Accesibilidad | Modo oscuro (`darkMode: "class"`), íconos claros, lenguaje simple |
 | Responsivo | Mobile-first — celular, tablet y computadora |
-| Idiomas | Español y quechua (mensajes críticos) |
-| Privacidad | Cumplimiento Ley N.° 29733 y Ley General de Salud |
+| Idiomas | Español y quechua chanka en toda la UI (portal paciente y chatbot) |
+| Privacidad | Cumplimiento Ley N.° 29733 y Ley General de Salud; RLS en Supabase |
 | Interoperabilidad | Extensión del portal existente del INEN, no sistema paralelo |
+| Rendimiento | Server Components por defecto; Client Components solo donde hay interacción |
 
 ---
 
-## 9. Fuera del Alcance
+## 9. Funcionalidades Post-Hackathon
 
-- Reescritura del portal existente del INEN
-- Integración directa con SISINEN o REFCON
-- IA clínica o diagnóstico automático
-- Historia clínica electrónica completa
-- Pago de citas en línea
-- Perfil de voluntaria orientadora (escalamiento futuro)
-- Traducción completa al quechua (solo mensajes críticos en esta etapa)
+Estas funcionalidades fueron diseñadas pero no alcanzaron a implementarse en el hackathon:
+
+- **Notificaciones por WhatsApp** — integración con WhatsApp Business API (Twilio u otro proveedor) para enviar recordatorios de cita, confirmación de documentos aprobados y avance de pasos
+- **Perfil de familiar cuidador** — acceso de solo lectura al proceso de una paciente, vinculado con su autorización, con las mismas notificaciones
+- **Habilitación automática de siguiente cita al aprobar documento** — actualmente la aprobación actualiza el estado del documento en BD; el desbloqueo del agendamiento de la siguiente cita requiere lógica adicional
+- **Selector de idioma explícito en el registro** — actualmente el idioma se infiere del flag `hablaQuechua` del perfil de vulnerabilidad; se propone un selector independiente español / quechua
+- **Alertas activas de inactividad** — el dashboard admin ya cuenta procesos con más de 7 días sin avance; falta un sistema que notifique activamente (email o mensaje) al equipo cuando se supera ese umbral
+- **Contenido completo en quechua en la sección Información** — actualmente el acordeón está en español con nota beta en quechua
 
 ---
 
@@ -272,11 +276,13 @@ Monitorear avance del panel
 
 ---
 
-## 11. Entregables para la Hackathon
+## 11. Entregables de la Hackathon
 
 | Entregable | Descripción |
 |---|---|
-| Prototipo navegable | Wireframe clickeable con flujo de paciente y admin |
-| Flujo del chatbot | Árbol de conversación del bot de WhatsApp |
-| Presentación del pitch | Historia de paciente + datos reales + propuesta de piloto |
-| Arquitectura técnica | Diagrama de extensión sobre el portal existente |
+| Aplicación web funcional | Next.js 14 desplegado en Vercel con flujo completo de paciente y admin |
+| Portal de paciente | Dashboard, Mi Proceso, Mis Documentos, Mis Citas, Información — funcional con datos reales |
+| Panel administrativo | Dashboard, lista de pacientes con filtros, expediente completo, revisión de documentos, gestión de citas y doctores |
+| Chatbot de acompañamiento | Asistente IA en español y quechua chanka conectado a datos reales de la paciente |
+| Internacionalización | UI completa en español y quechua chanka con IdiomaContext propio |
+| Presentación del pitch | Historia de paciente + datos reales del INEN + propuesta de piloto |

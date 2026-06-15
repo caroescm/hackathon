@@ -12,7 +12,7 @@ type Doctor = {
   especialidad: string | null;
   telefono: string | null;
   email: string | null;
-  estado: string | null;
+  activo: boolean | null;
 };
 
 export default async function DoctoresPage() {
@@ -20,7 +20,7 @@ export default async function DoctoresPage() {
 
   const { data } = await supabase
     .from("doctores")
-    .select("id, nombre, especialidad, telefono, email, estado")
+    .select("id, nombre, especialidad, telefono, email, activo")
     .order("nombre", { ascending: true });
 
   const doctores = (data as Doctor[] | null) ?? [];
@@ -64,8 +64,8 @@ export default async function DoctoresPage() {
                       <td className="py-3 text-muted tabular-nums">{d.telefono ?? "—"}</td>
                       <td className="py-3 text-muted">{d.email ?? "—"}</td>
                       <td className="py-3">
-                        <Badge variant={d.estado === "activo" ? "success" : "default"}>
-                          {d.estado === "activo" ? "Activo" : "Inactivo"}
+                        <Badge variant={d.activo ? "success" : "default"}>
+                          {d.activo ? "Activo" : "Inactivo"}
                         </Badge>
                       </td>
                     </tr>

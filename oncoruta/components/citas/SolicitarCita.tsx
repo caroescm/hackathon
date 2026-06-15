@@ -37,7 +37,7 @@ export default function SolicitarCita({ triggerLabel, triggerClassName }: Props 
   const [isOpen, setIsOpen] = useState(false);
   const [servicio, setServicio] = useState(SERVICIOS[0]);
   const [fecha, setFecha] = useState("");
-  const [notas, setNotas] = useState("");
+  const [queLevar, setQueLevar] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [enviado, setEnviado] = useState(false);
@@ -58,8 +58,8 @@ export default function SolicitarCita({ triggerLabel, triggerClassName }: Props 
       paciente_id: user.id,
       servicio,
       fecha: fecha || null,
-      notas: notas.trim() || null,
-      estado: "solicitada",
+      que_llevar: queLevar.trim() || null,
+      estado: "programada",
     });
 
     setLoading(false);
@@ -77,7 +77,7 @@ export default function SolicitarCita({ triggerLabel, triggerClassName }: Props 
     setIsOpen(false);
     setServicio(SERVICIOS[0]);
     setFecha("");
-    setNotas("");
+    setQueLevar("");
     setError("");
     setEnviado(false);
   }
@@ -186,8 +186,8 @@ export default function SolicitarCita({ triggerLabel, triggerClassName }: Props 
                     </span>
                   </label>
                   <textarea
-                    value={notas}
-                    onChange={(e) => setNotas(e.target.value)}
+                    value={queLevar}
+                    onChange={(e) => setQueLevar(e.target.value)}
                     rows={3}
                     placeholder={es
                       ? "Ej: Me derivaron para segunda opinión oncológica"

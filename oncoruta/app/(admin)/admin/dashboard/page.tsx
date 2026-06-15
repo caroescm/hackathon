@@ -30,7 +30,7 @@ type Doctor = {
   id: string;
   nombre: string;
   especialidad: string | null;
-  estado: string | null;
+  activo: boolean | null;
 };
 
 const PRIORIDAD_BADGE = {
@@ -84,8 +84,8 @@ export default async function AdminDashboardPage() {
       .limit(4),
     supabase
       .from("doctores")
-      .select("id, nombre, especialidad, estado")
-      .eq("estado", "activo")
+      .select("id, nombre, especialidad, activo")
+      .eq("activo", true)
       .limit(4),
   ]);
 

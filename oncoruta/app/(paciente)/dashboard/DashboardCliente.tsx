@@ -95,53 +95,6 @@ export default function DashboardCliente({
 
   return (
     <div className="p-6 space-y-6">
-      {/* ── Fila superior: Resultados + Consulta cita ── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {TOP_CARDS.map((card) => {
-          const Icon = card.icon;
-          return (
-            <div
-              key={card.title}
-              className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-7 flex flex-col gap-4 shadow-sm"
-            >
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: card.iconBg }}
-              >
-                <Icon size={22} style={{ color: card.iconColor }} />
-              </div>
-              <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 dark:text-slate-100 leading-snug">
-                {card.title}
-              </h2>
-              <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed flex-1">{card.description}</p>
-              <div>
-                <Link href={card.href}>
-                  <button className={card.btnClassName}>{idioma === "es" ? "Ingresar" : "Yaykuy"}</button>
-                </Link>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* ── Stats ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat) => (
-          <Card key={stat.label} className="p-0">
-            <div className="p-5 flex items-start gap-4">
-              <div className={`w-10 h-10 rounded-lg ${stat.iconBg} flex items-center justify-center flex-shrink-0`}>
-                {stat.icon}
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs text-muted font-medium">{stat.label}</p>
-                <p className="text-base font-bold text-foreground leading-tight truncate">{stat.value}</p>
-                <p className="text-xs text-muted">{stat.sub}</p>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
-
       {/* ── Proceso + Citas ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
@@ -192,6 +145,54 @@ export default function DashboardCliente({
           )}
         </Card>
       </div>
+
+      {/* ── Fila: Resultados + Consulta cita ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {TOP_CARDS.map((card) => {
+          const Icon = card.icon;
+          return (
+            <div
+              key={card.title}
+              className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-7 flex flex-col gap-4 shadow-sm"
+            >
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: card.iconBg }}
+              >
+                <Icon size={22} style={{ color: card.iconColor }} />
+              </div>
+              <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 dark:text-slate-100 leading-snug">
+                {card.title}
+              </h2>
+              <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed flex-1">{card.description}</p>
+              <div>
+                <Link href={card.href}>
+                  <button className={card.btnClassName}>{idioma === "es" ? "Ingresar" : "Yaykuy"}</button>
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ── Stats ── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {stats.map((stat) => (
+          <Card key={stat.label} className="p-0">
+            <div className="p-5 flex items-start gap-4">
+              <div className={`w-10 h-10 rounded-lg ${stat.iconBg} flex items-center justify-center flex-shrink-0`}>
+                {stat.icon}
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs text-muted font-medium">{stat.label}</p>
+                <p className="text-base font-bold text-foreground leading-tight truncate">{stat.value}</p>
+                <p className="text-xs text-muted">{stat.sub}</p>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+
     </div>
   );
 }

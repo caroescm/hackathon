@@ -11,7 +11,7 @@ type Message = {
 
 const MENSAJE_ELECCION: Message = {
   role: "assistant",
-  content: "Hola 💙 ¿En qué idioma prefieres que te acompañe?\n\nRimaykullayki 💙 ¿Ima simipi rimanayki munawanki?\n\n🇵🇪 Español  ·  Quechua",
+  content: "Hola, ¿en qué idioma prefieres que te acompañe?\n\nRimaykullayki, ¿ima simipi rimanayki munawanki?\n\nEspañol  ·  Quechua",
 };
 
 export default function ChatBot() {
@@ -38,7 +38,7 @@ export default function ChatBot() {
     setChatIdioma(lang);
     const bienvenida: Message = lang === "es"
       ? { role: "assistant", content: t.chatBienvenida }
-      : { role: "assistant", content: "Allinllachu kashanki 💙 Imaynallataq yanapasunki atini? Tapukuyniykikunata nin — kaypim kachkani." };
+      : { role: "assistant", content: "Allinllachu kashanki. Imaynallataq yanapasunki atini? Tapukuyniykikunata nin — kaypim kachkani." };
     setMessages((prev) => [...prev, bienvenida]);
   }
 
@@ -144,7 +144,7 @@ export default function ChatBot() {
                 onClick={() => seleccionarIdioma("es")}
                 className="flex-1 py-2 rounded-full border border-[#1a56db] text-[#1a56db] text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-700 transition-colors"
               >
-                🇵🇪 Español
+                Español
               </button>
               <button
                 onClick={() => seleccionarIdioma("qu")}

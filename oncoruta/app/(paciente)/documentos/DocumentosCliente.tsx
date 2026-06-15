@@ -10,7 +10,7 @@ type Documento = {
   id: string;
   nombre: string;
   estado: string;
-  created_at: string;
+  subido_en: string;
   pasos: { nombre: string } | null;
 };
 
@@ -73,7 +73,7 @@ export default function DocumentosCliente({ documentos }: { documentos: Document
                     <div>
                       <p className="text-sm font-medium text-foreground">{doc.nombre}</p>
                       <p className="text-xs text-muted">
-                        {formatFecha(doc.created_at)}
+                        {formatFecha(doc.subido_en)}
                         {doc.pasos?.nombre ? ` · ${doc.pasos.nombre}` : ""}
                       </p>
                     </div>

@@ -94,8 +94,6 @@ export default function SubirDocumento({ triggerLabel }: { triggerLabel?: string
 
     const { error: dbError } = await supabase.from("documentos").insert({
       paciente_id: user.id,
-      tipo,
-      descripcion: descripcion.trim() || null,
       url,
       nombre: file.name,
       estado: "enviado",

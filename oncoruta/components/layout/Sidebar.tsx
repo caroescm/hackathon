@@ -8,13 +8,14 @@ import {
   ChevronRight,
   ChevronLeft,
   Settings,
-  Search,
   LogOut,
   LayoutDashboard,
   Users,
   Stethoscope,
   GitBranch,
   Info,
+  Calendar,
+  FileText,
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils/cn";
@@ -40,7 +41,6 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
   const router = useRouter();
   const supabase = createClient();
   const [collapsed, setCollapsed] = useState(false);
-  const [consultasOpen, setConsultasOpen] = useState(true);
   const [configOpen, setConfigOpen] = useState(false);
   const { idioma, setIdioma, t } = useIdioma();
 
@@ -145,61 +145,35 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
           {!collapsed && t.inicio}
         </Link>
 
-        {/* Consultas group */}
-        {collapsed ? (
-          <Link
-            href="/citas"
-            className={cn(
-              "flex items-center justify-center px-3 py-2.5 rounded-lg text-sm transition-colors",
-              isActive("/citas") || isActive("/documentos")
-                ? "bg-[#1a2f5a] text-white"
-                : "text-gray-600 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-slate-800"
-            )}
-          >
-            <Search size={18} />
-          </Link>
-        ) : (
-          <div>
-            <button
-              onClick={() => setConsultasOpen((v) => !v)}
-              className="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <Search size={18} />
-                {t.consultas}
-              </div>
-              {consultasOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-            </button>
-            {consultasOpen && (
-              <div className="mt-0.5 ml-3 border-l-2 border-gray-200 dark:border-slate-600 pl-3 space-y-0.5">
-                <Link
-                  href="/citas"
-                  className={cn(
-                    "flex items-center gap-2.5 py-1.5 px-2 text-sm rounded-md transition-colors",
-                    pathname === "/citas"
-                      ? "text-[#3B52A2] font-medium"
-                      : "text-gray-500 hover:text-gray-800 dark:text-slate-400 dark:hover:text-slate-100"
-                  )}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0" />
-                  {t.misCitas}
-                </Link>
-                <Link
-                  href="/documentos"
-                  className={cn(
-                    "flex items-center gap-2.5 py-1.5 px-2 text-sm rounded-md transition-colors",
-                    pathname === "/documentos"
-                      ? "text-[#3B52A2] font-medium"
-                      : "text-gray-500 hover:text-gray-800 dark:text-slate-400 dark:hover:text-slate-100"
-                  )}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0" />
-                  {t.misDocumentos}
-                </Link>
-              </div>
-            )}
-          </div>
-        )}
+        {/* Mis Citas */}
+        <Link
+          href="/citas"
+          className={cn(
+            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+            isActive("/citas")
+              ? "bg-[#1a2f5a] text-white"
+              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+            collapsed && "justify-center"
+          )}
+        >
+          <Calendar size={18} className="flex-shrink-0" />
+          {!collapsed && t.misCitas}
+        </Link>
+
+        {/* Mis Documentos */}
+        <Link
+          href="/documentos"
+          className={cn(
+            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+            isActive("/documentos")
+              ? "bg-[#1a2f5a] text-white"
+              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+            collapsed && "justify-center"
+          )}
+        >
+          <FileText size={18} className="flex-shrink-0" />
+          {!collapsed && t.misDocumentos}
+        </Link>
 
         {/* Mi Proceso */}
         <Link

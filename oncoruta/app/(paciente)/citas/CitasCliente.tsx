@@ -3,7 +3,7 @@
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import SolicitarCita from "@/components/citas/SolicitarCita";
-import { Calendar, Clock, MapPin, Search } from "lucide-react";
+import { Calendar, Clock, MapPin } from "lucide-react";
 import { useIdioma } from "@/lib/i18n/IdiomaContext";
 
 type Cita = {
@@ -50,50 +50,12 @@ export default function CitasCliente({ proximas, pasadas }: { proximas: Cita[]; 
         <p className="text-sm text-gray-500 dark:text-slate-400">{t.misCitasSubtitle}</p>
       </div>
       <div className="p-6 space-y-6">
-        {/* Módulo de acciones */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* Solicitud de citas */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-7 flex flex-col gap-4 shadow-sm">
-            <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "#FCE4EC" }}>
-              <Calendar size={22} style={{ color: "#C2185B" }} />
-            </div>
-            <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 dark:text-slate-100 leading-snug">
-              {idioma === "es" ? "SOLICITUD DE CITAS" : "TUPANAKUY MAÑAY"}
-            </h2>
-            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed flex-1">
-              {idioma === "es"
-                ? "Solicita tu cita según la disponibilidad del servicio o departamento correspondiente."
-                : "Tupanakuykita mañay hampiq wasimanta."}
-            </p>
-            <div>
-              <SolicitarCita
-                triggerLabel={idioma === "es" ? "Ingresar" : "Yaykuy"}
-                triggerClassName="bg-[#C2185B] hover:bg-[#a01549] text-white font-semibold py-2.5 px-6 rounded-lg text-sm transition-colors"
-              />
-            </div>
-          </div>
-
-          {/* Consulta tu cita */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-7 flex flex-col gap-4 shadow-sm">
-            <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "#EDE7F6" }}>
-              <Search size={22} style={{ color: "#5E35B1" }} />
-            </div>
-            <h2 className="text-[14px] font-black uppercase tracking-wide text-gray-900 dark:text-slate-100 leading-snug">
-              {idioma === "es" ? "CONSULTA TU CITA" : "TUPANAKUYNIYKITA MASK'AY"}
-            </h2>
-            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed flex-1">
-              {idioma === "es"
-                ? "¿Quieres saber cuándo es tu próxima cita? Haz clic aquí y revisa los detalles al instante."
-                : "Qatiq tupanakuyniykita yachanki munajtinki? Kaypim tarinki."}
-            </p>
-            <div>
-              <a href="#mis-citas">
-                <button className="bg-[#5E35B1] hover:bg-[#4a2990] text-white font-semibold py-2.5 px-6 rounded-lg text-sm transition-colors">
-                  {idioma === "es" ? "Ingresar" : "Yaykuy"}
-                </button>
-              </a>
-            </div>
-          </div>
+        {/* Botón solicitar cita */}
+        <div className="flex">
+          <SolicitarCita
+            triggerLabel={idioma === "es" ? "Solicitar cita" : "Tupanakuy mañay"}
+            triggerClassName="bg-[#C2185B] hover:bg-[#a01549] text-white font-semibold py-2.5 px-6 rounded-lg text-sm transition-colors"
+          />
         </div>
 
         <div id="mis-citas" />

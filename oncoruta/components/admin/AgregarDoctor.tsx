@@ -40,7 +40,7 @@ export default function AgregarDoctor() {
       especialidad: form.especialidad.trim(),
       email: form.email.trim() || null,
       telefono: form.telefono.trim() || null,
-      estado: "activo",
+      activo: true,
     });
     setLoading(false);
 

@@ -1,11 +1,11 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import DocumentosCliente from "./DocumentosCliente";
 
 type Documento = {
   id: string;
   nombre: string;
   estado: string;
-  created_at: string;
+  subido_en: string;
   pasos: { nombre: string } | null;
 };
 
@@ -13,12 +13,13 @@ export default async function DocumentosPage() {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
+  const service = createServiceClient();
   const { data } = user
-    ? await supabase
+    ? await service
         .from("documentos")
-        .select("id, nombre, estado, created_at, pasos(nombre)")
+        .select("id, nombre, estado, subido_en, pasos(nombre)")
         .eq("paciente_id", user.id)
-        .order("created_at", { ascending: false })
+        .order("subido_en", { ascending: false })
     : { data: null };
 
   const documentos = (data as Documento[] | null) ?? [];

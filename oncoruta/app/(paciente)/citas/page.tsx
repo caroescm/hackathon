@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import CitasCliente from "./CitasCliente";
 
 type Cita = {
@@ -14,8 +14,9 @@ export default async function CitasPage() {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
+  const service = createServiceClient();
   const { data } = user
-    ? await supabase
+    ? await service
         .from("citas")
         .select("id, servicio, fecha, hora, piso, estado")
         .eq("paciente_id", user.id)
