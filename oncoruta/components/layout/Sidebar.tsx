@@ -224,10 +224,18 @@ export default function Sidebar({ role = "paciente" }: SidebarProps) {
             </button>
             {configOpen && (
               <div className="mt-0.5 ml-3 border-l-2 border-gray-200 dark:border-slate-600 pl-3 space-y-0.5">
-                <span className="flex items-center gap-2.5 py-1.5 px-2 text-sm text-gray-400 dark:text-slate-500 cursor-not-allowed select-none">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300 flex-shrink-0" />
+                <Link
+                  href="/mis-datos"
+                  className={cn(
+                    "flex items-center gap-2.5 py-1.5 px-2 text-sm rounded-md transition-colors",
+                    isActive("/mis-datos")
+                      ? "text-[#3B52A2] font-medium"
+                      : "text-gray-600 dark:text-slate-300 hover:text-gray-900 dark:hover:text-slate-100"
+                  )}
+                >
+                  <span className={cn("w-1.5 h-1.5 rounded-full flex-shrink-0", isActive("/mis-datos") ? "bg-[#3B52A2]" : "bg-gray-300 dark:bg-slate-500")} />
                   Mis Datos
-                </span>
+                </Link>
                 <span className="flex items-center gap-2.5 py-1.5 px-2 text-sm text-gray-400 dark:text-slate-500 cursor-not-allowed select-none">
                   <span className="w-1.5 h-1.5 rounded-full bg-gray-300 flex-shrink-0" />
                   Contraseña

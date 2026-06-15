@@ -13,7 +13,7 @@ const ROLE_ROUTES: { prefix: string; role: UserRole }[] = [
 ];
 
 // Rutas exclusivas de paciente (no tienen prefijo propio)
-const PACIENTE_PATHS = ["/dashboard", "/proceso", "/documentos", "/citas", "/informacion"];
+const PACIENTE_PATHS = ["/dashboard", "/proceso", "/documentos", "/citas", "/informacion", "/mis-datos"];
 
 // Redirige al dashboard correspondiente según el rol
 function dashboardForRole(role: UserRole): string {
