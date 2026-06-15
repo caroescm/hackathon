@@ -1,5 +1,4 @@
 import { createServerClient } from "@supabase/ssr";
-import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import type { UserRole } from "@/lib/supabase/types";
 
@@ -51,19 +50,13 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Cliente con service role para leer rol sin que la política RLS de authenticated interfiera
-  const serviceSupabase = createSupabaseClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-
   const { pathname } = request.nextUrl;
 
   // 1. Rutas públicas: accesibles sin sesión
   const isPublic = PUBLIC_PATHS.some((p) => pathname.startsWith(p));
   if (isPublic) {
     if (user) {
-      const { data: usuarioData } = await serviceSupabase
+      const { data: usuarioData } = await supabase
         .from("usuarios")
         .select("rol")
         .eq("id", user.id)
@@ -80,13 +73,12 @@ export async function updateSession(request: NextRequest) {
   if (!user) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    // Guardar la ruta original para redirigir después del login
     url.searchParams.set("redirect", pathname);
     return NextResponse.redirect(url);
   }
 
   // 3. Con sesión: verificar rol
-  const { data: usuarioData } = await serviceSupabase
+  const { data: usuarioData } = await supabase
     .from("usuarios")
     .select("rol")
     .eq("id", user.id)
