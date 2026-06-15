@@ -73,7 +73,15 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#2c3e50] flex items-center justify-center px-4 py-8">
+    <div
+      className="relative min-h-screen flex items-center justify-center px-4 py-8"
+      style={{
+        backgroundImage: "url('/inen-bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="absolute inset-0 bg-[#1a2340]/70" />
       <div className="flex w-full max-w-5xl shadow-2xl overflow-hidden" style={{ minHeight: 600 }}>
 
         {/* ── Panel izquierdo — formulario ── */}
