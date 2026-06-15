@@ -80,6 +80,12 @@ El portal muestra citas y documentos de forma aislada, sin conectarlos en una ru
 - Necesita: visibilidad de todas sus pacientes, alertas de quién está atrasada, gestión de documentos
 - Acceso desde computadora del hospital
 
+### Perfil 6 — Carmen, Sobreviviente y voluntaria
+- 50 años, participa en Club de Mamas y grupos de apoyo del INEN
+- Necesidades: compartir experiencias con otras pacientes, orientar a nuevas pacientes, difundir información confiable
+- Dificultades: falta de canales de comunicación organizados para voluntarias
+- Rol en la plataforma: futuro (post-hackathon)
+
 ---
 
 ## 4. El Proceso Diagnóstico Real (5 pasos del INEN)
@@ -88,10 +94,10 @@ Basado en el flujograma oficial del reto Hackatón INEN 2026.
 
 | Paso | Nombre | Qué necesita la paciente |
 |---|---|---|
-| 0 | Preparación (antes de llegar) | DNI, hoja de referencia, documentos clínicos |
-| 1 | Admisión y evaluación | Presentar documentos, esperar evaluación de criterios de admisión |
-| 2 | Apertura de HC y asignación de cita | Recibir fecha de primera cita |
-| 3 | Primera consulta con especialista | Evaluación inicial, conocer qué exámenes vienen |
+| 0 | Preparación | DNI, hoja de referencia, documentos clínicos |
+| 1 | Admisión y evaluación | Médico evalúa criterios de admisión. Criterio clave: examen anatomopatológico confirmatorio. Si no cumple, se informa por escrito |
+| 2 | Apertura de HC y asignación de cita | Se abre HC en SISINEN, se asigna cita visible en plataforma |
+| 3 | Primera consulta con especialista | Evaluación inicial |
 | 4 | Exámenes de apoyo diagnóstico | Mamografía, ecografía, colposcopía, biopsia |
 | 5 | Evaluación diagnóstica y resultado | Resultado final → inicio de tratamiento |
 
@@ -134,6 +140,7 @@ OncoRuta adapta la ruta mostrada según el tipo de paciente registrado: **preven
 - Ver próximas citas con detalle: servicio, fecha, hora, ubicación (piso), estado
 - Ver historial de citas pasadas
 - Solicitar nueva cita (queda en estado "pendiente de confirmación")
+- Especialidades disponibles: Ginecología (lunes a viernes, mañana y tarde), Mamas y Tejidos Blandos (lunes, miércoles y viernes)
 
 ### 5.6 Portal paciente — Información
 
@@ -249,6 +256,7 @@ Notas internas → registrar observaciones del caso
 | Privacidad | Cumplimiento Ley N.° 29733 y Ley General de Salud; RLS en Supabase |
 | Interoperabilidad | Extensión del portal existente del INEN, no sistema paralelo |
 | Rendimiento | Server Components por defecto; Client Components solo donde hay interacción |
+| Accesibilidad digital | Cumplimiento WCAG 2.2 (Resolución PCM/SGTD N°001-2025). Soporte de lengua originaria quechua satisface el requisito de lenguas originarias del Lineamiento de Accesibilidad Digital para entidades públicas. |
 
 ---
 
