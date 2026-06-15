@@ -16,8 +16,8 @@ import { useIdioma } from "@/lib/i18n/IdiomaContext";
 
 function MiniTimeline({ idioma }: { idioma: string }) {
   const pasos = idioma === "es"
-    ? [{ n: 1, label: "Preparación" }, { n: 2, label: "Registro" }, { n: 3, label: "Consulta" }, { n: 4, label: "Exámenes" }, { n: 5, label: "Resultado" }]
-    : [{ n: 1, label: "Allichakuy" }, { n: 2, label: "Yaykuy" }, { n: 3, label: "Tapukuy" }, { n: 4, label: "Llanachiy" }, { n: 5, label: "Tariy" }];
+    ? [{ n: 0, label: "Preparación" }, { n: 1, label: "Admisión" }, { n: 2, label: "Historia clínica" }, { n: 3, label: "Consulta" }, { n: 4, label: "Exámenes" }, { n: 5, label: "Resultado" }]
+    : [{ n: 0, label: "Allichakuy" }, { n: 1, label: "Yaykuy" }, { n: 2, label: "HC Kichay" }, { n: 3, label: "Tapukuy" }, { n: 4, label: "Llanachiy" }, { n: 5, label: "Tariy" }];
 
   return (
     <div className="flex items-start gap-0 overflow-x-auto pb-2 -mx-1 px-1">
@@ -97,24 +97,38 @@ function FaqAccordion({ faqs, idioma }: { faqs: FaqItem[]; idioma: string }) {
 // ─── Contenidos de categoría ──────────────────────────────────────────────
 
 function Cat1Content({ idioma }: { idioma: string }) {
+  const pasos = idioma === "es" ? [
+    { n: 0, titulo: "Preparación", texto: "Reúne los documentos necesarios: DNI, hoja de referencia del hospital de origen y documentos clínicos previos (resultados, ecografías, biopsias)." },
+    { n: 1, titulo: "Admisión y evaluación", texto: "El médico evalúa si cumples los criterios de admisión. Para ser admitida necesitas contar con un examen anatomopatológico confirmatorio. Si no cumples los criterios, se te informan las razones por escrito." },
+    { n: 2, titulo: "Apertura de HC y asignación de cita", texto: "Si cumples los criterios, se abre tu historia clínica en el sistema SISINEN y se asigna la fecha de tu primera cita, que será publicada en la plataforma." },
+    { n: 3, titulo: "Primera consulta con especialista", texto: "El especialista realiza la evaluación inicial, revisa tus documentos clínicos y determina qué exámenes de apoyo necesitas." },
+    { n: 4, titulo: "Exámenes de apoyo al diagnóstico", texto: "Según la especialidad, se indicará mamografía, ecografía, colposcopía o biopsia. Los resultados pueden tardar entre una y cuatro semanas." },
+    { n: 5, titulo: "Evaluación diagnóstica y resultado", texto: "El médico te cita para explicarte el resultado final. Si se confirma el diagnóstico, se define e inicia el plan de tratamiento." },
+  ] : [
+    { n: 0, titulo: "Allichakuy", texto: "Qillqaykikunata tantachiy: DNI, qillqa kachasqa hampiq wasimanta, llanachiy tarisqaykuna kanman." },
+    { n: 1, titulo: "Yaykuy / Llapachakuy", texto: "Hampiqmi qhawasunki criteriokunata. Yaykuyta atinankipaq, examen anatomopatológico confirmatorio nisqata apamunay. Mana allinchu kaptinki, qillqapi willasunkiku imaraykus." },
+    { n: 2, titulo: "HC Kichay / Cita churay", texto: "Criteriokunata huntaptinki, kawsay qillqaykita SISINEN-pi kichanku, tapukuy p'unchayniykitaqmi nisunkiku, plataformapi rikusunqanki." },
+    { n: 3, titulo: "Ñawpaq tapukuy", texto: "Especialistam qhawasunki, qillqaykikunata leekunki, imatam llanachiy nisunki nisunki." },
+    { n: 4, titulo: "Llanachiy yanapaq", texto: "Especialidadmanta hina: mamografía, ecografía, colposcopía icha biopsia. Tarisqakuna 1–4 simanamanta sayaykamunqa." },
+    { n: 5, titulo: "Tarisqa / Resultado", texto: "Hampiqmi waqyasunki resultado willanaykipaq. Unquy kasqanta tariptinku, chay p'unchayllapitaqmi hampiy ñanniykita qallarichinkiku." },
+  ];
+
   return (
     <div className="space-y-5 text-sm text-gray-600 dark:text-slate-300 leading-relaxed">
       <MiniTimeline idioma={idioma} />
-      {idioma === "es" ? (
-        <>
-          <p>Antes de tu primera visita al INEN necesitas reunir tus documentos: DNI original, hoja de referencia de tu centro de salud u hospital de origen, y resultados de exámenes previos si tienes. Sin la hoja de referencia, es difícil ser atendida en la primera visita.</p>
-          <p>Al llegar, pasas por admisión para registrarte. El personal revisa tus documentos y, si cumples los criterios, abre tu historia clínica y te asigna una primera cita con el especialista. Ese trámite puede tomar entre uno y dos días hábiles.</p>
-          <p>En tu primera consulta oncológica, el médico te examina y te indica qué exámenes necesitas — puede ser una mamografía, ecografía, colposcopía o biopsia. Los resultados demoran entre una y cuatro semanas según el tipo de examen.</p>
-          <p>Finalmente, el médico te cita para explicarte el resultado. Si se confirma un diagnóstico, ese mismo día se define el plan de tratamiento.</p>
-        </>
-      ) : (
-        <>
-          <p>INEN-man ñawpaq hamunankipaq, qillqaykikunata tantachiy: DNI, qillqa kachasqa hampiq wasimanta, llanachiy tarisqaykuna kanman.</p>
-          <p>Chayaptinki, yaykuyman rinki. Runakuna qillqaykikunata qhawanku. Allinmi kaptinki, kawsay qillqaykita kichanku, tapukuyniykitaqmi nisunkiku.</p>
-          <p>Ñawpaq tapukuykipi, hampiqmi qhawasunki, imatam llanachisqayki nisunki — mamografía, ecografía, colposcopía icha biopsia kanman. Tarisqakuna 1–4 simanamanta sayaykamunqa.</p>
-          <p>Tukuypitaq, hampiqmi waqyasunki tarisqaykita willanaykipaq. Unquy kasqanta tariptinku, chay p'unchayllapitaqmi hampiy ñanniykita nisunkiku.</p>
-        </>
-      )}
+      <div className="space-y-3">
+        {pasos.map((p) => (
+          <div key={p.n} className="flex gap-3">
+            <div className="w-6 h-6 rounded-full bg-blue-100 border-2 border-blue-300 flex items-center justify-center text-[11px] font-bold text-blue-700 flex-shrink-0 mt-0.5">
+              {p.n}
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-800 dark:text-slate-100 leading-tight">{p.titulo}</p>
+              <p className="text-sm text-gray-600 dark:text-slate-300 mt-0.5">{p.texto}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -124,17 +138,73 @@ function Cat2Content({ idioma }: { idioma: string }) {
     <div className="space-y-5 text-sm text-gray-600 dark:text-slate-300 leading-relaxed">
       {idioma === "es" ? (
         <>
-          <p>Para cualquier cita en el INEN, lleva siempre tu DNI original. Si tienes SIS, ESSALUD u otro seguro, lleva también ese carnet. Trae todos los exámenes, ecografías, mamografías o biopsias que hayas hecho antes — aunque sean de otro hospital.</p>
-          <p>Si es tu primera vez, lleva la hoja de referencia de tu centro de salud de origen. Sin ella, el proceso de admisión puede complicarse. Si ya eres paciente del INEN, lleva tu carnet de historia clínica y cualquier resultado nuevo que tengas.</p>
-          <p>Llega con al menos una hora de anticipación, especialmente si tu cita es en las mañanas. Traer algo de comer y beber te ayudará a esperar con más comodidad.</p>
-          <p>Ven acompañada si puedes. Tener a alguien de confianza te ayuda a recordar lo que el médico te dice. Antes de tu cita, escribe tus preguntas en un papel o en tu celular para no olvidarlas durante la consulta.</p>
+          <div>
+            <p className="font-semibold text-gray-800 dark:text-slate-100 mb-2">Criterios de admisión</p>
+            <p>Para ser admitida en el INEN debes contar con un <span className="font-semibold">examen anatomopatológico confirmatorio</span>. Si no cumples este requisito, el personal de admisión te informará las razones por escrito.</p>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-800 dark:text-slate-100 mb-2">Documentos que debes traer</p>
+            <ul className="space-y-1.5 list-none">
+              {[
+                "DNI original",
+                "Hoja de referencia del hospital de origen",
+                "Documentos clínicos previos (resultados de exámenes, ecografías, biopsias u otros)",
+              ].map((d) => (
+                <li key={d} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
+                  {d}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-800 dark:text-slate-100 mb-2">Días de atención por especialidad</p>
+            <div className="space-y-2">
+              <div className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
+                <span><span className="font-medium text-gray-700 dark:text-slate-200">Ginecología (cérvix):</span> lunes a viernes, mañana y tarde</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
+                <span><span className="font-medium text-gray-700 dark:text-slate-200">Mamas y Tejidos Blandos:</span> lunes, miércoles y viernes</span>
+              </div>
+            </div>
+          </div>
         </>
       ) : (
         <>
-          <p>Sapa tapukuyman rinankipaq, DNI, SIS qillqa icha huk seguro apamuy. Huk wasi llanachisqaykitapas apamuy — INEN-pi manachus rurasqachu kaptinpas.</p>
-          <p>Ñawpaq kutikipim hampiq wasimanta qillqa kachasqata apamuy. Chay qillqa mana kasqanki, yaykuyman rinki siqiminqa sasam kanqa. Ña INEN-pi kasqaykipim, kawsay qillqa kartaykita apamuy.</p>
-          <p>Siq'i hourkunam ñawpaqta chayamuy, amataq saqiychu — INEN-pi achkha runakuna kachkan. Mikhuyta upyaytawan apamuy suyanaykipaq.</p>
-          <p>Apaykachawaqniyoq hamuy. Paymi yanapasunki hampiq nisqankunata yuyarinaykipaq. Tapukuyniykunata ñawpaqmantam qillqakuy, tapukuykipi mana qonqanaykipaq.</p>
+          <div>
+            <p className="font-semibold text-gray-800 dark:text-slate-100 mb-2">Yaykuy criterios</p>
+            <p>INEN-man yaykuyta atinankipaq, <span className="font-semibold">examen anatomopatológico confirmatorio</span> nisqata apamunay. Mana kasqanki, qillqapi willasunkiku imaraykus.</p>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-800 dark:text-slate-100 mb-2">Apamunay qillqakuna</p>
+            <ul className="space-y-1.5 list-none">
+              {[
+                "DNI original",
+                "Qillqa kachasqa hampiq wasimanta (hoja de referencia)",
+                "Ñawpaq llanachiy tarisqaykuna (resultados, ecografías, biopsias)",
+              ].map((d) => (
+                <li key={d} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
+                  {d}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-800 dark:text-slate-100 mb-2">P'unchay atención especialidadmanta</p>
+            <div className="space-y-2">
+              <div className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
+                <span><span className="font-medium text-gray-700 dark:text-slate-200">Ginecología (cérvix):</span> lunes a viernes, paqarin, ch'isi</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
+                <span><span className="font-medium text-gray-700 dark:text-slate-200">Mamas y Tejidos Blandos:</span> lunes, miércoles, viernes</span>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </div>
