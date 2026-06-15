@@ -146,6 +146,24 @@ export default function DashboardCliente({
         </Card>
       </div>
 
+      {/* ── Stats ── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {stats.map((stat) => (
+          <Card key={stat.label} className="p-0">
+            <div className="p-5 flex items-start gap-4">
+              <div className={`w-10 h-10 rounded-lg ${stat.iconBg} flex items-center justify-center flex-shrink-0`}>
+                {stat.icon}
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs text-muted font-medium">{stat.label}</p>
+                <p className="text-base font-bold text-foreground leading-tight truncate">{stat.value}</p>
+                <p className="text-xs text-muted">{stat.sub}</p>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+
       {/* ── Fila: Resultados + Consulta cita ── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {TOP_CARDS.map((card) => {
@@ -173,24 +191,6 @@ export default function DashboardCliente({
             </div>
           );
         })}
-      </div>
-
-      {/* ── Stats ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat) => (
-          <Card key={stat.label} className="p-0">
-            <div className="p-5 flex items-start gap-4">
-              <div className={`w-10 h-10 rounded-lg ${stat.iconBg} flex items-center justify-center flex-shrink-0`}>
-                {stat.icon}
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs text-muted font-medium">{stat.label}</p>
-                <p className="text-base font-bold text-foreground leading-tight truncate">{stat.value}</p>
-                <p className="text-xs text-muted">{stat.sub}</p>
-              </div>
-            </div>
-          </Card>
-        ))}
       </div>
 
     </div>
